@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShoeHub - Premium Footwear Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a1a2e;
+            --accent-color: #ff6b35;
+            --secondary-color: #0f3460;
+            --light-bg: #f8f9fa;
+            --dark-text: #2d2d2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .navbar {
+            background: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: white !important;
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand span {
+            color: var(--accent-color);
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+
+        .nav-icon {
+            position: relative;
+            font-size: 1.3rem;
+            margin: 0 8px;
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=1600');
+            background-size: cover;
+            background-position: center;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-primary-custom {
+            background: var(--accent-color);
+            border: none;
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary-custom:hover {
+            background: #ff5722;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,53,0.4);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+        }
+
+        .category-card {
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+            height: 300px;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 800;
+            transition: all 0.3s;
+        }
+
+        .category-card:hover .category-overlay {
+            background: rgba(255,107,53,0.7);
+        }
+
+        .brand-slider {
+            overflow: hidden;
+            padding: 40px 0;
+            background: white;
+        }
+
+        .brand-track {
+            display: flex;
+            animation: scroll 20s linear infinite;
+        }
+
+        .brand-item {
+            min-width: 200px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .brand-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .product-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 280px;
+        }
+
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s;
+        }
+
+        .product-image-container .secondary-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .product-card:hover .secondary-image {
+            opacity: 1;
+        }
+
+        .product-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-brand {
+            font-size: 0.85rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 5px 0;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            color: #666;
+            font-style: italic;
+            margin: 3px 0;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .product-price-old {
+            text-decoration: line-through;
+            color: #999;
+            margin-left: 10px;
+            font-size: 1rem;
+        }
+
+        .rating {
+            color: #ffa500;
+            margin: 5px 0;
+        }
+
+        .feature-box {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .filter-sidebar {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .filter-option {
+            margin-bottom: 10px;
+        }
+
+        .filter-option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .product-detail-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .thumbnail-gallery {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .thumbnail:hover, .thumbnail.active {
+            border-color: var(--accent-color);
+        }
+
+        .size-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .size-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .size-btn:hover, .size-btn.active {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .qty-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .qty-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .cart-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .price-comparison-table {
+            margin: 30px 0;
+        }
+
+        .price-comparison-table table {
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .price-comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px;
+        }
+
+        .price-comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .best-price {
+            background: #d4edda;
+            font-weight: bold;
+        }
+
+        .auth-container {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .auth-box {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .auth-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 80px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 1.5rem;
+        }
+
+        .social-icons i {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-icons i:hover {
+            color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .modal-content {
+            border-radius: 15px;
+        }
+
+        .wishlist-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .order-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .filter-sidebar {
+                position: static;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home')">Shoe<span>Hub</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('shop')">Shop</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Brands
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" onclick="filterByBrand('Nike')">Nike</a></li>
+                            <li><a class="dropdown-item" onclick="filterByBrand('Adidas')">Adidas</a></li>
+                            <li><a class="dropdown-item" onclick="filterByBrand('Puma')">Puma</a></li>
+                            <li><a class="dropdown-item" onclick="filterByBrand('Reebok')">Reebok</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('about')">About</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('contact')">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('login')">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('signup')">Signup</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-icon" onclick="showPage('wishlist')">
+                            <i class="bi bi-heart"></i>
+                            <span class="badge-count" id="wishlistCount">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-icon" onclick="showPage('cart')">
+                            <i class="bi bi-cart3"></i>
+                            <span class="badge-count" id="cartCount">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-icon" onclick="showPage('profile')">
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="home" class="page-section active">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>Step Into Style</h1>
+                <p>Discover the Perfect Pair for Every Occasion</p>
+                <button class="btn-primary-custom" onclick="showPage('shop')">Shop Now</button>
+            </div>
+        </div>
+
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title">Shop By Category</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="category-card" onclick="filterByGender('men')">
+                            <img src="https://images.unsplash.com/photo-1603787081207-362bcef7f812?w=600" alt="Men">
+                            <div class="category-overlay">MEN</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" onclick="filterByGender('women')">
+                            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600" alt="Women">
+                            <div class="category-overlay">WOMEN</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" onclick="filterByGender('kids')">
+                            <img src="https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=600" alt="Kids">
+                            <div class="category-overlay">KIDS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="brand-slider">
+            <div class="container">
+                <h2 class="section-title">Featured Brands</h2>
+            </div>
+            <div class="brand-track">
+                <div class="brand-item" onclick="filterByBrand('Nike')">NIKE</div>
+                <div class="brand-item" onclick="filterByBrand('Adidas')">ADIDAS</div>
+                <div class="brand-item" onclick="filterByBrand('Puma')">PUMA</div>
+                <div class="brand-item" onclick="filterByBrand('Reebok')">REEBOK</div>
+                <div class="brand-item" onclick="filterByBrand('Bata')">BATA</div>
+                <div class="brand-item" onclick="filterByBrand('Campus')">CAMPUS</div>
+                <div class="brand-item" onclick="filterByBrand('Nike')">NIKE</div>
+                <div class="brand-item" onclick="filterByBrand('Adidas')">ADIDAS</div>
+                <div class="brand-item" onclick="filterByBrand('Puma')">PUMA</div>
+                <div class="brand-item" onclick="filterByBrand('Reebok')">REEBOK</div>
+                <div class="brand-item" onclick="filterByBrand('Bata')">BATA</div>
+                <div class="brand-item" onclick="filterByBrand('Campus')">CAMPUS</div>
+            </div>
+        </section>
+
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title">Trending Products</h2>
+                <div class="row" id="trendingProducts"></div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title">Why Choose Us</h2>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="feature-box">
+                            <div class="feature-icon"><i class="bi bi-truck"></i></div>
+                            <h5>Free Shipping</h5>
+                            <p>On orders above ₹999</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="feature-box">
+                            <div class="feature-icon"><i class="bi bi-arrow-repeat"></i></div>
+                            <h5>Easy Returns</h5>
+                            <p>30 days return policy</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="feature-box">
+                            <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+                            <h5>Secure Payment</h5>
+                            <p>100% secure transactions</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="feature-box">
+                            <div class="feature-icon"><i class="bi bi-headset"></i></div>
+                            <h5>24/7 Support</h5>
+                            <p>Dedicated customer service</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="shop" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">Shop All Products</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="filter-sidebar">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5>Filters</h5>
+                            <button class="btn btn-sm btn-outline-danger" onclick="clearFilters()">Clear All</button>
+                        </div>
+
+                        <div class="filter-group">
+                            <div class="filter-title">Gender</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterMen" value="men" onchange="applyFilters()">
+                                <label for="filterMen">Men</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterWomen" value="women" onchange="applyFilters()">
+                                <label for="filterWomen">Women</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterKids" value="kids" onchange="applyFilters()">
+                                <label for="filterKids">Kids</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <div class="filter-title">Brand</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandNike" value="Nike" onchange="applyFilters()">
+                                <label for="brandNike">Nike</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandAdidas" value="Adidas" onchange="applyFilters()">
+                                <label for="brandAdidas">Adidas</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandPuma" value="Puma" onchange="applyFilters()">
+                                <label for="brandPuma">Puma</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandReebok" value="Reebok" onchange="applyFilters()">
+                                <label for="brandReebok">Reebok</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandBata" value="Bata" onchange="applyFilters()">
+                                <label for="brandBata">Bata</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandCampus" value="Campus" onchange="applyFilters()">
+                                <label for="brandCampus">Campus</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <div class="filter-title">Shoe Type</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="typeSneakers" value="sneakers" onchange="applyFilters()">
+                                <label for="typeSneakers">Sneakers</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="typeRunning" value="running" onchange="applyFilters()">
+                                <label for="typeRunning">Running</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="typeCasual" value="casual" onchange="applyFilters()">
+                                <label for="typeCasual">Casual</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="typeFormal" value="formal" onchange="applyFilters()">
+                                <label for="typeFormal">Formal</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="typeSandals" value="sandals" onchange="applyFilters()">
+                                <label for="typeSandals">Sandals</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="typeBoots" value="boots" onchange="applyFilters()">
+                                <label for="typeBoots">Boots</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <div class="filter-title">Occasion</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="occasionSports" value="sports" onchange="applyFilters()">
+                                <label for="occasionSports">Sports</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="occasionOffice" value="office" onchange="applyFilters()">
+                                <label for="occasionOffice">Office</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="occasionParty" value="party" onchange="applyFilters()">
+                                <label for="occasionParty">Party</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="occasionCasual" value="casual" onchange="applyFilters()">
+                                <label for="occasionCasual">Casual</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <div class="filter-title">Price Range</div>
+                            <select class="form-select" id="priceRange" onchange="applyFilters()">
+                                <option value="">All Prices</option>
+                                <option value="0-1000">Under ₹1000</option>
+                                <option value="1000-2000">₹1000 - ₹2000</option>
+                                <option value="2000-3000">₹2000 - ₹3000</option>
+                                <option value="3000-5000">₹3000 - ₹5000</option>
+                                <option value="5000-99999">Above ₹5000</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <div class="filter-title">Size</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size6" value="6" onchange="applyFilters()">
+                                <label for="size6">6</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size7" value="7" onchange="applyFilters()">
+                                <label for="size7">7</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size8" value="8" onchange="applyFilters()">
+                                <label for="size8">8</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size9" value="9" onchange="applyFilters()">
+                                <label for="size9">9</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size10" value="10" onchange="applyFilters()">
+                                <label for="size10">10</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size11" value="11" onchange="applyFilters()">
+                                <label for="size11">11</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div><span id="productCount">0</span> Products Found</div>
+                        <select class="form-select w-auto" id="sortBy" onchange="applySorting()">
+                            <option value="">Sort By</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name">Name: A to Z</option>
+                        </select>
+                    </div>
+                    <div class="row" id="shopProducts"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="productDetail" class="page-section">
+        <div class="container py-5">
+            <button class="btn btn-outline-secondary mb-4" onclick="showPage('shop')">
+                <i class="bi bi-arrow-left"></i> Back to Shop
+            </button>
+            <div class="row" id="productDetailContent"></div>
+        </div>
+    </div>
+
+    <div id="cart" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">Shopping Cart</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="cartItems"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h4 class="mb-4">Order Summary</h4>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Subtotal:</span>
+                            <span id="cartSubtotal">₹0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Shipping:</span>
+                            <span id="shippingCost">₹0</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <strong>Total:</strong>
+                            <strong id="cartTotal">₹0</strong>
+                        </div>
+                        <button class="btn btn-primary-custom w-100" onclick="showPage('checkout')">
+                            Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkout" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">Checkout</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="bg-white p-4 rounded shadow mb-4">
+                        <h4 class="mb-4">Billing Details</h4>
+                        <form id="checkoutForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Pincode</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <h4 class="mb-3 mt-4">Payment Method</h4>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment" id="cod" checked>
+                                <label class="form-check-label" for="cod">Cash on Delivery</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment" id="card">
+                                <label class="form-check-label" for="card">Credit/Debit Card</label>
+                            </div>
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="radio" name="payment" id="upi">
+                                <label class="form-check-label" for="upi">UPI</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">Place Order</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h4 class="mb-4">Order Summary</h4>
+                        <div id="checkoutSummary"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="login" class="page-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2 class="auth-title">Login</h2>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="loginPassword" required>
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('loginPassword')">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">Login</button>
+                    <div class="text-center">
+                        Don't have an account? <a href="#" onclick="showPage('signup')" class="text-decoration-none" style="color: var(--accent-color)">Sign Up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="signup" class="page-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2 class="auth-title">Sign Up</h2>
+                <form id="signupForm">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="signupName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="signupEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="signupPassword" required minlength="6">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('signupPassword')">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="signupConfirmPassword" required>
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('signupConfirmPassword')">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">Sign Up</button>
+                    <div class="text-center">
+                        Already have an account? <a href="#" onclick="showPage('login')" class="text-decoration-none" style="color: var(--accent-color)">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="wishlist" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">My Wishlist</h2>
+            <div class="row" id="wishlistItems"></div>
+        </div>
+    </div>
+
+    <div id="profile" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">My Profile</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="bg-white p-4 rounded shadow">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-person-circle" style="font-size: 5rem; color: var(--primary-color);"></i>
+                            <h4 class="mt-3">John Doe</h4>
+                            <p class="text-muted">john.doe@example.com</p>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary" onclick="showPage('profile')">My Orders</button>
+                            <button class="btn btn-outline-primary" onclick="showPage('wishlist')">Wishlist</button>
+                            <button class="btn btn-outline-primary" onclick="showPage('refund')">Replace/Refund</button>
+                            <button class="btn btn-outline-danger">Logout</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h4 class="mb-4">Order History</h4>
+                        <div id="orderHistory">
+                            <div class="order-item">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <strong>Order #12345</strong>
+                                        <p class="text-muted mb-0">Placed on: 15 Jan 2024</p>
+                                    </div>
+                                    <span class="badge bg-success">Delivered</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                    <div class="ms-3">
+                                        <strong>Nike Air Max 270</strong>
+                                        <p class="text-muted mb-0">Quantity: 1</p>
+                                        <strong>₹4999</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="order-item">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <strong>Order #12344</strong>
+                                        <p class="text-muted mb-0">Placed on: 10 Jan 2024</p>
+                                    </div>
+                                    <span class="badge bg-primary">Shipped</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                    <div class="ms-3">
+                                        <strong>Adidas Ultraboost</strong>
+                                        <p class="text-muted mb-0">Quantity: 1</p>
+                                        <strong>₹5499</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="refund" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">Replace / Refund Request</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="bg-white p-5 rounded shadow">
+                        <form id="refundForm">
+                            <div class="mb-3">
+                                <label class="form-label">Order ID</label>
+                                <input type="text" class="form-control" placeholder="Enter your order ID" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Request Type</label>
+                                <select class="form-select" required>
+                                    <option value="">Select Request Type</option>
+                                    <option value="replace">Replace Product</option>
+                                    <option value="refund">Refund Request</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Reason</label>
+                                <select class="form-select" required>
+                                    <option value="">Select Reason</option>
+                                    <option value="defective">Defective Product</option>
+                                    <option value="wrong">Wrong Product Delivered</option>
+                                    <option value="size">Size Issue</option>
+                                    <option value="quality">Quality Issue</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Additional Details</label>
+                                <textarea class="form-control" rows="4" placeholder="Please provide more details about your request" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Upload Image (Optional)</label>
+                                <input type="file" class="form-control" accept="image/*">
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">Submit Request</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">About ShoeHub</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="bg-white p-5 rounded shadow">
+                        <h3 class="mb-4">Our Story</h3>
+                        <p class="mb-4">ShoeHub is your premier destination for quality footwear. Founded in 2020, we've been committed to bringing you the latest styles from the world's top brands at competitive prices.</p>
+                        
+                        <h3 class="mb-4">Our Mission</h3>
+                        <p class="mb-4">Our mission is to provide customers with a seamless shopping experience, offering authentic products, competitive pricing, and exceptional customer service. We believe everyone deserves to step out in style and comfort.</p>
+                        
+                        <h3 class="mb-4">Why Choose ShoeHub?</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>100% Authentic Products</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Wide Range of Brands</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Easy Returns & Exchanges</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Secure Payment Options</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Fast Delivery</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>24/7 Customer Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="bg-white p-5 rounded shadow">
+                        <h4 class="mb-4">Get In Touch</h4>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Subject</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-white p-5 rounded shadow">
+                        <h4 class="mb-4">Contact Information</h4>
+                        <div class="mb-4">
+                            <i class="bi bi-geo-alt-fill me-2" style="color: var(--accent-color);"></i>
+                            <strong>Address:</strong>
+                            <p class="ms-4">123 Shoe Street, Fashion District, Mumbai 400001</p>
+                        </div>
+                        <div class="mb-4">
+                            <i class="bi bi-telephone-fill me-2" style="color: var(--accent-color);"></i>
+                            <strong>Phone:</strong>
+                            <p class="ms-4">+91 98765 43210</p>
+                        </div>
+                        <div class="mb-4">
+                            <i class="bi bi-envelope-fill me-2" style="color: var(--accent-color);"></i>
+                            <strong>Email:</strong>
+                            <p class="ms-4">support@shoehub.com</p>
+                        </div>
+                        <div class="mb-4">
+                            <i class="bi bi-clock-fill me-2" style="color: var(--accent-color);"></i>
+                            <strong>Business Hours:</strong>
+                            <p class="ms-4">Mon - Sat: 9:00 AM - 9:00 PM<br>Sunday: 10:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">ShoeHub</h5>
+                    <p>Your trusted partner for quality footwear since 2020.</p>
+                    <div class="social-icons mt-3">
+                        <i class="bi bi-facebook"></i>
+                        <i class="bi bi-instagram"></i>
+                        <i class="bi bi-twitter"></i>
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="#" onclick="showPage('about')">About Us</a>
+                        <a href="#" onclick="showPage('contact')">Contact</a>
+                        <a href="#" onclick="showPage('shop')">Shop</a>
+                        <a href="#">Blog</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Customer Service</h5>
+                    <div class="footer-links">
+                        <a href="#">Track Order</a>
+                        <a href="#" onclick="showPage('refund')">Returns & Exchanges</a>
+                        <a href="#">Shipping Info</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Legal</h5>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Policy</a>
+                        <a href="#">Disclaimer</a>
+                    </div>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.2);">
+            <div class="text-center py-3">
+                <p>&copy; 2024 ShoeHub. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="quickViewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Quick View</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="quickViewContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const products = [
+            { id: 1, name: 'Nike Air Max 270', brand: 'Nike', gender: 'men', type: 'sneakers', occasion: 'sports', price: 4999, oldPrice: 6999, rating: 4.5, image1: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', image2: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400', desc: 'The Nike Air Max 270 delivers visible cushioning under every step.', sizes: [6,7,8,9,10,11] },
+            { id: 2, name: 'Adidas Ultraboost', brand: 'Adidas', gender: 'men', type: 'running', occasion: 'sports', price: 5499, oldPrice: 7999, rating: 4.7, image1: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400', image2: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400', desc: 'Experience endless energy with Boost cushioning technology.', sizes: [6,7,8,9,10,11] },
+            { id: 3, name: 'Puma RS-X', brand: 'Puma', gender: 'women', type: 'sneakers', occasion: 'casual', price: 3999, oldPrice: 5499, rating: 4.3, image1: 'https://images.unsplash.com/photo-1608667508764-33cf0726b13a?w=400', image2: 'https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=400', desc: 'Bold design with superior comfort for everyday wear.', sizes: [6,7,8,9,10,11] },
+            { id: 4, name: 'Reebok Classic', brand: 'Reebok', gender: 'men', type: 'casual', occasion: 'casual', price: 2799, oldPrice: 3999, rating: 4.4, image1: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400', image2: 'https://images.unsplash.com/photo-1612902376152-8a3e7db5b40d?w=400', desc: 'Timeless style meets modern comfort.', sizes: [6,7,8,9,10,11] },
+            { id: 5, name: 'Nike Zoom Pegasus', brand: 'Nike', gender: 'women', type: 'running', occasion: 'sports', price: 4599, oldPrice: 6499, rating: 4.6, image1: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400', image2: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400', desc: 'Responsive cushioning for your daily runs.', sizes: [6,7,8,9,10,11] },
+            { id: 6, name: 'Adidas Stan Smith', brand: 'Adidas', gender: 'men', type: 'casual', occasion: 'casual', price: 3299, oldPrice: 4999, rating: 4.5, image1: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=400', image2: 'https://images.unsplash.com/photo-1606932836120-66d63bb42815?w=400', desc: 'Iconic tennis-inspired sneakers for everyday style.', sizes: [6,7,8,9,10,11] },
+            { id: 7, name: 'Puma Smash', brand: 'Puma', gender: 'kids', type: 'casual', occasion: 'casual', price: 1999, oldPrice: 2999, rating: 4.2, image1: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400', image2: 'https://images.unsplash.com/photo-1603808033587-4a40fcb7c777?w=400', desc: 'Perfect casual shoes for active kids.', sizes: [6,7,8,9,10] },
+            { id: 8, name: 'Nike Court Vision', brand: 'Nike', gender: 'women', type: 'casual', occasion: 'casual', price: 3499, oldPrice: 4999, rating: 4.4, image1: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400', image2: 'https://images.unsplash.com/photo-1603808033587-4a40fcb7c777?w=400', desc: 'Classic basketball style for everyday wear.', sizes: [6,7,8,9,10,11] },
+            { id: 9, name: 'Adidas Predator', brand: 'Adidas', gender: 'men', type: 'formal', occasion: 'office', price: 6999, oldPrice: 9999, rating: 4.8, image1: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400', image2: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400', desc: 'Professional performance meets elegant design.', sizes: [6,7,8,9,10,11] },
+            { id: 10, name: 'Reebok Nano', brand: 'Reebok', gender: 'women', type: 'running', occasion: 'sports', price: 4299, oldPrice: 5999, rating: 4.5, image1: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400', image2: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400', desc: 'Built for high-intensity training.', sizes: [6,7,8,9,10,11] },
+            { id: 11, name: 'Puma Future Rider', brand: 'Puma', gender: 'men', type: 'sneakers', occasion: 'casual', price: 3799, oldPrice: 5299, rating: 4.3, image1: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400', image2: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400', desc: 'Retro-inspired design with modern comfort.', sizes: [6,7,8,9,10,11] },
+            { id: 12, name: 'Nike Air Force 1', brand: 'Nike', gender: 'kids', type: 'casual', occasion: 'casual', price: 2499, oldPrice: 3499, rating: 4.6, image1: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400', image2: 'https://images.unsplash.com/photo-1603808033587-4a40fcb7c777?w=400', desc: 'Iconic style for the young ones.', sizes: [6,7,8,9,10] },
+            { id: 13, name: 'Bata Red Label', brand: 'Bata', gender: 'men', type: 'formal', occasion: 'office', price: 2999, oldPrice: 4499, rating: 4.2, image1: 'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=400', image2: 'https://images.unsplash.com/photo-1614252368794-d8d70da3f660?w=400', desc: 'Professional formal shoes for office wear.', sizes: [6,7,8,9,10,11] },
+            { id: 14, name: 'Campus Sutra', brand: 'Campus', gender: 'women', type: 'sandals', occasion: 'casual', price: 1499, oldPrice: 2199, rating: 4.0, image1: 'https://images.unsplash.com/photo-1603808033587-4a40fcb7c777?w=400', image2: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400', desc: 'Comfortable sandals for summer days.', sizes: [6,7,8,9,10] },
+            { id: 15, name: 'Bata Floatz', brand: 'Bata', gender: 'kids', type: 'sandals', occasion: 'casual', price: 999, oldPrice: 1499, rating: 4.1, image1: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400', image2: 'https://images.unsplash.com/photo-1603808033587-4a40fcb7c777?w=400', desc: 'Lightweight sandals for kids.', sizes: [6,7,8,9] },
+            { id: 16, name: 'Campus Action', brand: 'Campus', gender: 'men', type: 'boots', occasion: 'party', price: 3499, oldPrice: 4999, rating: 4.4, image1: 'https://images.unsplash.com/photo-1608667508764-33cf0726b13a?w=400', image2: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400', desc: 'Stylish boots for special occasions.', sizes: [7,8,9,10,11] }
+        ];
+
+        let cart = [];
+        let wishlist = [];
+        let filteredProducts = [...products];
+        let currentProduct = null;
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(pageName).classList.add('active');
+            window.scrollTo(0, 0);
+
+            if (pageName === 'home') {
+                renderTrendingProducts();
+            } else if (pageName === 'shop') {
+                renderShopProducts();
+            } else if (pageName === 'cart') {
+                renderCart();
+            } else if (pageName === 'checkout') {
+                renderCheckoutSummary();
+            } else if (pageName === 'wishlist') {
+                renderWishlist();
+            }
+        }
+
+        function renderTrendingProducts() {
+            const container = document.getElementById('trendingProducts');
+            const trending = products.slice(0, 8);
+            container.innerHTML = trending.map(product => `
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card">
+                        ${product.oldPrice ? `<div class="discount-badge">-${Math.round((1 - product.price/product.oldPrice) * 100)}%</div>` : ''}
+                        <div class="product-image-container">
+                            <img src="${product.image1}" class="primary-image" alt="${product.name}">
+                            <img src="${product.image2}" class="secondary-image" alt="${product.name}">
+                            <div class="product-actions">
+                                <button class="action-btn" onclick="addToWishlist(${product.id})" title="Add to Wishlist">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                                <button class="action-btn" onclick="quickView(${product.id})" title="Quick View" data-bs-toggle="modal" data-bs-target="#quickViewModal">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">${product.brand}</div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-category">${product.type.charAt(0).toUpperCase() + product.type.slice(1)} • ${product.occasion.charAt(0).toUpperCase() + product.occasion.slice(1)}</div>
+                            <div class="rating">
+                                ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                            </div>
+                            <div class="product-price">
+                                ₹${product.price}
+                                ${product.oldPrice ? `<span class="product-price-old">₹${product.oldPrice}</span>` : ''}
+                            </div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-primary-custom flex-fill" onclick="viewProduct(${product.id})">View Details</button>
+                                <button class="btn btn-outline-secondary" onclick="addToCart(${product.id})">
+                                    <i class="bi bi-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderShopProducts() {
+            const container = document.getElementById('shopProducts');
+            const count = document.getElementById('productCount');
+            count.textContent = filteredProducts.length;
+
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        ${product.oldPrice ? `<div class="discount-badge">-${Math.round((1 - product.price/product.oldPrice) * 100)}%</div>` : ''}
+                        <div class="product-image-container">
+                            <img src="${product.image1}" class="primary-image" alt="${product.name}">
+                            <img src="${product.image2}" class="secondary-image" alt="${product.name}">
+                            <div class="product-actions">
+                                <button class="action-btn" onclick="addToWishlist(${product.id})">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                                <button class="action-btn" onclick="quickView(${product.id})" data-bs-toggle="modal" data-bs-target="#quickViewModal">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">${product.brand}</div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-category">${product.type.charAt(0).toUpperCase() + product.type.slice(1)} • ${product.occasion.charAt(0).toUpperCase() + product.occasion.slice(1)}</div>
+                            <div class="rating">
+                                ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                            </div>
+                            <div class="product-price">
+                                ₹${product.price}
+                                ${product.oldPrice ? `<span class="product-price-old">₹${product.oldPrice}</span>` : ''}
+                            </div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-primary-custom flex-fill" onclick="viewProduct(${product.id})">View Details</button>
+                                <button class="btn btn-outline-secondary" onclick="addToCart(${product.id})">
+                                    <i class="bi bi-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function applyFilters() {
+            const genders = [];
+            if (document.getElementById('filterMen')?.checked) genders.push('men');
+            if (document.getElementById('filterWomen')?.checked) genders.push('women');
+            if (document.getElementById('filterKids')?.checked) genders.push('kids');
+
+            const brands = [];
+            if (document.getElementById('brandNike')?.checked) brands.push('Nike');
+            if (document.getElementById('brandAdidas')?.checked) brands.push('Adidas');
+            if (document.getElementById('brandPuma')?.checked) brands.push('Puma');
+            if (document.getElementById('brandReebok')?.checked) brands.push('Reebok');
+            if (document.getElementById('brandBata')?.checked) brands.push('Bata');
+            if (document.getElementById('brandCampus')?.checked) brands.push('Campus');
+
+            const types = [];
+            if (document.getElementById('typeSneakers')?.checked) types.push('sneakers');
+            if (document.getElementById('typeRunning')?.checked) types.push('running');
+            if (document.getElementById('typeCasual')?.checked) types.push('casual');
+            if (document.getElementById('typeFormal')?.checked) types.push('formal');
+            if (document.getElementById('typeSandals')?.checked) types.push('sandals');
+            if (document.getElementById('typeBoots')?.checked) types.push('boots');
+
+            const occasions = [];
+            if (document.getElementById('occasionSports')?.checked) occasions.push('sports');
+            if (document.getElementById('occasionOffice')?.checked) occasions.push('office');
+            if (document.getElementById('occasionParty')?.checked) occasions.push('party');
+            if (document.getElementById('occasionCasual')?.checked) occasions.push('casual');
+
+            const sizes = [];
+            for (let i = 6; i <= 11; i++) {
+                if (document.getElementById(`size${i}`)?.checked) sizes.push(i);
+            }
+
+            const priceRange = document.getElementById('priceRange')?.value;
+
+            filteredProducts = products.filter(product => {
+                let match = true;
+
+                if (genders.length > 0 && !genders.includes(product.gender)) match = false;
+                if (brands.length > 0 && !brands.includes(product.brand)) match = false;
+                if (types.length > 0 && !types.includes(product.type)) match = false;
+                if (occasions.length > 0 && !occasions.includes(product.occasion)) match = false;
+                if (sizes.length > 0 && !product.sizes.some(s => sizes.includes(s))) match = false;
+
+                if (priceRange) {
+                    const [min, max] = priceRange.split('-').map(Number);
+                    if (product.price < min || product.price > max) match = false;
+                }
+
+                return match;
+            });
+
+            applySorting();
+        }
+
+        function applySorting() {
+            const sortBy = document.getElementById('sortBy')?.value;
+
+            if (sortBy === 'price-low') {
+                filteredProducts.sort((a, b) => a.price - b.price);
+            } else if (sortBy === 'price-high') {
+                filteredProducts.sort((a, b) => b.price - a.price);
+            } else if (sortBy === 'name') {
+                filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            renderShopProducts();
+        }
+
+        function clearFilters() {
+            document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.getElementById('priceRange').value = '';
+            document.getElementById('sortBy').value = '';
+            filteredProducts = [...products];
+            renderShopProducts();
+        }
+
+        function filterByGender(gender) {
+            clearFilters();
+            document.getElementById('filter' + gender.charAt(0).toUpperCase() + gender.slice(1)).checked = true;
+            showPage('shop');
+            applyFilters();
+        }
+
+        function filterByBrand(brand) {
+            clearFilters();
+            document.getElementById('brand' + brand).checked = true;
+            showPage('shop');
+            applyFilters();
+        }
+
+        function viewProduct(id) {
+            currentProduct = products.find(p => p.id === id);
+            const container = document.getElementById('productDetailContent');
+
+            container.innerHTML = `
+                <div class="col-md-6">
+                    <img src="${currentProduct.image1}" class="product-detail-image" id="mainImage" alt="${currentProduct.name}">
+                    <div class="thumbnail-gallery">
+                        <img src="${currentProduct.image1}" class="thumbnail active" onclick="changeMainImage('${currentProduct.image1}', this)">
+                        <img src="${currentProduct.image2}" class="thumbnail" onclick="changeMainImage('${currentProduct.image2}', this)">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-brand mb-2">${currentProduct.brand}</div>
+                    <h2 class="mb-3">${currentProduct.name}</h2>
+                    <div class="product-category mb-2">
+                        <span class="badge bg-secondary">${currentProduct.type.charAt(0).toUpperCase() + currentProduct.type.slice(1)}</span>
+                        <span class="badge bg-info">${currentProduct.occasion.charAt(0).toUpperCase() + currentProduct.occasion.slice(1)}</span>
+                    </div>
+                    <div class="rating mb-3">
+                        ${'★'.repeat(Math.floor(currentProduct.rating))}${'☆'.repeat(5 - Math.floor(currentProduct.rating))}
+                        <span class="text-muted ms-2">(${currentProduct.rating} / 5)</span>
+                    </div>
+                    <div class="product-price mb-4">
+                        ₹${currentProduct.price}
+                        ${currentProduct.oldPrice ? `<span class="product-price-old">₹${currentProduct.oldPrice}</span>` : ''}
+                        ${currentProduct.oldPrice ? `<span class="badge bg-danger ms-2">-${Math.round((1 - currentProduct.price/currentProduct.oldPrice) * 100)}%</span>` : ''}
+                    </div>
+                    <p class="mb-4">${currentProduct.desc}</p>
+
+                    <h5 class="mb-3">Select Size</h5>
+                    <div class="size-selector">
+                        ${currentProduct.sizes.map(size => `
+                            <button class="size-btn" onclick="selectSize(this)">${size}</button>
+                        `).join('')}
+                    </div>
+
+                    <h5 class="mb-3">Quantity</h5>
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                        <span id="productQty" style="font-size: 1.2rem; font-weight: 700;">1</span>
+                        <button class="qty-btn" onclick="changeQty(1)">+</button>
+                    </div>
+
+                    <div class="d-flex gap-3 mt-4">
+                        <button class="btn btn-primary-custom flex-fill" onclick="addToCartFromDetail()">
+                            <i class="bi bi-cart-plus me-2"></i>Add to Cart
+                        </button>
+                        <button class="btn btn-outline-danger" onclick="addToWishlist(${currentProduct.id})">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+
+                    <div class="price-comparison-table">
+                        <h5 class="mb-3">Price Comparison</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Platform</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Amazon</td>
+                                    <td>₹${currentProduct.price + 200}</td>
+                                </tr>
+                                <tr>
+                                    <td>Flipkart</td>
+                                    <td>₹${currentProduct.price + 100}</td>
+                                </tr>
+                                <tr class="best-price">
+                                    <td><strong>ShoeHub</strong></td>
+                                    <td><strong>₹${currentProduct.price}</strong> 🎉</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-5">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#description">Description</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reviews">Reviews</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content bg-white p-4 rounded-bottom">
+                        <div class="tab-pane fade show active" id="description">
+                            <p>${currentProduct.desc}</p>
+                            <p>Experience ultimate comfort and style with the ${currentProduct.name}. Crafted with premium materials and innovative technology, these shoes are perfect for ${currentProduct.type} activities.</p>
+                        </div>
+                        <div class="tab-pane fade" id="reviews">
+                            <div class="mb-4">
+                                <h6>John Doe</h6>
+                                <div class="rating">★★★★★</div>
+                                <p class="text-muted">Amazing quality! Highly recommended.</p>
+                            </div>
+                            <div class="mb-4">
+                                <h6>Jane Smith</h6>
+                                <div class="rating">★★★★☆</div>
+                                <p class="text-muted">Great shoes, very comfortable.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            showPage('productDetail');
+        }
+
+        function quickView(id) {
+            const product = products.find(p => p.id === id);
+            const container = document.getElementById('quickViewContent');
+
+            container.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="${product.image1}" class="w-100 rounded" alt="${product.name}">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product-brand">${product.brand}</div>
+                        <h4>${product.name}</h4>
+                        <div class="product-category mb-2">
+                            <span class="badge bg-secondary">${product.type}</span>
+                            <span class="badge bg-info">${product.occasion}</span>
+                        </div>
+                        <div class="rating">
+                            ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                        </div>
+                        <div class="product-price my-3">
+                            ₹${product.price}
+                            ${product.oldPrice ? `<span class="product-price-old">₹${product.oldPrice}</span>` : ''}
+                        </div>
+                        <p>${product.desc}</p>
+                        <button class="btn btn-primary-custom w-100 mt-3" onclick="viewProduct(${product.id})" data-bs-dismiss="modal">
+                            View Full Details
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function changeMainImage(src, element) {
+            document.getElementById('mainImage').src = src;
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        let selectedSize = null;
+        let productQty = 1;
+
+        function selectSize(element) {
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            selectedSize = element.textContent;
+        }
+
+        function changeQty(delta) {
+            productQty = Math.max(1, productQty + delta);
+            document.getElementById('productQty').textContent = productQty;
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existingItem = cart.find(item => item.id === id);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    brand: product.brand,
+                    price: product.price,
+                    image: product.image1,
+                    size: 9,
+                    quantity: 1
+                });
+            }
+
+            updateCartCount();
+            alert('Product added to cart!');
+        }
+
+        function addToCartFromDetail() {
+            if (!selectedSize) {
+                alert('Please select a size');
+                return;
+            }
+
+            const existingItem = cart.find(item => item.id === currentProduct.id && item.size == selectedSize);
+
+            if (existingItem) {
+                existingItem.quantity += productQty;
+            } else {
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    brand: currentProduct.brand,
+                    price: currentProduct.price,
+                    image: currentProduct.image1,
+                    size: selectedSize,
+                    quantity: productQty
+                });
+            }
+
+            updateCartCount();
+            alert('Product added to cart!');
+            productQty = 1;
+            selectedSize = null;
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-center py-5"><h4>Your cart is empty</h4></div>';
+                document.getElementById('cartSubtotal').textContent = '₹0';
+                document.getElementById('shippingCost').textContent = '₹0';
+                document.getElementById('cartTotal').textContent = '₹0';
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img src="${item.image}" class="cart-item-image" alt="${item.name}">
+                        </div>
+                        <div class="col-md-4">
+                            <h6>${item.name}</h6>
+                            <p class="text-muted mb-0">${item.brand} | Size: ${item.size}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>₹${item.price}</strong>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="qty-selector">
+                                <button class="qty-btn" onclick="updateCartQty(${index}, -1)">-</button>
+                                <span style="font-weight: 700;">${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateCartQty(${index}, 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            updateCartTotals();
+        }
+
+        function updateCartQty(index, delta) {
+            cart[index].quantity = Math.max(1, cart[index].quantity + delta);
+            renderCart();
+            updateCartCount();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+            updateCartCount();
+        }
+
+        function updateCartTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 999 ? 0 : 100;
+            const total = subtotal + shipping;
+
+            document.getElementById('cartSubtotal').textContent = '₹' + subtotal;
+            document.getElementById('shippingCost').textContent = shipping === 0 ? 'FREE' : '₹' + shipping;
+            document.getElementById('cartTotal').textContent = '₹' + total;
+        }
+
+        function renderCheckoutSummary() {
+            const container = document.getElementById('checkoutSummary');
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 999 ? 0 : 100;
+            const total = subtotal + shipping;
+
+            container.innerHTML = `
+                ${cart.map(item => `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>${item.name} (${item.quantity}x)</span>
+                        <span>₹${item.price * item.quantity}</span>
+                    </div>
+                `).join('')}
+                <hr>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span>₹${subtotal}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Shipping:</span>
+                    <span>${shipping === 0 ? 'FREE' : '₹' + shipping}</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total:</strong>
+                    <strong>₹${total}</strong>
+                </div>
+            `;
+        }
+
+        function addToWishlist(id) {
+            const product = products.find(p => p.id === id);
+            const existing = wishlist.find(item => item.id === id);
+
+            if (existing) {
+                alert('Product already in wishlist!');
+                return;
+            }
+
+            wishlist.push({
+                id: product.id,
+                name: product.name,
+                brand: product.brand,
+                price: product.price,
+                image: product.image1
+            });
+
+            updateWishlistCount();
+            alert('Product added to wishlist!');
+        }
+
+        function updateWishlistCount() {
+            document.getElementById('wishlistCount').textContent = wishlist.length;
+        }
+
+        function renderWishlist() {
+            const container = document.getElementById('wishlistItems');
+
+            if (wishlist.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center py-5"><h4>Your wishlist is empty</h4></div>';
+                return;
+            }
+
+            container.innerHTML = wishlist.map((item, index) => `
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">${item.brand}</div>
+                            <div class="product-name">${item.name}</div>
+                            <div class="product-price">₹${item.price}</div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-primary-custom flex-fill" onclick="moveToCart(${index})">
+                                    Move to Cart
+                                </button>
+                                <button class="btn btn-outline-danger" onclick="removeFromWishlist(${index})">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function moveToCart(index) {
+            const item = wishlist[index];
+            addToCart(item.id);
+            wishlist.splice(index, 1);
+            updateWishlistCount();
+            renderWishlist();
+        }
+
+        function removeFromWishlist(index) {
+            wishlist.splice(index, 1);
+            updateWishlistCount();
+            renderWishlist();
+        }
+
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            alert('Login successful!');
+            showPage('home');
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            alert('Account created successfully!');
+            showPage('login');
+        });
+
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            alert('Order placed successfully! Thank you for shopping with ShoeHub.');
+            cart = [];
+            updateCartCount();
+            showPage('home');
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for contacting us! We will get back to you soon.');
+            this.reset();
+        });
+
+        document.getElementById('refundForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Your request has been submitted successfully. We will review it and contact you within 24-48 hours.');
+            this.reset();
+        });
+
+        renderTrendingProducts();
+    </script>
+</body>
+</html>
