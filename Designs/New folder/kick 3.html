@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KicKart | Editorial Streetwear</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=Space+Grotesk:wght@300;500;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --kk-purple: #8a2be2;
+            --kk-dark: #000;
+            --kk-light: #f8f8f8;
+            --kk-border: #e5e5e5;
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body { font-family: 'Outfit', sans-serif; background: #fff; color: var(--kk-dark); overflow-x: hidden; }
+        h1, h2, h3, .brand-font { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+        .cursor-pointer { cursor: pointer; }
+
+        /* --- NAVBAR --- */
+        #main-nav { border-bottom: 1px solid var(--kk-border); padding: 20px 0; background: #fff; transition: 0.3s; }
+        .navbar-brand { font-family: 'Syncopate'; font-size: 1.2rem; letter-spacing: -1px; }
+
+        /* --- HERO: EDITORIAL OVERLAP --- */
+        .section-tag { font-family: 'Syncopate'; font-size: 10px; letter-spacing: 5px; color: #ccc; text-align: center; display: block; padding: 40px 0; }
+        .hero-section { min-height: 80vh; display: flex; align-items: center; }
+        .editorial-wall { position: relative; height: 550px; width: 100%; }
+        .ed-item { position: absolute; background: #fff; border: 1px solid #000; transition: var(--transition); cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .ed-1 { width: 320px; height: 420px; left: 0; top: 0; z-index: 3; }
+        .ed-2 { width: 280px; height: 320px; left: 250px; top: 120px; z-index: 2; background: var(--kk-light); }
+        .ed-3 { width: 380px; height: 220px; left: 80px; top: 350px; z-index: 4; }
+        .ed-item img { width: 45%; filter: grayscale(1); transition: 0.5s; }
+        .ed-item:hover { transform: translate(-10px, -10px); z-index: 10; box-shadow: 20px 20px 0 var(--kk-purple); }
+        .ed-item:hover img { filter: grayscale(0); transform: scale(1.1); }
+
+        /* --- PRODUCT CARD --- */
+        .product-card { border: none; margin-bottom: 40px; position: relative; }
+        .card-img-box { aspect-ratio: 4/5; overflow: hidden; background: var(--kk-light); position: relative; }
+        .card-img-box img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .variant-strip { display: flex; gap: 8px; margin-top: 12px; }
+        .v-thumb { width: 35px; height: 35px; border: 1px solid var(--kk-border); padding: 2px; cursor: pointer; }
+        .v-thumb.active { border-bottom: 3px solid var(--kk-dark); }
+        .v-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- NIKE STYLE DETAIL PAGE --- */
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .gallery-item { background: var(--kk-light); aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+        .gallery-item img, .gallery-item video { width: 100%; height: 100%; object-fit: cover; }
+        
+        .sticky-side { position: sticky; top: 100px; }
+        .size-box { border: 1px solid var(--kk-border); padding: 12px; text-align: center; cursor: pointer; transition: 0.2s; font-weight: 500; }
+        .size-box:hover, .size-box.active { border-color: var(--kk-dark); background: var(--kk-dark); color: #fff; }
+        
+        .compare-table { font-size: 0.85rem; border: 1px solid var(--kk-border); margin-top: 30px; }
+        .compare-table td { padding: 12px; }
+        .kk-row { background: #fdf7ff; font-weight: 700; color: var(--kk-purple); }
+
+        /* --- MODALS & OVERLAYS --- */
+        .kk-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content-kk { background: #fff; width: 100%; max-width: 500px; padding: 40px; position: relative; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* --- KICKS FILTERS --- */
+        .btn-filter { border: 1px solid var(--kk-border); padding: 8px 20px; border-radius: 0; background: #fff; font-weight: 500; margin-right: 10px; }
+        .btn-filter.selected { border-color: var(--kk-purple); color: var(--kk-purple); }
+
+        .return-form input, .return-form textarea, .return-form select {
+            border-radius: 0; border: 1px solid var(--kk-border); padding: 12px; margin-bottom: 15px; width: 100%;
+        }
+
+        /* --- UTILS --- */
+        .hidden { display: none !important; }
+        .line-btn { text-decoration: underline; background: none; border: none; padding: 0; font-weight: 600; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <nav id="main-nav" class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home')">KIC<span style="color:var(--kk-purple)">KART</span></a>
+            <div class="collapse navbar-collapse justify-content-center">
+                <ul class="navbar-nav gap-4">
+                    <li class="nav-item"><a class="nav-link fw-600" href="#" onclick="showPage('kicks')">Kicks</a></li>
+                    <li class="nav-item"><a class="nav-link fw-600" href="#">New Drops</a></li>
+                    <li class="nav-item"><a class="nav-link fw-600" href="#" onclick="showPage('returns')">Returns</a></li>
+                </ul>
+            </div>
+            <div class="d-flex gap-4 align-items-center">
+                <i class="bi bi-search fs-5"></i>
+                <i class="bi bi-heart fs-5 cursor-pointer" onclick="checkAuth('wishlist')"></i>
+                <div class="position-relative cursor-pointer" onclick="checkAuth('cart')">
+                    <i class="bi bi-bag fs-5"></i>
+                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-dark" style="font-size: 0.6rem;">0</span>
+                </div>
+                <button class="btn btn-dark btn-sm rounded-0 px-3" onclick="showPage('login')" id="login-btn-nav">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="home" class="page-content">
+        <span class="section-tag">EDITORIAL // SELECTION 01</span>
+        <section class="hero-section container">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <h1 style="font-size: 4.5rem; line-height: 0.9;">Brands<br>that define<br><span style="color:var(--kk-purple)">The Culture.</span></h1>
+                    <p class="lead text-secondary mt-4">Hand-picked originals. Sourced globally. Priced for the streets.</p>
+                    <button class="btn btn-dark rounded-0 px-5 py-3 mt-4 fw-bold" onclick="showPage('kicks')">SHOP COLLECTION</button>
+                </div>
+                <div class="col-lg-7">
+                    <div class="editorial-wall">
+                        <div class="ed-item ed-1"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg"></div>
+                        <div class="ed-item ed-2"><img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg"></div>
+                        <div class="ed-item ed-3"><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Puma_complete_logo.svg"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container my-5">
+            <h2 class="mb-5">Latest Drops</h2>
+            <div class="row" id="home-grid"></div>
+        </section>
+    </div>
+
+    <div id="kicks" class="page-content hidden container py-5">
+        <div class="d-flex gap-2 mb-5 overflow-auto pb-2 no-scrollbar">
+            <button class="btn btn-filter selected">All Kicks</button>
+            <button class="btn btn-filter">Nike (12)</button>
+            <button class="btn btn-filter">Adidas (8)</button>
+            <button class="btn btn-filter">Price: Under ₹5000</button>
+            <button class="btn btn-filter">Gender: Men</button>
+        </div>
+        <div class="row" id="kicks-grid"></div>
+    </div>
+
+    <div id="product-detail" class="page-content hidden container py-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="gallery-grid" id="detail-gallery">
+                    </div>
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <button class="btn btn-outline-dark rounded-0 px-4"><i class="bi bi-chevron-left"></i></button>
+                    <button class="btn btn-outline-dark rounded-0 px-4"><i class="bi bi-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="col-lg-4 ps-lg-5">
+                <div class="sticky-side">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h2 id="det-name" class="m-0"></h2>
+                            <p class="text-secondary" id="det-type">Men • Basketball</p>
+                        </div>
+                        <img id="det-brand-logo" src="" width="50">
+                    </div>
+
+                    <h4 class="mt-4 fw-700" id="det-price"></h4>
+                    <p class="text-secondary small">MRP inclusive of all taxes</p>
+
+                    <div class="mt-4">
+                        <p class="fw-600 mb-2">Select Color</p>
+                        <div class="d-flex gap-2" id="det-variants"></div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <p class="fw-600">Select Size (UK)</p>
+                            <p class="text-secondary small line-btn">Size Guide</p>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-4"><div class="size-box">UK 7</div></div>
+                            <div class="col-4"><div class="size-box active">UK 8</div></div>
+                            <div class="col-4"><div class="size-box">UK 9</div></div>
+                            <div class="col-4"><div class="size-box">UK 10</div></div>
+                            <div class="col-4"><div class="size-box">UK 11</div></div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-5">
+                        <button class="btn btn-dark rounded-0 py-3 fw-bold" onclick="checkAuth('cart')">Add to Bag</button>
+                        <button class="btn btn-outline-dark rounded-0 py-3 fw-bold" onclick="checkAuth('wishlist')">Favourite <i class="bi bi-heart ms-2"></i></button>
+                    </div>
+
+                    <div class="mt-5 border-top pt-4">
+                        <button class="line-btn" onclick="openModal('desc-modal')">Product Details —</button>
+                        <div class="mt-4">
+                            <p class="fw-bold small mb-2">Check Delivery</p>
+                            <div class="d-flex border">
+                                <input type="text" class="form-control border-0 rounded-0" placeholder="Enter Pincode">
+                                <button class="btn btn-dark rounded-0">Check</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 border-top border-bottom py-3">
+                        <div class="d-flex justify-content-between cursor-pointer" onclick="toggleAcc('ret-acc')">
+                            <span class="fw-600">Return & Refund Policy</span>
+                            <i class="bi bi-chevron-down"></i>
+                        </div>
+                        <div id="ret-acc" class="small mt-3 hidden text-secondary">
+                            7-day easy returns. Replacement focused. *T&C apply.
+                        </div>
+                    </div>
+
+                    <div class="compare-table">
+                        <table class="table table-borderless m-0">
+                            <tr class="kk-row">
+                                <td>KicKart (Best Price)</td>
+                                <td class="text-end" id="comp-kk"></td>
+                            </tr>
+                            <tr>
+                                <td>Other Marketplaces</td>
+                                <td class="text-end text-secondary">₹14,999</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5 pt-5 border-top">
+            <h3 class="mb-4">You Might Also Like</h3>
+            <div class="row" id="related-grid"></div>
+        </div>
+    </div>
+
+    <div id="returns" class="page-content hidden container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h1 class="mb-4">Return / Replacement Hub</h1>
+                <div class="bg-light p-4 mb-4 small">
+                    <p class="m-0"><strong>Policy:</strong> 7 days return window • No tag breakage • Replacement focus (5 days) • Refund only if product unavailable.</p>
+                </div>
+                <form class="return-form">
+                    <input type="text" placeholder="Full Name">
+                    <input type="text" placeholder="Order ID (e.g. KK-9921)">
+                    <select>
+                        <option disabled selected>Reason for Return</option>
+                        <option>Size doesn't match</option>
+                        <option>Color doesn't match</option>
+                        <option>Wrong product received</option>
+                        <option>Damaged or Tag broken</option>
+                    </select>
+                    <textarea rows="4" placeholder="Describe the issue in detail..."></textarea>
+                    <label class="small fw-bold mb-2">Upload Proof (Image/Video)</label>
+                    <input type="file" multiple class="pt-2">
+                    <button type="button" class="btn btn-dark w-100 py-3 mt-3 rounded-0" onclick="alert('Request Submitted. We will contact you within 24hrs.')">SUBMIT REQUEST</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="login" class="page-content hidden">
+        <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="border p-5 text-center" style="max-width: 400px; width:100%">
+                <h2 class="mb-4">Welcome Back</h2>
+                <input type="email" class="form-control rounded-0 mb-3 p-3" placeholder="Email Address">
+                <input type="password" class="form-control rounded-0 mb-4 p-3" placeholder="Password">
+                <button class="btn btn-dark w-100 py-3 rounded-0" onclick="doLogin()">SIGN IN</button>
+                <p class="mt-4 small text-secondary">Don't have an account? <span class="line-btn">Join Us</span></p>
+                <p class="mt-2 line-btn small" onclick="showPage('home')">Back to Home</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="auth-modal" class="kk-modal">
+        <div class="modal-content-kk text-center">
+            <i class="bi bi-lock fs-1 text-purple"></i>
+            <h3 class="mt-3">Member Access Required</h3>
+            <p class="text-secondary">Please login to access your Bag and Favourites.</p>
+            <button class="btn btn-dark w-100 py-3 rounded-0 mt-3" onclick="closeModal('auth-modal'); showPage('login')">LOGIN TO CONTINUE</button>
+            <p class="mt-3 line-btn small" onclick="closeModal('auth-modal')">Maybe Later</p>
+        </div>
+    </div>
+
+    <div id="desc-modal" class="kk-modal">
+        <div class="modal-content-kk">
+            <i class="bi bi-x-lg position-absolute top-0 end-0 p-4 cursor-pointer" onclick="closeModal('desc-modal')"></i>
+            <h3 class="mb-4">Product Story</h3>
+            <p class="text-secondary">Engineered for the ultimate street performance. This pair features responsive cushioning and a breathable mesh upper designed to keep you moving comfortably throughout the day.</p>
+            <ul class="text-secondary small">
+                <li>Original sourcing guaranteed.</li>
+                <li>Premium synthetic overlays.</li>
+                <li>Rubber traction outsole.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="review-modal" class="kk-modal">
+        <div class="modal-content-kk">
+            <i class="bi bi-x-lg position-absolute top-0 end-0 p-4 cursor-pointer" onclick="closeModal('review-modal')"></i>
+            <h3>Reviews (214)</h3>
+            <div class="mt-4 border-bottom pb-3">
+                <div class="d-flex gap-2">⭐⭐⭐⭐⭐ <span class="fw-bold">Great Fit!</span></div>
+                <p class="small text-secondary mt-2">The size UK 9 fits perfectly. The color is exactly as shown on KicKart. Delivery was fast.</p>
+            </div>
+            <div class="mt-3 border-bottom pb-3">
+                <div class="d-flex gap-2">⭐⭐⭐⭐ <span class="fw-bold">Premium Feel</span></div>
+                <p class="small text-secondary mt-2">Feels very high quality. Best price I found online.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isLoggedIn = false;
+        const products = [
+            { 
+                id: 1, name: "Air Max Pulse", brand: "NIKE", price: 8295, oldPrice: 12995, 
+                logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg",
+                img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600",
+                hover: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600",
+                variants: [
+                    { thumb: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100", images: ["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800", "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=800", "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=800"] },
+                    { thumb: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=100", images: ["https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800", "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800", "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800"] }
+                ]
+            },
+            { 
+                id: 2, name: "Ultraboost 22", brand: "ADIDAS", price: 11499, oldPrice: 18999, 
+                logo: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg",
+                img: "https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?w=600",
+                hover: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=600",
+                variants: [
+                    { thumb: "https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?w=100", images: ["https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?w=800"] }
+                ]
+            }
+        ];
+
+        // --- NAVIGATION & ROUTING ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            // Hide navbar on login page
+            const nav = document.getElementById('main-nav');
+            if (pageId === 'login') nav.classList.add('hidden');
+            else nav.classList.remove('hidden');
+
+            window.scrollTo(0, 0);
+        }
+
+        function checkAuth(target) {
+            if(!isLoggedIn) openModal('auth-modal');
+            else alert("Added to " + target);
+        }
+
+        function doLogin() {
+            isLoggedIn = true;
+            document.getElementById('login-btn-nav').innerText = "Hi, Alex";
+            showPage('home');
+        }
+
+        // --- RENDER FUNCTIONS ---
+        function renderProducts(gridId, list) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = list.map(p => `
+                <div class="col-6 col-md-3">
+                    <div class="product-card" onclick="openProduct(${p.id})">
+                        <div class="card-img-box">
+                            <img src="${p.img}" onmouseover="this.src='${p.hover}'" onmouseout="this.src='${p.img}'">
+                        </div>
+                        <div class="variant-strip">
+                            ${p.variants.map((v, i) => `<div class="v-thumb ${i===0?'active':''}"><img src="${v.thumb}"></div>`).join('')}
+                        </div>
+                        <div class="pt-3">
+                            <p class="text-secondary small mb-0">${p.brand}</p>
+                            <h6 class="fw-bold mb-1">${p.name}</h6>
+                            <p class="fw-bold">₹${p.price.toLocaleString()}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openProduct(id) {
+            const p = products.find(prod => prod.id === id);
+            document.getElementById('det-name').innerText = p.name;
+            document.getElementById('det-price').innerText = "₹" + p.price.toLocaleString();
+            document.getElementById('comp-kk').innerText = "₹" + p.price.toLocaleString();
+            document.getElementById('det-brand-logo').src = p.logo;
+            
+            // Variants
+            const vContainer = document.getElementById('det-variants');
+            vContainer.innerHTML = p.variants.map((v, i) => `
+                <div class="v-thumb ${i===0?'active':''}" onclick="loadVariantGallery(${id}, ${i})">
+                    <img src="${v.thumb}">
+                </div>
+            `).join('');
+
+            loadVariantGallery(id, 0);
+            renderProducts('related-grid', products);
+            showPage('product-detail');
+        }
+
+        function loadVariantGallery(pid, vIndex) {
+            const p = products.find(prod => prod.id === pid);
+            const variant = p.variants[vIndex];
+            const gallery = document.getElementById('detail-gallery');
+            
+            gallery.innerHTML = variant.images.map(img => `
+                <div class="gallery-item"><img src="${img}"></div>
+            `).join('');
+            
+            // Video Placeholder (User requested video if possible)
+            gallery.innerHTML += `<div class="gallery-item"><video autoplay muted loop><source src="#" type="video/mp4"></video><div class="position-absolute text-white p-3 bottom-0 small">Video Preview</div></div>`;
+        }
+
+        // --- UTILS ---
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function toggleAcc(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+        window.onload = () => {
+            renderProducts('home-grid', products);
+            renderProducts('kicks-grid', products.concat(products)); // Fill grid for demo
+        };
+    </script>
+</body>
+</html>

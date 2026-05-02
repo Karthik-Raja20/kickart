@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSJ SHOE | Comfortable & Stylish Shoes for Everyone</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --brand-gold: #c5a059;
+            --brand-dark: #121212;
+            --brand-light: #f8f9fa;
+            --transition: all 0.3s ease;
+        }
+
+        body { font-family: 'Montserrat', sans-serif; color: var(--brand-dark); overflow-x: hidden; }
+        h1, h2, h3, .navbar-brand { font-family: 'Cinzel', serif; letter-spacing: 2px; }
+
+        /* Navigation */
+        .navbar { background: white !important; border-bottom: 2px solid var(--brand-light); padding: 15px 0; }
+        .navbar-brand { font-size: 1.8rem; font-weight: 800; }
+        .nav-link { font-weight: 600; text-transform: uppercase; font-size: 0.85rem; padding: 0 15px !important; }
+        .nav-link:hover, .nav-link.active { color: var(--brand-gold) !important; }
+
+        /* SPA Section Control */
+        .page-section { display: none; padding-top: 100px; min-height: 100vh; }
+        .active-section { display: block; animation: fadeIn 0.4s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Hero Banner */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2000');
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; color: white;
+        }
+
+        /* Sale Banner */
+        .sale-badge { background: #ff3e6c; color: white; padding: 2px 8px; font-size: 0.7rem; border-radius: 3px; font-weight: bold; }
+
+        /* Product Cards */
+        .product-card { border: none; transition: var(--transition); cursor: pointer; position: relative; }
+        .product-card:hover { transform: translateY(-8px); }
+        .img-container { background: var(--brand-light); border-radius: 12px; overflow: hidden; position: relative; }
+        .wishlist-icon { position: absolute; top: 15px; right: 15px; color: #ccc; transition: var(--transition); z-index: 10; }
+        .wishlist-icon.active { color: #ff3e6c; }
+
+        /* Selectors (Size/Color) */
+        .size-box, .color-circle {
+            display: inline-block; width: 40px; height: 40px; border: 1px solid #ddd;
+            text-align: center; line-height: 38px; margin: 5px; cursor: pointer; font-weight: 600; transition: var(--transition);
+        }
+        .size-box.selected { background: var(--brand-dark); color: white; border-color: var(--brand-dark); }
+        .color-circle { border-radius: 50%; border: 2px solid white; outline: 1px solid #ddd; }
+        .color-circle.selected { outline: 2px solid var(--brand-dark); }
+
+        /* Buttons */
+        .btn-ksj {
+            background: var(--brand-dark); color: white; border-radius: 0; padding: 12px 30px;
+            font-weight: 700; text-transform: uppercase; border: 2px solid var(--brand-dark);
+        }
+        .btn-ksj:hover { background: transparent; color: var(--brand-dark); }
+        .btn-outline-ksj { border: 2px solid var(--brand-dark); border-radius: 0; font-weight: 700; }
+
+        /* Footer */
+        footer { background: #111; color: #999; padding: 60px 0; }
+        footer h5 { color: white; font-family: 'Cinzel'; margin-bottom: 25px; }
+        footer a { color: #999; text-decoration: none; font-size: 0.9rem; transition: var(--transition); }
+        footer a:hover { color: var(--brand-gold); }
+
+        /* Checkout Progress */
+        .progress-steps { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .step { flex: 1; text-align: center; font-weight: 600; font-size: 0.8rem; color: #ccc; }
+        .step.active { color: var(--brand-dark); border-bottom: 2px solid var(--brand-gold); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showSection('home')">KSJ <span style="color:var(--brand-gold)">SHOE</span></a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ksjNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="ksjNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('home')">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Shop</a>
+                        <ul class="dropdown-menu border-0 shadow">
+                            <li><a class="dropdown-item" href="#" onclick="filterCat('men')">Men Shoes</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterCat('women')">Women Shoes</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterCat('sports')">Sports Shoes</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterCat('casual')">Casual Shoes</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterCat('formal')">Formal Shoes</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('about')">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('contact')">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="#" class="nav-link" onclick="showSection('login')"><i class="fa-regular fa-user"></i></a>
+                    <a href="#" class="nav-link position-relative" onclick="showSection('cart')">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span id="cart-count" class="badge rounded-pill bg-dark position-absolute top-0 start-100 translate-middle">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="page-section active-section">
+        <div class="hero">
+            <div class="container">
+                <p class="text-uppercase fw-bold mb-0" style="letter-spacing: 4px;">Exclusive Collection 2026</p>
+                <h1 class="display-1 fw-bold my-3">Comfortable & <br>Stylish Shoes</h1>
+                <p class="lead mb-4">Crafted for everyone, designed for the journey.</p>
+                <button class="btn btn-ksj btn-lg px-5" onclick="showSection('shop')">Shop Now</button>
+            </div>
+        </div>
+
+        <div class="container py-5">
+            <div class="row align-items-center bg-light p-4 rounded text-center">
+                <div class="col-md-4"><h3><i class="fa-solid fa-truck-fast gold-accent"></i> Free Shipping</h3></div>
+                <div class="col-md-4 border-start border-end"><h3><i class="fa-solid fa-headset gold-accent"></i> 24/7 Support</h3></div>
+                <div class="col-md-4"><h3><i class="fa-solid fa-fire-flame-curved text-danger"></i> Sale Up to 50%</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop" class="page-section">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <h2 class="mb-0">Explore Collections</h2>
+                <div class="dropdown">
+                    <button class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">Filter Category</button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" onclick="filterCat('all')">All Products</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filterCat('men')">Men</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filterCat('women')">Women</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row g-4" id="product-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="product-detail" class="page-section">
+        <div class="container" id="detail-container">
+            </div>
+    </section>
+
+    <section id="about" class="page-section">
+        <div class="container py-5 text-center">
+            <h2 class="display-4 mb-4">Our Journey</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <p class="lead text-muted">KSJ SHOE started with a simple vision: to bridge the gap between high-fashion aesthetics and athletic-level comfort. Every pair is a result of meticulous craftsmanship and premium materials.</p>
+                    <div class="row mt-5 text-start">
+                        <div class="col-md-6 mb-4">
+                            <h5><i class="fa-solid fa-check-circle text-success"></i> Quality Materials</h5>
+                            <p>We use genuine leather and breathable fabrics to ensure durability.</p>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <h5><i class="fa-solid fa-check-circle text-success"></i> Advanced Ergonomics</h5>
+                            <p>Our soles are designed to support your posture all day long.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="page-section">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-md-6">
+                    <h2 class="mb-4">Get In Touch</h2>
+                    <form onsubmit="event.preventDefault(); alert('Message Sent!');">
+                        <input type="text" class="form-control mb-3 p-3" placeholder="Full Name" required>
+                        <input type="email" class="form-control mb-3 p-3" placeholder="Email Address" required>
+                        <textarea class="form-control mb-3 p-3" rows="5" placeholder="Your Message" required></textarea>
+                        <button class="btn btn-ksj w-100">Send Message</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="bg-light p-5 h-100 rounded">
+                        <h4 class="mb-4">Contact Info</h4>
+                        <p><i class="fa-solid fa-location-dot me-3"></i> 123 Fashion Street, Mumbai, India</p>
+                        <p><i class="fa-solid fa-phone me-3"></i> +91 98765 43210</p>
+                        <p><i class="fa-solid fa-envelope me-3"></i> support@ksjshoe.com</p>
+                        <hr class="my-4">
+                        <div class="ratio ratio-16x9">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120612.42878701382!2d72.77508311132644!3d19.101569055456485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1700000000000" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cart" class="page-section">
+        <div class="container">
+            <h2 class="mb-4"><i class="fa-solid fa-bag-shopping"></i> Your Bag</h2>
+            <div class="row g-5">
+                <div class="col-lg-8" id="cart-list">
+                    </div>
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm p-4">
+                        <h4 class="mb-4">Order Summary</h4>
+                        <div class="d-flex justify-content-between mb-2"><span>Subtotal</span><span id="cart-subtotal">₹0</span></div>
+                        <div class="d-flex justify-content-between mb-2"><span>Shipping</span><span class="text-success">FREE</span></div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4"><h4 class="mb-0">Total</h4><h4 class="mb-0" id="cart-total">₹0</h4></div>
+                        <button class="btn btn-ksj w-100 py-3" onclick="showSection('checkout')">Proceed To Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="checkout" class="page-section">
+        <div class="container">
+            <div class="progress-steps">
+                <div class="step">1. CART</div>
+                <div class="step active">2. ADDRESS</div>
+                <div class="step">3. PAYMENT</div>
+            </div>
+            <div class="row g-5">
+                <div class="col-md-7">
+                    <h4 class="mb-4">Shipping Address 📍</h4>
+                    <form id="checkout-form">
+                        <div class="row g-3">
+                            <div class="col-12"><input type="text" class="form-control p-3" placeholder="Full Name" required></div>
+                            <div class="col-md-6"><input type="tel" class="form-control p-3" placeholder="Mobile Number" required></div>
+                            <div class="col-md-6"><input type="text" class="form-control p-3" placeholder="Pincode" required></div>
+                            <div class="col-12"><input type="text" class="form-control p-3" placeholder="House / Street / Area" required></div>
+                            <div class="col-md-6"><input type="text" class="form-control p-3" placeholder="City" required></div>
+                            <div class="col-md-6"><input type="text" class="form-control p-3" placeholder="State" required></div>
+                        </div>
+                        <h4 class="my-4">Payment Method 💳</h4>
+                        <div class="list-group">
+                            <label class="list-group-item d-flex gap-3">
+                                <input class="form-check-input" type="radio" name="payment" value="cod" checked>
+                                <span>Cash on Delivery</span>
+                            </label>
+                            <label class="list-group-item d-flex gap-3">
+                                <input class="form-check-input" type="radio" name="payment" value="upi">
+                                <span>UPI (Google Pay / PhonePe)</span>
+                            </label>
+                            <label class="list-group-item d-flex gap-3">
+                                <input class="form-check-input" type="radio" name="payment" value="card">
+                                <span>Debit / Credit Card</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-ksj w-100 mt-4 py-3" onclick="event.preventDefault(); alert('Order Placed Successfully!');">PLACE ORDER</button>
+                    </form>
+                </div>
+                <div class="col-md-5">
+                    <div class="bg-light p-4 rounded border">
+                        <h5>Order Summary 🧾</h5>
+                        <div id="checkout-summary-list"></div>
+                        <hr>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Promo Code">
+                            <button class="btn btn-dark">Apply</button>
+                        </div>
+                        <div class="d-flex justify-content-between h4 mt-3"><span>Grand Total</span><span id="checkout-total">₹0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="login" class="page-section">
+        <div class="container d-flex justify-content-center align-items-center" style="height: 60vh;">
+            <div class="card p-5 border-0 shadow" style="max-width: 450px; width:100%">
+                <h2 class="text-center mb-4">Account Access</h2>
+                <input type="email" class="form-control mb-3 p-3" placeholder="Email Address">
+                <input type="password" class="form-control mb-2 p-3" placeholder="Password">
+                <div class="text-end mb-4"><a href="#" class="text-muted small">Forgot Password?</a></div>
+                <button class="btn btn-ksj w-100 py-3">Login</button>
+                <div class="text-center mt-4">New to KSJ Shoe? <a href="#" onclick="showSection('signup')" class="text-dark fw-bold">Create Account</a></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="signup" class="page-section">
+        <div class="container d-flex justify-content-center align-items-center" style="height: 60vh;">
+            <div class="card p-5 border-0 shadow" style="max-width: 450px; width:100%">
+                <h2 class="text-center mb-4">Register</h2>
+                <input type="text" class="form-control mb-3 p-3" placeholder="Full Name">
+                <input type="email" class="form-control mb-3 p-3" placeholder="Email">
+                <input type="password" class="form-control mb-4 p-3" placeholder="Create Password">
+                <button class="btn btn-ksj w-100 py-3">Sign Up</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h2 class="navbar-brand text-white">KSJ <span style="color:var(--brand-gold)">SHOE</span></h2>
+                    <p>India's emerging destination for high-quality, comfortable, and designer footwear. We believe every step should tell a story.</p>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" onclick="showSection('shop')">Shop All</a></li>
+                        <li><a href="#" onclick="showSection('about')">About Us</a></li>
+                        <li><a href="#" onclick="showSection('contact')">Contact Support</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5>Categories</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Men's Luxury</a></li>
+                        <li><a href="#">Women's Heels</a></li>
+                        <li><a href="#">Sport Tech</a></li>
+                        <li><a href="#">Casual Wear</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5>Stay Connected</h5>
+                    <div class="d-flex gap-3 mb-4">
+                        <a href="#" class="fs-4"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="fs-4"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" class="fs-4"><i class="fa-brands fa-twitter"></i></a>
+                    </div>
+                    <h6>Newsletter</h6>
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-dark border-0 text-white" placeholder="Email Address">
+                        <button class="btn btn-ksj">Join</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5">
+            <div class="text-center small">
+                Copyright © 2026 KSJ Shoe India. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Data Structure
+        const db = [
+            { id: 1, name: "Oxford Sterling", cat: "men formal", price: 4999, oldPrice: 8999, img: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=500", reviews: 4.5, colors: ["#000", "#4B2C20"], desc: "Handcrafted Italian leather for the boardrooms and formal evenings." },
+            { id: 2, name: "Urban Velocity", cat: "men sports", price: 3499, oldPrice: 5999, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", reviews: 4.8, colors: ["#ff0000", "#000"], desc: "Engineered for speed and ultimate breathable comfort." },
+            { id: 3, name: "Velvet Pump", cat: "women formal heels", price: 2999, oldPrice: 4500, img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=500", reviews: 4.2, colors: ["#5D3FD3", "#000"], desc: "Elegance redefined with premium velvet finish." },
+            { id: 4, name: "Derby Tan", cat: "men formal casual", price: 3999, oldPrice: 6500, img: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500", reviews: 4.9, colors: ["#A0522D", "#000"], desc: "The perfect transition shoe from office to dinner." },
+            { id: 5, name: "Midnight Stiletto", cat: "women heels", price: 5999, oldPrice: 12000, img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500", reviews: 5.0, colors: ["#000", "#C5A059"], desc: "Luxury handcrafted heels for the elite spotlight." },
+            { id: 6, name: "Street Comfort", cat: "casual women", price: 1999, oldPrice: 3999, img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500", reviews: 4.3, colors: ["#fff", "#ddd"], desc: "Everyday sneakers for those who never stop moving." }
+        ];
+
+        let cart = [];
+        let activeProduct = null;
+        let activeSize = null;
+        let activeColor = null;
+
+        // Navigation Controller
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active-section'));
+            document.getElementById(id).classList.add('active-section');
+            window.scrollTo(0, 0);
+        }
+
+        // Render Shop
+        function renderShop(list = db) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = list.map(p => `
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="product-card" onclick="viewDetail(${p.id})">
+                        <div class="img-container">
+                            <div class="wishlist-icon"><i class="fa-regular fa-heart"></i></div>
+                            <img src="${p.img}" class="img-fluid" alt="${p.name}">
+                            <div class="position-absolute bottom-0 start-0 m-2">
+                                <span class="sale-badge">SALE</span>
+                            </div>
+                        </div>
+                        <div class="py-3">
+                            <h6 class="mb-1 text-uppercase fw-bold" style="font-size:0.8rem">${p.name}</h6>
+                            <p class="mb-0 fw-bold">₹${p.price} <small class="text-muted text-decoration-line-through">₹${p.oldPrice}</small></p>
+                            <div class="small text-warning">
+                                <i class="fa-solid fa-star"></i> ${p.reviews}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filtering
+        function filterCat(cat) {
+            if(cat === 'all') renderShop(db);
+            else renderShop(db.filter(p => p.cat.includes(cat)));
+            showSection('shop');
+        }
+
+        // Product Detail Logic
+        function viewDetail(id) {
+            const p = db.find(item => item.id === id);
+            activeProduct = p;
+            activeSize = null;
+            activeColor = null;
+
+            const container = document.getElementById('detail-container');
+            container.innerHTML = `
+                <div class="row g-5">
+                    <div class="col-md-6">
+                        <div class="row g-2">
+                            <div class="col-12"><img src="${p.img}" class="img-fluid rounded border w-100" id="mainImg"></div>
+                            <div class="col-4"><img src="${p.img}" class="img-fluid rounded border opacity-50" style="cursor:pointer"></div>
+                            <div class="col-4"><img src="https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=500" class="img-fluid rounded border opacity-50" style="cursor:pointer"></div>
+                            <div class="col-4"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" class="img-fluid rounded border opacity-50" style="cursor:pointer"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="text-muted text-uppercase small mb-1">${p.cat}</p>
+                        <h1 class="display-5 fw-bold mb-3">${p.name}</h1>
+                        <div class="mb-4">
+                            <h2 class="text-danger d-inline">₹${p.price}</h2>
+                            <h5 class="text-muted d-inline text-decoration-line-through ms-3">₹${p.oldPrice}</h5>
+                            <div class="text-warning mt-2">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                                <span class="text-muted small ms-2">(120 Reviews)</span>
+                            </div>
+                        </div>
+                        <p class="text-muted mb-4">${p.desc}</p>
+                        
+                        <div class="mb-4">
+                            <h6>Select Size (UK)</h6>
+                            ${[6, 7, 8, 9, 10].map(s => `<div class="size-box" onclick="selectSize(this, ${s})">${s}</div>`).join('')}
+                        </div>
+
+                        <div class="mb-5">
+                            <h6>Select Color</h6>
+                            ${p.colors.map(c => `<div class="color-circle" style="background:${c}" onclick="selectColor(this, '${c}')"></div>`).join('')}
+                        </div>
+
+                        <div class="d-flex gap-3">
+                            <button class="btn btn-ksj flex-grow-1" onclick="addToCart()">ADD TO CART</button>
+                            <button class="btn btn-outline-ksj flex-grow-1" onclick="addToCart(true)">BUY NOW</button>
+                        </div>
+                        <div class="mt-4 border-top pt-4">
+                            <p class="small"><i class="fa-solid fa-truck me-2"></i> Delivered in 3-5 working days.</p>
+                            <p class="small"><i class="fa-solid fa-rotate-left me-2"></i> 7 Days easy return policy.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            showSection('product-detail');
+        }
+
+        function selectSize(el, s) {
+            document.querySelectorAll('.size-box').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+            activeSize = s;
+        }
+
+        function selectColor(el, c) {
+            document.querySelectorAll('.color-circle').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+            activeColor = c;
+        }
+
+        // Cart Engine
+        function addToCart(buyNow = false) {
+            if(!activeSize || !activeColor) {
+                alert("Please select both Size and Color!");
+                return;
+            }
+            cart.push({...activeProduct, size: activeSize, color: activeColor});
+            updateCartUI();
+            if(buyNow) showSection('checkout');
+            else alert("Added to your bag!");
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const list = document.getElementById('cart-list');
+            const summary = document.getElementById('checkout-summary-list');
+            
+            let html = "";
+            let summaryHtml = "";
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                html += `
+                    <div class="d-flex align-items-center mb-4 p-3 bg-light rounded position-relative">
+                        <img src="${item.img}" style="width: 100px; height:100px; object-fit:cover" class="rounded border">
+                        <div class="ms-4">
+                            <h5 class="mb-1">${item.name}</h5>
+                            <p class="mb-0 small text-muted">Size: UK ${item.size} | Color: <span class="d-inline-block rounded-circle border" style="width:10px; height:10px; background:${item.color}"></span></p>
+                            <h6 class="mt-2 fw-bold">₹${item.price}</h6>
+                        </div>
+                        <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2" onclick="removeItem(${index})"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                summaryHtml += `
+                    <div class="d-flex justify-content-between small mb-2">
+                        <span>${item.name} (x1)</span>
+                        <span>₹${item.price}</span>
+                    </div>
+                `;
+            });
+
+            if(cart.length === 0) html = "<p class='text-center py-5'>Your bag is empty. <a href='#' onclick='showSection(\"shop\")'>Go Shop</a></p>";
+
+            list.innerHTML = html;
+            summary.innerHTML = summaryHtml;
+            document.getElementById('cart-subtotal').innerText = "₹" + total;
+            document.getElementById('cart-total').innerText = "₹" + total;
+            document.getElementById('checkout-total').innerText = "₹" + total;
+        }
+
+        function removeItem(idx) {
+            cart.splice(idx, 1);
+            updateCartUI();
+        }
+
+        // Initialize
+        window.onload = () => {
+            renderShop();
+        };
+    </script>
+</body>
+</html>

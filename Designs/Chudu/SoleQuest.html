@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SoleQuest – Compare Smart. Shop Smarter.</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#080808;
+  --surface:#111;
+  --card:#161616;
+  --border:#222;
+  --accent:#E8C547;
+  --accent2:#FF3B3B;
+  --text:#F0EDE8;
+  --muted:#777;
+  --green:#4CAF50;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--accent);}
+
+/* ===== NAVBAR ===== */
+#mainNav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(8,8,8,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 2rem;
+  height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.8rem;letter-spacing:3px;
+  color:var(--accent);cursor:pointer;
+}
+.nav-logo span{color:var(--text);}
+.nav-links{display:flex;gap:2rem;align-items:center;}
+.nav-links a{
+  font-size:.85rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);transition:.2s;cursor:pointer;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--text);}
+.nav-actions{display:flex;gap:1rem;align-items:center;}
+.nav-search{
+  display:flex;align-items:center;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:4px;padding:6px 12px;gap:8px;
+}
+.nav-search input{
+  background:none;border:none;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:.85rem;width:140px;outline:none;
+}
+.nav-search input::placeholder{color:var(--muted);}
+.nav-icon-btn{
+  background:none;border:none;color:var(--muted);
+  font-size:1rem;cursor:pointer;position:relative;transition:.2s;
+  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+}
+.nav-icon-btn:hover{color:var(--accent);}
+.badge-count{
+  position:absolute;top:-2px;right:-2px;
+  background:var(--accent);color:#000;
+  font-size:.55rem;font-weight:700;
+  border-radius:50%;width:15px;height:15px;
+  display:flex;align-items:center;justify-content:center;
+}
+/* profile dropdown */
+.profile-wrap{position:relative;}
+.profile-dropdown{
+  position:absolute;top:calc(100%+10px);right:0;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;min-width:160px;overflow:hidden;
+  display:none;z-index:999;
+}
+.profile-wrap:hover .profile-dropdown{display:block;}
+.profile-header{padding:10px 14px;border-bottom:1px solid var(--border);font-size:.8rem;color:var(--muted);}
+.profile-header strong{display:block;color:var(--text);font-size:.9rem;}
+.profile-dropdown a{
+  display:block;padding:10px 14px;font-size:.85rem;
+  transition:.15s;cursor:pointer;
+}
+.profile-dropdown a:hover{background:var(--card);color:var(--accent);}
+
+/* ===== PAGES ===== */
+.page{display:none;min-height:100vh;padding-top:64px;}
+.page.active{display:block;}
+
+/* ===== HERO ===== */
+#hero{
+  min-height:calc(100vh - 64px);
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:4rem 5rem;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 60% at 80% 50%, rgba(232,197,71,0.06) 0%, transparent 70%),
+             radial-gradient(ellipse 40% 40% at 10% 80%, rgba(255,59,59,0.04) 0%, transparent 60%);
+  pointer-events:none;
+}
+/* animated bg orbs */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:float 8s ease-in-out infinite;}
+.orb1{width:400px;height:400px;background:rgba(232,197,71,0.04);top:-10%;right:10%;animation-delay:0s;}
+.orb2{width:300px;height:300px;background:rgba(255,59,59,0.03);bottom:20%;left:5%;animation-delay:-4s;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-30px);}}
+
+.hero-left{}
+.hero-eyebrow{
+  font-size:.75rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-eyebrow::before{content:'';width:32px;height:2px;background:var(--accent);}
+.hero-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,6vw,5.5rem);
+  line-height:.95;letter-spacing:1px;
+  margin-bottom:1.5rem;
+}
+.hero-title .accent{color:var(--accent);}
+.hero-sub{
+  color:var(--muted);font-size:1rem;line-height:1.7;
+  max-width:400px;margin-bottom:2.5rem;
+}
+.hero-sub strong{color:var(--text);}
+.btn-primary-custom{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--accent);color:#000;
+  font-weight:700;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;
+  padding:14px 28px;border-radius:4px;border:none;
+  cursor:pointer;transition:.25s;
+}
+.btn-primary-custom:hover{background:#fff;transform:translateY(-2px);}
+.btn-outline-custom{
+  display:inline-flex;align-items:center;gap:10px;
+  background:transparent;color:var(--text);
+  font-weight:600;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;
+  padding:13px 28px;border-radius:4px;border:1px solid var(--border);
+  cursor:pointer;transition:.25s;
+}
+.btn-outline-custom:hover{border-color:var(--accent);color:var(--accent);}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;}
+
+/* hero brand cards */
+.hero-right{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+  padding-left:3rem;
+}
+.brand-hero-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;cursor:pointer;transition:.3s;position:relative;overflow:hidden;
+}
+.brand-hero-card:hover{border-color:var(--accent);transform:translateY(-4px);}
+.brand-hero-card img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}
+.brand-hero-card .brand-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;}
+.brand-hero-card .brand-count{font-size:.75rem;color:var(--muted);}
+.brand-hero-card .card-arrow{
+  position:absolute;top:1rem;right:1rem;
+  color:var(--muted);font-size:.8rem;transition:.2s;
+}
+.brand-hero-card:hover .card-arrow{color:var(--accent);transform:translate(2px,-2px);}
+
+/* ===== BRAND SLIDER ===== */
+#brandSlider{
+  padding:3rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  overflow:hidden;
+}
+.slider-track{
+  display:flex;gap:3rem;align-items:center;
+  animation:slide 20s linear infinite;
+  white-space:nowrap;width:max-content;
+}
+.slider-track:hover{animation-play-state:paused;}
+@keyframes slide{from{transform:translateX(0);}to{transform:translateX(-50%)}}
+.brand-item{
+  display:flex;align-items:center;gap:12px;
+  font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:3px;
+  color:var(--muted);transition:.2s;flex-shrink:0;
+}
+.brand-item i{font-size:1rem;color:var(--accent);}
+.brand-item:hover{color:var(--text);}
+
+/* ===== SECTION HEADERS ===== */
+.section-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  padding:4rem 5rem 2rem;
+}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3rem);letter-spacing:2px;}
+.section-title span{color:var(--accent);}
+.section-sub{color:var(--muted);font-size:.85rem;margin-top:.25rem;}
+.see-all{
+  font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--accent);cursor:pointer;display:flex;align-items:center;gap:6px;
+}
+.see-all:hover{color:var(--text);}
+
+/* ===== FEATURED PRODUCTS ===== */
+#featuredProducts{padding-bottom:4rem;}
+.products-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;padding:0 5rem;
+}
+
+/* ===== PRODUCT CARD ===== */
+.product-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;cursor:pointer;
+  transition:.3s;position:relative;
+}
+.product-card:hover{border-color:rgba(232,197,71,0.4);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.5);}
+.card-image-wrap{position:relative;overflow:hidden;aspect-ratio:1;}
+.card-image-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  transition:.4s ease;
+}
+.card-image-wrap img.img-back{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:.4s ease;
+}
+.product-card:hover .card-image-wrap img.img-front{opacity:0;}
+.product-card:hover .card-image-wrap img.img-back{opacity:1;}
+/* color dots overlay on image */
+.color-dots{
+  position:absolute;bottom:10px;left:10px;
+  display:flex;gap:5px;
+}
+.color-dot{
+  width:18px;height:18px;border-radius:50%;
+  border:2px solid rgba(255,255,255,0.3);
+  transition:.2s;cursor:pointer;
+}
+.color-dot.active,.color-dot:hover{border-color:#fff;transform:scale(1.15);}
+.card-badge{
+  position:absolute;top:10px;left:10px;
+  font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:3px 8px;border-radius:3px;
+}
+.badge-new{background:var(--accent);color:#000;}
+.badge-sale{background:var(--accent2);color:#fff;}
+.badge-hot{background:#ff6b00;color:#fff;}
+.card-wishlist{
+  position:absolute;top:10px;right:10px;
+  background:rgba(0,0,0,0.6);border:none;
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:.85rem;cursor:pointer;transition:.2s;
+}
+.card-wishlist:hover,.card-wishlist.active{background:var(--accent2);color:#fff;}
+.card-wishlist.active .fa-heart{font-weight:900;}
+.card-body-custom{padding:1rem;}
+.card-brand{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);}
+.card-name{font-size:.9rem;font-weight:600;margin:.3rem 0;line-height:1.3;}
+.card-rating{display:flex;align-items:center;gap:6px;font-size:.8rem;margin:.3rem 0;}
+.card-rating .star{color:var(--accent);font-size:.75rem;}
+.card-rating .rating-val{font-weight:700;}
+.card-rating .rating-count{color:var(--muted);}
+.card-price-row{display:flex;align-items:center;justify-content:space-between;margin-top:.5rem;}
+.card-price{font-family:'Space Mono',monospace;font-size:1rem;font-weight:700;}
+.card-old-price{font-size:.75rem;color:var(--muted);text-decoration:line-through;font-family:'Space Mono',monospace;}
+.card-discount{font-size:.7rem;font-weight:700;color:#4CAF50;}
+.card-add-btn{
+  width:100%;background:var(--surface);border:1px solid var(--border);
+  color:var(--text);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:8px;margin-top:.75rem;border-radius:4px;cursor:pointer;transition:.2s;
+}
+.card-add-btn:hover{background:var(--accent);color:#000;border-color:var(--accent);}
+
+/* ===== WHY CHOOSE US ===== */
+#whyUs{padding:4rem 5rem;background:var(--surface);border-top:1px solid var(--border);}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+.why-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:2rem;
+  transition:.3s;position:relative;overflow:hidden;
+}
+.why-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--accent);transform:scaleX(0);transition:.3s;transform-origin:left;
+}
+.why-card:hover::after{transform:scaleX(1);}
+.why-icon{font-size:2rem;color:var(--accent);margin-bottom:1rem;}
+.why-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:1px;margin-bottom:.5rem;}
+.why-desc{color:var(--muted);font-size:.85rem;line-height:1.6;}
+
+/* ===== REVIEWS ===== */
+#reviews{padding:4rem 5rem;}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+.review-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem;
+}
+.review-stars{color:var(--accent);font-size:.85rem;margin-bottom:.75rem;}
+.review-text{color:var(--text);font-size:.85rem;line-height:1.7;margin-bottom:1rem;font-style:italic;}
+.review-author{display:flex;align-items:center;gap:10px;}
+.review-avatar{
+  width:36px;height:36px;border-radius:50%;background:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:.9rem;color:#000;
+}
+.review-name{font-weight:600;font-size:.85rem;}
+.review-product{font-size:.75rem;color:var(--muted);}
+
+/* ===== FOOTER ===== */
+footer{
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:4rem 5rem 2rem;
+}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-brand{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;color:var(--accent);margin-bottom:1rem;}
+.footer-brand span{color:var(--text);}
+.footer-desc{color:var(--muted);font-size:.85rem;line-height:1.7;margin-bottom:1.5rem;max-width:280px;}
+.footer-socials{display:flex;gap:.75rem;}
+.social-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:.85rem;cursor:pointer;transition:.2s;
+}
+.social-btn:hover{background:var(--accent);color:#000;border-color:var(--accent);}
+.footer-col h6{font-size:.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:1.25rem;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:.6rem;}
+.footer-col ul li a{color:var(--muted);font-size:.85rem;transition:.15s;cursor:pointer;}
+.footer-col ul li a:hover{color:var(--text);}
+.footer-bottom{
+  border-top:1px solid var(--border);padding-top:1.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  color:var(--muted);font-size:.8rem;
+}
+
+/* ===== WEARABLES PAGE ===== */
+#wearablesPage{padding:80px 0 4rem;}
+.wearables-header{
+  padding:3rem 5rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid var(--border);
+}
+.wearables-title{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:3px;}
+/* Category Tabs */
+.category-tabs{
+  display:flex;gap:1rem;padding:1.5rem 5rem;
+  border-bottom:1px solid var(--border);
+  overflow-x:auto;
+}
+.cat-tab{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--muted);font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:8px 20px;border-radius:30px;cursor:pointer;transition:.2s;white-space:nowrap;
+}
+.cat-tab:hover,.cat-tab.active{background:var(--accent);color:#000;border-color:var(--accent);}
+/* Filter bar */
+.filter-bar{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 5rem;border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.filter-label{font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-right:.5rem;}
+.filter-select{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:.8rem;
+  padding:7px 14px;border-radius:4px;cursor:pointer;outline:none;
+}
+.filter-select:focus{border-color:var(--accent);}
+.filter-icon-btn{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--muted);padding:7px 12px;border-radius:4px;cursor:pointer;transition:.2s;
+}
+.filter-icon-btn:hover{border-color:var(--accent);color:var(--accent);}
+.results-count{margin-left:auto;color:var(--muted);font-size:.8rem;}
+
+.wearables-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1.5rem;padding:2rem 5rem;
+}
+
+/* ===== PRODUCT DETAIL PAGE ===== */
+#productPage{padding:80px 0 4rem;}
+.product-detail{display:grid;grid-template-columns:1fr 1fr;gap:3rem;padding:3rem 5rem;}
+/* sticky image */
+.product-img-col{position:sticky;top:80px;height:fit-content;}
+.product-main-img{
+  width:100%;aspect-ratio:1;background:var(--card);border-radius:16px;overflow:hidden;
+  border:1px solid var(--border);margin-bottom:1rem;
+}
+.product-main-img img{width:100%;height:100%;object-fit:cover;}
+.product-thumbs{display:flex;gap:.75rem;}
+.product-thumb{
+  width:70px;height:70px;border-radius:8px;overflow:hidden;
+  border:1px solid var(--border);cursor:pointer;transition:.2s;
+}
+.product-thumb:hover,.product-thumb.active{border-color:var(--accent);}
+.product-thumb img{width:100%;height:100%;object-fit:cover;}
+
+.product-info-col{}
+.product-brand-badge{
+  display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--accent);padding:3px 10px;border-radius:3px;margin-bottom:1rem;
+}
+.product-name{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:1px;line-height:1;margin-bottom:.5rem;}
+.product-rating{display:flex;align-items:center;gap:8px;margin-bottom:1rem;}
+.product-rating .star{color:var(--accent);}
+.product-rating .count{color:var(--muted);font-size:.85rem;}
+.product-price{font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;margin-bottom:.5rem;}
+.product-old-price{font-family:'Space Mono',monospace;font-size:.9rem;color:var(--muted);text-decoration:line-through;}
+.product-discount{color:var(--green);font-size:.85rem;font-weight:700;}
+.product-divider{border:none;border-top:1px solid var(--border);margin:1.5rem 0;}
+/* Color options */
+.option-label{font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;}
+.color-options{display:flex;gap:.75rem;margin-bottom:1.5rem;}
+.color-opt{
+  width:36px;height:36px;border-radius:50%;
+  border:2px solid transparent;cursor:pointer;transition:.2s;
+}
+.color-opt:hover,.color-opt.active{border-color:#fff;transform:scale(1.1);}
+/* Size options */
+.size-options{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.size-opt{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);font-size:.8rem;font-weight:600;
+  padding:8px 16px;border-radius:4px;cursor:pointer;transition:.2s;
+}
+.size-opt:hover,.size-opt.active{background:var(--accent);color:#000;border-color:var(--accent);}
+/* Quantity */
+.qty-control{display:flex;align-items:center;gap:0;margin-bottom:1.5rem;}
+.qty-btn{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1rem;transition:.2s;
+}
+.qty-btn:hover{background:var(--accent);color:#000;border-color:var(--accent);}
+.qty-val{
+  background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  width:50px;height:36px;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-family:'Space Mono',monospace;
+}
+/* Action buttons */
+.detail-actions{display:flex;gap:1rem;margin-bottom:2rem;}
+.btn-cart{
+  flex:1;background:var(--accent);color:#000;
+  font-weight:700;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;
+  padding:14px;border:none;border-radius:6px;cursor:pointer;transition:.2s;
+}
+.btn-cart:hover{background:#fff;}
+.btn-wish{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text);padding:14px 18px;border-radius:6px;cursor:pointer;transition:.2s;
+}
+.btn-wish:hover{border-color:var(--accent2);color:var(--accent2);}
+/* Price comparison table */
+.price-compare{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:1.5rem;}
+.price-compare-header{
+  padding:1rem 1.25rem;border-bottom:1px solid var(--border);
+  font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);
+}
+.compare-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.75rem 1.25rem;border-bottom:1px solid var(--border);
+}
+.compare-row:last-child{border-bottom:none;}
+.compare-platform{display:flex;align-items:center;gap:.75rem;font-size:.85rem;font-weight:600;}
+.compare-platform i{color:var(--muted);}
+.compare-price{font-family:'Space Mono',monospace;font-size:.9rem;font-weight:700;}
+.compare-price.best{color:var(--green);}
+.best-badge{font-size:.6rem;background:var(--green);color:#fff;padding:2px 6px;border-radius:2px;font-weight:700;}
+/* Product detail accordion */
+.detail-accordion{margin-bottom:1rem;}
+.accordion-custom{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;
+}
+.accordion-custom-btn{
+  width:100%;background:none;border:none;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;
+  padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;
+  cursor:pointer;
+}
+.accordion-custom-btn i{transition:.3s;color:var(--muted);}
+.accordion-custom-btn.open i{transform:rotate(180deg);color:var(--accent);}
+.accordion-custom-body{max-height:0;overflow:hidden;transition:.3s;padding:0 1.25rem;}
+.accordion-custom-body.show{max-height:300px;padding:0 1.25rem 1rem;}
+.accordion-custom-body p{color:var(--muted);font-size:.85rem;line-height:1.7;}
+/* Reviews on product page */
+.product-reviews{padding:0 5rem 4rem;}
+.review-grid-single{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+
+/* ===== ABOUT PAGE ===== */
+#aboutPage{padding:80px 0;}
+.about-hero{
+  padding:5rem;
+  background:linear-gradient(135deg,var(--surface) 0%,var(--bg) 100%);
+  border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+}
+.about-title{font-family:'Bebas Neue',sans-serif;font-size:4rem;letter-spacing:2px;margin-bottom:1rem;}
+.about-title span{color:var(--accent);}
+.about-body{color:var(--muted);line-height:1.8;font-size:.95rem;}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--accent);letter-spacing:2px;}
+.stat-label{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:2px;}
+.about-features{padding:4rem 5rem;}
+.about-features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem;}
+
+/* ===== CONTACT PAGE ===== */
+#contactPage{padding:80px 0;}
+.contact-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:3rem;padding:4rem 5rem;}
+.contact-title{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:2px;margin-bottom:.5rem;}
+.contact-title span{color:var(--accent);}
+.contact-sub{color:var(--muted);margin-bottom:2rem;line-height:1.7;}
+.form-label-custom{font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;display:block;}
+.form-control-custom{
+  width:100%;background:var(--card);border:1px solid var(--border);
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;
+  padding:10px 14px;border-radius:6px;outline:none;transition:.2s;
+  margin-bottom:1rem;
+}
+.form-control-custom:focus{border-color:var(--accent);}
+.form-control-custom::placeholder{color:var(--muted);}
+textarea.form-control-custom{resize:vertical;min-height:120px;}
+.contact-info-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:1.5rem;
+}
+.contact-info-item{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.5rem;}
+.contact-info-item:last-child{margin-bottom:0;}
+.ci-icon{
+  width:40px;height:40px;background:rgba(232,197,71,0.1);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:var(--accent);
+  font-size:.9rem;flex-shrink:0;
+}
+.ci-label{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.ci-val{font-size:.9rem;font-weight:500;margin-top:.2rem;}
+.social-links-contact{display:flex;gap:.75rem;margin-top:1.5rem;}
+.social-link-btn{
+  display:flex;align-items:center;gap:.5rem;
+  background:var(--card);border:1px solid var(--border);
+  color:var(--muted);font-size:.8rem;font-weight:600;
+  padding:8px 14px;border-radius:6px;cursor:pointer;transition:.2s;
+}
+.social-link-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ===== WISHLIST MODAL ===== */
+.sq-modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:2000;
+  display:none;align-items:center;justify-content:center;
+}
+.sq-modal-overlay.show{display:flex;}
+.sq-modal{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;width:90%;max-width:700px;max-height:85vh;
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.sq-modal-header{
+  padding:1.5rem;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.sq-modal-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;}
+.sq-modal-close{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;}
+.sq-modal-close:hover{color:var(--text);}
+.sq-modal-body{padding:1.5rem;overflow-y:auto;flex:1;}
+.wishlist-empty,.cart-empty{
+  text-align:center;padding:3rem;color:var(--muted);
+}
+.wishlist-empty i,.cart-empty i{font-size:3rem;margin-bottom:1rem;display:block;color:var(--border);}
+/* Compare table in wishlist */
+.compare-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.compare-table th{
+  text-align:left;padding:.75rem 1rem;
+  border-bottom:1px solid var(--border);
+  font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);
+}
+.compare-table td{padding:.75rem 1rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table .product-cell{display:flex;align-items:center;gap.75rem;gap:.75rem;}
+.compare-table .product-cell img{width:48px;height:48px;border-radius:6px;object-fit:cover;}
+.compare-table .product-cell-info{}
+.compare-table .product-cell-brand{font-size:.65rem;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+.compare-table .product-cell-name{font-size:.8rem;font-weight:600;}
+.platform-prices{display:flex;flex-direction:column;gap:2px;}
+.platform-price-row{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;}
+.platform-price-row .pname{color:var(--muted);}
+.platform-price-row .pprice{font-family:'Space Mono',monospace;font-weight:700;}
+.platform-price-row .pprice.best{color:var(--green);}
+.remove-wish-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;transition:.15s;}
+.remove-wish-btn:hover{color:var(--accent2);}
+
+/* Cart modal */
+.cart-item{
+  display:flex;gap:1rem;align-items:center;
+  padding:.75rem 0;border-bottom:1px solid var(--border);
+}
+.cart-item:last-child{border-bottom:none;}
+.cart-item img{width:60px;height:60px;border-radius:8px;object-fit:cover;}
+.cart-item-info{flex:1;}
+.cart-item-brand{font-size:.65rem;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.cart-item-name{font-size:.85rem;font-weight:600;}
+.cart-item-meta{font-size:.75rem;color:var(--muted);}
+.cart-item-price{font-family:'Space Mono',monospace;font-weight:700;font-size:.9rem;}
+.cart-item-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.85rem;margin-left:1rem;}
+.cart-item-remove:hover{color:var(--accent2);}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;}
+.cart-total-label{font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:.85rem;}
+.cart-total-price{font-family:'Space Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--accent);}
+
+/* ===== TOAST ===== */
+.toast-container-custom{position:fixed;bottom:2rem;right:2rem;z-index:3000;display:flex;flex-direction:column;gap:.5rem;}
+.toast-custom{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:.75rem 1.25rem;
+  display:flex;align-items:center;gap.75rem;gap:.75rem;
+  font-size:.85rem;font-weight:500;
+  animation:toastIn .3s ease forwards;
+  min-width:240px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+}
+.toast-custom.success{border-left:3px solid var(--green);}
+.toast-custom.warning{border-left:3px solid var(--accent);}
+.toast-custom i{color:var(--accent);}
+.toast-custom.success i{color:var(--green);}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+
+/* ===== ANIMATIONS ===== */
+.fade-in{opacity:0;transform:translateY(20px);transition:.5s;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* ===== BREADCRUMB ===== */
+.breadcrumb-custom{
+  padding:1rem 5rem;border-bottom:1px solid var(--border);
+  font-size:.8rem;color:var(--muted);display:flex;gap:.5rem;align-items:center;
+}
+.breadcrumb-custom span{cursor:pointer;transition:.15s;}
+.breadcrumb-custom span:hover{color:var(--text);}
+.breadcrumb-custom .sep{color:var(--border);}
+.breadcrumb-custom .current{color:var(--accent);}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .products-grid,.wearables-grid{grid-template-columns:repeat(3,1fr);}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  #hero{grid-template-columns:1fr;padding:3rem;}
+  .hero-right{grid-template-columns:repeat(4,1fr);padding-left:0;margin-top:2rem;}
+}
+@media(max-width:768px){
+  .products-grid,.wearables-grid,.reviews-grid,.why-grid{grid-template-columns:repeat(2,1fr);}
+  .section-header,.wearables-header,.filter-bar,.category-tabs,.product-reviews,.about-features{padding-left:1.5rem;padding-right:1.5rem;}
+  .products-grid,.wearables-grid{padding:0 1.5rem;}
+  #hero{padding:2rem 1.5rem;}
+  .hero-right{grid-template-columns:1fr 1fr;}
+  .product-detail{grid-template-columns:1fr;padding:1.5rem;}
+  .contact-grid{grid-template-columns:1fr;padding:2rem 1.5rem;}
+  footer{padding:3rem 1.5rem 2rem;}
+  .footer-grid{grid-template-columns:1fr;}
+  .about-hero{grid-template-columns:1fr;padding:2rem 1.5rem;}
+  .nav-links{display:none;}
+  .nav-search{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="mainNav">
+  <div class="nav-logo" onclick="showPage('home')">SOLE<span>QUEST</span></div>
+  <div class="nav-links">
+    <a class="active" onclick="showPage('home')">Home</a>
+    <a onclick="showPage('wearables')">Wearables</a>
+    <a onclick="showPage('about')">About Us</a>
+    <a onclick="showPage('contact')">Contact Us</a>
+  </div>
+  <div class="nav-actions">
+    <div class="nav-search">
+      <i class="fas fa-search" style="color:var(--muted);font-size:.8rem;"></i>
+      <input type="text" placeholder="Search shoes..." id="searchInput" oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter')goToSearch()"/>
+    </div>
+    <button class="nav-icon-btn" onclick="toggleModal('wishlistModal')" title="Wishlist">
+      <i class="fas fa-heart"></i>
+      <span class="badge-count" id="wishBadge">0</span>
+    </button>
+    <button class="nav-icon-btn" onclick="toggleModal('cartModal')" title="Cart">
+      <i class="fas fa-shopping-bag"></i>
+      <span class="badge-count" id="cartBadge">0</span>
+    </button>
+    <div class="profile-wrap">
+      <button class="nav-icon-btn" title="Profile">
+        <i class="fas fa-user"></i>
+      </button>
+      <div class="profile-dropdown" id="profileDropdown">
+        <div class="profile-header">
+          <strong>Hi, Vishal 👋</strong>
+          <span>vishal@example.com</span>
+        </div>
+        <a><i class="fas fa-user me-2"></i>Account</a>
+        <a><i class="fas fa-box me-2"></i>Orders</a>
+        <a style="color:var(--accent2)!important"><i class="fas fa-sign-out-alt me-2"></i>Sign Out</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div class="page active" id="homePage">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"><div class="orb orb1"></div><div class="orb orb2"></div></div>
+    <div class="hero-left fade-in">
+      <div class="hero-eyebrow">India's #1 Shoe Comparison Platform</div>
+      <h1 class="hero-title">Compare <span class="accent">Smart.</span><br>Shop <span class="accent">Smarter.</span></h1>
+      <p class="hero-sub">Find the best deals across <strong>Amazon, Flipkart, Myntra,</strong> and <strong>Ajio.</strong> All in one place. Every brand. Every style.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary-custom" onclick="showPage('wearables')">Shop Now <i class="fas fa-arrow-right"></i></button>
+        <button class="btn-outline-custom" onclick="showPage('about')">Our Story</button>
+      </div>
+    </div>
+    <div class="hero-right fade-in" id="heroBrandCards"></div>
+  </section>
+
+  <!-- BRAND SLIDER -->
+  <div id="brandSlider">
+    <div class="slider-track" id="sliderTrack"></div>
+  </div>
+
+  <!-- FEATURED PRODUCTS -->
+  <section id="featuredProducts">
+    <div class="section-header fade-in">
+      <div>
+        <div class="section-title">Featured <span>Products</span></div>
+        <div class="section-sub">Handpicked trending pairs & bestsellers</div>
+      </div>
+      <span class="see-all" onclick="showPage('wearables')">View All <i class="fas fa-arrow-right"></i></span>
+    </div>
+    <div class="products-grid fade-in" id="featuredGrid"></div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section id="whyUs" class="fade-in">
+    <div class="section-title" style="margin-bottom:.25rem;">Why <span style="color:var(--accent)">Choose</span> Us</div>
+    <div style="color:var(--muted);font-size:.85rem;">We're not just another shoe store</div>
+    <div class="why-grid" id="whyGrid"></div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="fade-in">
+    <div class="section-header" style="padding:0 0 2rem;">
+      <div>
+        <div class="section-title">Customer <span style="color:var(--accent)">Reviews</span></div>
+        <div class="section-sub">What our community says</div>
+      </div>
+      <div style="font-family:'Space Mono',monospace;font-size:.8rem;color:var(--muted);">4.8 ⭐ (2,400+ reviews)</div>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">SOLE<span>QUEST</span></div>
+        <p class="footer-desc">India's smartest shoe comparison platform. We help you find the best deals across all major e-commerce platforms.</p>
+        <div class="footer-socials">
+          <div class="social-btn"><i class="fab fa-instagram"></i></div>
+          <div class="social-btn"><i class="fab fa-twitter"></i></div>
+          <div class="social-btn"><i class="fab fa-youtube"></i></div>
+          <div class="social-btn"><i class="fab fa-facebook"></i></div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h6>Collections</h6>
+        <ul>
+          <li><a onclick="showWearables('Sneakers')">Sneakers</a></li>
+          <li><a onclick="showWearables('Sports')">Sports</a></li>
+          <li><a onclick="showWearables('Casuals')">Casuals</a></li>
+          <li><a onclick="showWearables('Formals')">Formals</a></li>
+          <li><a onclick="showWearables('Sliders')">Sliders</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h6>Company</h6>
+        <ul>
+          <li><a onclick="showPage('about')">About Us</a></li>
+          <li><a onclick="showPage('contact')">Contact Us</a></li>
+          <li><a>Blog</a></li>
+          <li><a>Careers</a></li>
+          <li><a>Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h6>Support</h6>
+        <ul>
+          <li><a>FAQ</a></li>
+          <li><a>Return Policy</a></li>
+          <li><a>Exchange Policy</a></li>
+          <li><a>Terms & Conditions</a></li>
+          <li><a>Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SoleQuest. All rights reserved.</span>
+      <span>Built with ❤️ for sneakerheads</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ===================== WEARABLES PAGE ===================== -->
+<div class="page" id="wearablesPage">
+  <div class="wearables-header">
+    <div>
+      <div class="wearables-title">Wearables</div>
+      <div style="color:var(--muted);font-size:.85rem;" id="wearableCount">Loading products...</div>
+    </div>
+  </div>
+  <!-- Category Tabs -->
+  <div class="category-tabs" id="categoryTabs">
+    <div class="cat-tab active" data-cat="All" onclick="filterByCategory('All',this)">All</div>
+    <div class="cat-tab" data-cat="Sneakers" onclick="filterByCategory('Sneakers',this)">Sneakers</div>
+    <div class="cat-tab" data-cat="Sports" onclick="filterByCategory('Sports',this)">Sports</div>
+    <div class="cat-tab" data-cat="Casuals" onclick="filterByCategory('Casuals',this)">Casuals</div>
+    <div class="cat-tab" data-cat="Formals" onclick="filterByCategory('Formals',this)">Formals</div>
+    <div class="cat-tab" data-cat="Sliders" onclick="filterByCategory('Sliders',this)">Sliders</div>
+  </div>
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <span class="filter-label">Filters:</span>
+    <select class="filter-select" id="filterBrand" onchange="applyFilters()">
+      <option value="">All Brands</option>
+      <option>Nike</option><option>Adidas</option><option>Puma</option>
+      <option>New Balance</option><option>Reebok</option><option>Converse</option>
+      <option>Bata</option><option>Skechers</option>
+    </select>
+    <select class="filter-select" id="filterGender" onchange="applyFilters()">
+      <option value="">All Genders</option>
+      <option>Men</option><option>Women</option><option>Unisex</option>
+    </select>
+    <select class="filter-select" id="filterPrice" onchange="applyFilters()">
+      <option value="">All Prices</option>
+      <option value="0-2000">Under ₹2,000</option>
+      <option value="2000-5000">₹2,000 – ₹5,000</option>
+      <option value="5000-10000">₹5,000 – ₹10,000</option>
+      <option value="10000-99999">₹10,000+</option>
+    </select>
+    <select class="filter-select" id="filterSort" onchange="applyFilters()">
+      <option value="">Sort By</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="rating">Top Rated</option>
+      <option value="newest">Newest First</option>
+    </select>
+    <button class="filter-icon-btn" onclick="resetFilters()"><i class="fas fa-sliders-h"></i> Reset</button>
+    <div class="results-count" id="resultsCount"></div>
+  </div>
+  <div class="wearables-grid" id="wearablesGrid"></div>
+</div>
+
+<!-- ===================== PRODUCT DETAIL PAGE ===================== -->
+<div class="page" id="productPage">
+  <div class="breadcrumb-custom" id="productBreadcrumb">
+    <span onclick="showPage('home')">Home</span>
+    <span class="sep">/</span>
+    <span onclick="showPage('wearables')">Wearables</span>
+    <span class="sep">/</span>
+    <span class="current" id="productBreadcrumbName">Product</span>
+  </div>
+  <div class="product-detail" id="productDetailInner"></div>
+  <div class="product-reviews">
+    <div class="section-title" style="margin-bottom:1.5rem;">Customer <span style="color:var(--accent)">Reviews</span></div>
+    <div class="review-grid-single" id="productReviewsGrid"></div>
+  </div>
+</div>
+
+<!-- ===================== ABOUT PAGE ===================== -->
+<div class="page" id="aboutPage">
+  <div class="about-hero">
+    <div>
+      <div class="about-title">We Are <span>SoleQuest</span></div>
+      <p class="about-body">SoleQuest was born from a simple frustration — why should you visit 10 different websites to find the best deal on a single pair of shoes? We built the ultimate shoe comparison platform that aggregates prices from Amazon, Flipkart, Myntra, and Ajio in real-time, so you always get the best value.</p>
+      <p class="about-body" style="margin-top:1rem;">We partner only with the most trusted brands — Nike, Adidas, Puma, New Balance, Reebok, Converse, Bata, and Skechers — ensuring every pair you discover is authentic and of the highest quality.</p>
+    </div>
+    <div>
+      <div class="about-stats">
+        <div class="stat-card"><div class="stat-num">50K+</div><div class="stat-label">Products Listed</div></div>
+        <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Trusted Brands</div></div>
+        <div class="stat-card"><div class="stat-num">₹800</div><div class="stat-label">Avg. Saving Per Order</div></div>
+        <div class="stat-card"><div class="stat-num">4.8★</div><div class="stat-label">User Rating</div></div>
+        <div class="stat-card"><div class="stat-num">200K</div><div class="stat-label">Happy Customers</div></div>
+        <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Platforms Compared</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="about-features">
+    <div class="section-title">What Makes Us <span style="color:var(--accent)">Different</span></div>
+    <div class="about-features-grid">
+      <div class="why-card"><div class="why-icon"><i class="fas fa-balance-scale"></i></div><div class="why-title">Live Price Comparison</div><div class="why-desc">Real-time price comparison across Amazon, Flipkart, Myntra, and Ajio. Always know you're getting the best deal possible.</div></div>
+      <div class="why-card"><div class="why-icon"><i class="fas fa-shield-alt"></i></div><div class="why-title">Only Trusted Brands</div><div class="why-desc">We curate only authentic products from verified brand partners. No counterfeits, ever.</div></div>
+      <div class="why-card"><div class="why-icon"><i class="fas fa-undo"></i></div><div class="why-title">Easy Returns</div><div class="why-desc">Hassle-free 30-day return and exchange policy across all partner platforms.</div></div>
+      <div class="why-card"><div class="why-icon"><i class="fas fa-lock"></i></div><div class="why-title">Secure Payments</div><div class="why-desc">Your transactions are fully secured with 256-bit encryption and PCI-DSS compliance.</div></div>
+      <div class="why-card"><div class="why-icon"><i class="fas fa-headset"></i></div><div class="why-title">24/7 Support</div><div class="why-desc">Our dedicated team is available around the clock via chat, email, and WhatsApp.</div></div>
+      <div class="why-card"><div class="why-icon"><i class="fas fa-tags"></i></div><div class="why-title">Exclusive Deals</div><div class="why-desc">Access member-only coupons and early access to sales — prices you won't find anywhere else.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CONTACT PAGE ===================== -->
+<div class="page" id="contactPage">
+  <div class="contact-grid">
+    <div>
+      <div class="contact-title">Get in <span>Touch</span></div>
+      <p class="contact-sub">Have a question or complaint? We're here 24/7 to help you find the perfect pair or solve any issue.</p>
+      <form onsubmit="submitForm(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div>
+            <label class="form-label-custom">First Name</label>
+            <input type="text" class="form-control-custom" placeholder="Vishal"/>
+          </div>
+          <div>
+            <label class="form-label-custom">Last Name</label>
+            <input type="text" class="form-control-custom" placeholder="Kumar"/>
+          </div>
+        </div>
+        <label class="form-label-custom">Email</label>
+        <input type="email" class="form-control-custom" placeholder="vishal@example.com"/>
+        <label class="form-label-custom">Phone</label>
+        <input type="tel" class="form-control-custom" placeholder="+91 98765 43210"/>
+        <label class="form-label-custom">Subject</label>
+        <select class="form-control-custom">
+          <option>General Inquiry</option>
+          <option>Order Issue</option>
+          <option>Return / Exchange</option>
+          <option>Product Query</option>
+          <option>Partnership</option>
+          <option>Other</option>
+        </select>
+        <label class="form-label-custom">Message</label>
+        <textarea class="form-control-custom" placeholder="Tell us how we can help..."></textarea>
+        <button type="submit" class="btn-primary-custom" style="width:100%;justify-content:center;">Send Message <i class="fas fa-paper-plane"></i></button>
+      </form>
+    </div>
+    <div>
+      <div class="contact-info-card">
+        <div class="contact-info-item">
+          <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+          <div><div class="ci-label">Email</div><div class="ci-val">support@solequest.in</div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="ci-icon"><i class="fas fa-phone"></i></div>
+          <div><div class="ci-label">Phone</div><div class="ci-val">+91 80000 00000<br><small style="color:var(--muted)">Mon–Sat, 9am – 8pm IST</small></div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="ci-icon"><i class="fab fa-whatsapp"></i></div>
+          <div><div class="ci-label">WhatsApp Support</div><div class="ci-val">+91 90000 00000<br><small style="color:var(--muted)">24/7 Chat Support</small></div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><div class="ci-label">Office</div><div class="ci-val">SoleQuest HQ, Mumbai, Maharashtra, India</div></div>
+        </div>
+      </div>
+      <div class="contact-info-card">
+        <div style="font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Follow Us</div>
+        <div class="social-links-contact">
+          <div class="social-link-btn"><i class="fab fa-instagram"></i> Instagram</div>
+          <div class="social-link-btn"><i class="fab fa-twitter"></i> Twitter</div>
+          <div class="social-link-btn"><i class="fab fa-youtube"></i> YouTube</div>
+          <div class="social-link-btn"><i class="fab fa-facebook"></i> Facebook</div>
+        </div>
+      </div>
+      <div class="contact-info-card">
+        <div style="font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">Return Policy</div>
+        <p style="color:var(--muted);font-size:.85rem;line-height:1.7;">We offer a <strong style="color:var(--text)">30-day hassle-free return</strong> and exchange policy on all products. Simply raise a request and our team will arrange a pickup within 2 business days.</p>
+      </div>
+      <div class="contact-info-card">
+        <div style="font-size:.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;">FAQ</div>
+        <div class="accordion-custom" style="margin-bottom:.5rem;">
+          <button class="accordion-custom-btn" onclick="toggleAccordion(this)">How do I compare prices? <i class="fas fa-chevron-down"></i></button>
+          <div class="accordion-custom-body"><p>Every product page shows a live price comparison table across Amazon, Flipkart, Myntra, and Ajio. You can directly visit the platform with the best price.</p></div>
+        </div>
+        <div class="accordion-custom" style="margin-bottom:.5rem;">
+          <button class="accordion-custom-btn" onclick="toggleAccordion(this)">Is SoleQuest free to use? <i class="fas fa-chevron-down"></i></button>
+          <div class="accordion-custom-body"><p>Yes! SoleQuest is completely free. We earn a small commission from our partner platforms when you make a purchase, at no extra cost to you.</p></div>
+        </div>
+        <div class="accordion-custom">
+          <button class="accordion-custom-btn" onclick="toggleAccordion(this)">How do I track my order? <i class="fas fa-chevron-down"></i></button>
+          <div class="accordion-custom-body"><p>Orders are fulfilled by the platform you purchase from (Amazon, Flipkart, etc.). Track your order directly on their platform or via your SoleQuest account.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== WISHLIST MODAL ===================== -->
+<div class="sq-modal-overlay" id="wishlistModal" onclick="closeModalOutside(event,'wishlistModal')">
+  <div class="sq-modal">
+    <div class="sq-modal-header">
+      <div class="sq-modal-title">Your Wishlist <span id="wishlistCount" style="color:var(--muted);font-size:1rem;"></span></div>
+      <button class="sq-modal-close" onclick="toggleModal('wishlistModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="sq-modal-body" id="wishlistBody"></div>
+  </div>
+</div>
+
+<!-- ===================== CART MODAL ===================== -->
+<div class="sq-modal-overlay" id="cartModal" onclick="closeModalOutside(event,'cartModal')">
+  <div class="sq-modal">
+    <div class="sq-modal-header">
+      <div class="sq-modal-title">Shopping Bag <span id="cartCount" style="color:var(--muted);font-size:1rem;"></span></div>
+      <button class="sq-modal-close" onclick="toggleModal('cartModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="sq-modal-body" id="cartBody"></div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container-custom" id="toastContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ===================== DATA =====================
+const products = [
+  {
+    id:1, name:"Air Max 270 React", brand:"Nike", category:"Sneakers", gender:"Men",
+    price:12999, oldPrice:15999, discount:19,
+    rating:4.8, ratingCount:2340, isNew:true, isHot:false, isSale:false,
+    colors:["#000","#fff","#e8c547","#ff3b3b"],
+    sizes:["UK 6","UK 7","UK 8","UK 9","UK 10","UK 11"],
+    img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200","https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=200","https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=200"],
+    desc:"Experience all-day comfort with the Nike Air Max 270 React. Featuring the tallest Air unit in Nike history combined with React foam for a bouncy, cushioned ride.",
+    compare:[
+      {platform:"Amazon",price:12999,best:true,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:13499,best:false,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:14299,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:13799,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:2, name:"Ultraboost 22", brand:"Adidas", category:"Sports", gender:"Men",
+    price:14999, oldPrice:18000, discount:17,
+    rating:4.7, ratingCount:1890, isNew:true, isHot:true, isSale:false,
+    colors:["#1a1a2e","#fff","#4CAF50"],
+    sizes:["UK 6","UK 7","UK 8","UK 9","UK 10"],
+    img:"https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=200","https://images.unsplash.com/photo-1539185441755-769473a23570?w=200"],
+    desc:"The Adidas Ultraboost 22 delivers a new level of comfort. Crafted with Primeknit+ upper and Boost midsole for energy return like no other.",
+    compare:[
+      {platform:"Amazon",price:15299,best:false,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:14999,best:true,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:16000,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:15500,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:3, name:"RS-X Puzzle", brand:"Puma", category:"Sneakers", gender:"Unisex",
+    price:7999, oldPrice:9999, discount:20,
+    rating:4.5, ratingCount:980, isNew:false, isHot:false, isSale:true,
+    colors:["#fff","#ff6b00","#1a1a2e"],
+    sizes:["UK 5","UK 6","UK 7","UK 8","UK 9","UK 10"],
+    img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=200","https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=200"],
+    desc:"The Puma RS-X Puzzle features a bold retro running silhouette with modern comfort. Perfect for street style that stands out.",
+    compare:[
+      {platform:"Amazon",price:7999,best:true,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:8499,best:false,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:8999,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:8299,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:4, name:"574 Classic", brand:"New Balance", category:"Casuals", gender:"Unisex",
+    price:6499, oldPrice:7999, discount:19,
+    rating:4.6, ratingCount:1450, isNew:false, isHot:true, isSale:false,
+    colors:["#888","#e8c547","#fff","#000"],
+    sizes:["UK 6","UK 7","UK 8","UK 9","UK 10","UK 11","UK 12"],
+    img:"https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1539185441755-769473a23570?w=200","https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=200"],
+    desc:"The New Balance 574 is a timeless classic. With ENCAP midsole technology, this everyday sneaker provides unmatched comfort for all-day wear.",
+    compare:[
+      {platform:"Amazon",price:6799,best:false,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:6499,best:true,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:7299,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:6999,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:5, name:"Classic Leather", brand:"Reebok", category:"Casuals", gender:"Men",
+    price:4999, oldPrice:6499, discount:23,
+    rating:4.4, ratingCount:720, isNew:false, isHot:false, isSale:true,
+    colors:["#fff","#000"],
+    sizes:["UK 6","UK 7","UK 8","UK 9","UK 10"],
+    img:"https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=200"],
+    desc:"The Reebok Classic Leather has been a staple of street culture since 1983. Timeless design meets everyday comfort.",
+    compare:[
+      {platform:"Amazon",price:4999,best:true,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:5299,best:false,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:5499,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:5199,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:6, name:"Chuck Taylor All Star", brand:"Converse", category:"Sneakers", gender:"Unisex",
+    price:3999, oldPrice:4999, discount:20,
+    rating:4.9, ratingCount:5600, isNew:false, isHot:true, isSale:false,
+    colors:["#000","#fff","#ff3b3b","#1a1a2e","#e8c547"],
+    sizes:["UK 4","UK 5","UK 6","UK 7","UK 8","UK 9","UK 10","UK 11"],
+    img:"https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=200","https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=200"],
+    desc:"The Converse Chuck Taylor All Star is a cultural icon. This legendary silhouette has been worn by musicians, athletes, and rebels for over a century.",
+    compare:[
+      {platform:"Amazon",price:4199,best:false,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:3999,best:true,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:4499,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:4299,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:7, name:"Power Running Pro", brand:"Bata", category:"Sports", gender:"Men",
+    price:1499, oldPrice:1999, discount:25,
+    rating:4.2, ratingCount:3200, isNew:true, isHot:false, isSale:false,
+    colors:["#000","#1a1a2e"],
+    sizes:["UK 6","UK 7","UK 8","UK 9","UK 10","UK 11"],
+    img:"https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=200"],
+    desc:"The Bata Power Running Pro is built for performance at an unbeatable price. Lightweight, breathable, and ready for your daily run.",
+    compare:[
+      {platform:"Amazon",price:1599,best:false,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:1499,best:true,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:1699,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:1549,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:8, name:"D'Lites Memory Foam", brand:"Skechers", category:"Casuals", gender:"Women",
+    price:5499, oldPrice:6999, discount:21,
+    rating:4.6, ratingCount:2100, isNew:false, isHot:false, isSale:true,
+    colors:["#ff9eb5","#fff","#888"],
+    sizes:["UK 3","UK 4","UK 5","UK 6","UK 7","UK 8"],
+    img:"https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=200"],
+    desc:"Step into unparalleled comfort with Skechers D'Lites Memory Foam. The cushioned insole molds to your foot for a personalized fit.",
+    compare:[
+      {platform:"Amazon",price:5499,best:true,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:5799,best:false,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:5999,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:5699,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:9, name:"Pegasus 40", brand:"Nike", category:"Sports", gender:"Men",
+    price:9999, oldPrice:12000, discount:17,
+    rating:4.8, ratingCount:1780, isNew:true, isHot:true, isSale:false,
+    colors:["#ff3b3b","#000","#4CAF50"],
+    sizes:["UK 7","UK 8","UK 9","UK 10","UK 11"],
+    img:"https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=200"],
+    desc:"Built for road runners, the Nike Pegasus 40 offers React foam cushioning and a responsive ride for daily training.",
+    compare:[
+      {platform:"Amazon",price:9999,best:true,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:10299,best:false,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:11000,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:10499,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:10, name:"Oxford Classic", brand:"Bata", category:"Formals", gender:"Men",
+    price:2499, oldPrice:2999, discount:17,
+    rating:4.3, ratingCount:890, isNew:false, isHot:false, isSale:false,
+    colors:["#3d2b1f","#000"],
+    sizes:["UK 6","UK 7","UK 8","UK 9","UK 10","UK 11"],
+    img:"https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=200"],
+    desc:"The Bata Oxford Classic brings timeless formal elegance at an accessible price. Genuine leather upper with a comfortable cushioned footbed.",
+    compare:[
+      {platform:"Amazon",price:2599,best:false,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:2499,best:true,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:2799,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:2699,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:11, name:"Foam Slide", brand:"Adidas", category:"Sliders", gender:"Unisex",
+    price:3499, oldPrice:4499, discount:22,
+    rating:4.5, ratingCount:4100, isNew:false, isHot:true, isSale:true,
+    colors:["#fff","#000","#e8c547"],
+    sizes:["UK 5","UK 6","UK 7","UK 8","UK 9","UK 10"],
+    img:"https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=200"],
+    desc:"The Adidas Foam Slide is impossibly comfortable. One-piece foam construction for a like-walking-on-clouds experience.",
+    compare:[
+      {platform:"Amazon",price:3499,best:true,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:3699,best:false,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:3899,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:3799,best:false,icon:"fas fa-tag"},
+    ]
+  },
+  {
+    id:12, name:"Suede Classic", brand:"Puma", category:"Casuals", gender:"Unisex",
+    price:6999, oldPrice:8499, discount:18,
+    rating:4.7, ratingCount:3400, isNew:false, isHot:false, isSale:false,
+    colors:["#8b4513","#000","#1a1a2e","#ff6b00"],
+    sizes:["UK 5","UK 6","UK 7","UK 8","UK 9","UK 10","UK 11"],
+    img:"https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=600&q=80",
+    imgBack:"https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80",
+    thumbs:["https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=200"],
+    desc:"The Puma Suede Classic has been a street fashion icon since 1968. Soft suede upper with a cupsole for a clean, minimalist look.",
+    compare:[
+      {platform:"Amazon",price:7199,best:false,icon:"fab fa-amazon"},
+      {platform:"Flipkart",price:6999,best:true,icon:"fas fa-shopping-bag"},
+      {platform:"Myntra",price:7699,best:false,icon:"fas fa-store"},
+      {platform:"Ajio",price:7299,best:false,icon:"fas fa-tag"},
+    ]
+  },
+];
+
+const brands = [
+  {name:"Nike",count:124,color:"#E8C547",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80"},
+  {name:"Adidas",count:98,color:"#fff",img:"https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400&q=80"},
+  {name:"Puma",count:76,color:"#ff3b3b",img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=80"},
+  {name:"Converse",count:54,color:"#4CAF50",img:"https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=400&q=80"},
+];
+
+const reviews = [
+  {name:"Arjun M.",product:"Nike Air Max 270",text:"Found the best price for my Nike Air Max here! Saved about ₹2,000 compared to buying directly. The price comparison table is a game changer.",rating:5,initials:"AM"},
+  {name:"Priya S.",product:"Adidas Ultraboost",text:"Finally a platform that doesn't make me open 5 tabs. SoleQuest showed me the best deal on Flipkart instantly. Super clean UI too!",rating:5,initials:"PS"},
+  {name:"Rahul K.",product:"Puma RS-X",text:"Got my Puma RS-X for ₹7,999 when everywhere else was selling for ₹9,500. This site is legit — highly recommend.",rating:4,initials:"RK"},
+  {name:"Sneha T.",product:"Converse Chuck Taylor",text:"The wishlist comparison feature is brilliant. I added 3 shoes and could instantly see which platforms had the best prices. Bought all 3!",rating:5,initials:"ST"},
+  {name:"Vikram D.",product:"New Balance 574",text:"Delivery was fast and the product was exactly as shown. The return policy guidance on SoleQuest saved me a lot of confusion.",rating:4,initials:"VD"},
+  {name:"Meera J.",product:"Skechers D'Lites",text:"Love the hover effect on cards — you can see the shoe from different angles before buying. Very helpful for making a decision!",rating:5,initials:"MJ"},
+];
+
+const whyItems = [
+  {icon:"fas fa-balance-scale",title:"Live Price Comparison",desc:"Compare prices across Amazon, Flipkart, Myntra & Ajio in real-time. Always get the best deal."},
+  {icon:"fas fa-tag",title:"Prices You Won't Find Elsewhere",desc:"Exclusive deals and member coupons that you simply cannot find on any other platform."},
+  {icon:"fas fa-shield-alt",title:"Only Trusted Brands",desc:"Every brand on SoleQuest is verified and authentic. Zero counterfeits guaranteed."},
+  {icon:"fas fa-lock",title:"Secure Payment",desc:"256-bit SSL encryption protects every transaction. Shop with complete peace of mind."},
+  {icon:"fas fa-headset",title:"24/7 Support",desc:"Our team is available round the clock via chat, email, and WhatsApp to assist you."},
+  {icon:"fas fa-undo",title:"Easy Replacement",desc:"Hassle-free 30-day return and exchange policy across all partner platforms."},
+];
+
+// ===================== STATE =====================
+let wishlist = [];
+let cart = [];
+let currentCategory = 'All';
+let filteredProducts = [...products];
+let currentProduct = null;
+
+// ===================== INIT =====================
+document.addEventListener('DOMContentLoaded',()=>{
+  buildHeroBrandCards();
+  buildBrandSlider();
+  buildFeaturedGrid();
+  buildWhyGrid();
+  buildReviewsGrid();
+  setupScrollAnimations();
+});
+
+// ===================== NAVIGATION =====================
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const pages={home:'homePage',wearables:'wearablesPage',about:'aboutPage',contact:'contactPage',product:'productPage'};
+  const navMap={home:0,wearables:1,about:2,contact:3};
+  document.getElementById(pages[page]).classList.add('active');
+  if(navMap[page]!==undefined){
+    document.querySelectorAll('.nav-links a')[navMap[page]]?.classList.add('active');
+  }
+  if(page==='wearables'){buildWearablesGrid();}
+  window.scrollTo(0,0);
+}
+
+function showWearables(cat){
+  currentCategory=cat;
+  document.querySelectorAll('.cat-tab').forEach(t=>{
+    t.classList.toggle('active',t.dataset.cat===cat);
+  });
+  showPage('wearables');
+}
+
+// ===================== HERO =====================
+function buildHeroBrandCards(){
+  const grid=document.getElementById('heroBrandCards');
+  grid.innerHTML=brands.map(b=>`
+    <div class="brand-hero-card" onclick="showWearables('${b.name}')">
+      <i class="fas fa-arrow-up-right-from-square card-arrow"></i>
+      <img src="${b.img}" alt="${b.name}" loading="lazy"/>
+      <div class="brand-name">${b.name}</div>
+      <div class="brand-count">${b.count} styles available</div>
+    </div>
+  `).join('');
+}
+
+// ===================== BRAND SLIDER =====================
+function buildBrandSlider(){
+  const allBrands=['Nike','Adidas','Puma','New Balance','Reebok','Converse','Bata','Skechers','Fila','Vans','Under Armour','Asics'];
+  const icons=['fab fa-nike','fas fa-star','fas fa-bolt','fas fa-shoe-prints','fas fa-running','fas fa-dumbbell','fas fa-crown','fas fa-gem'];
+  const track=document.getElementById('sliderTrack');
+  // duplicate for infinite scroll
+  const items=[...allBrands,...allBrands].map((b,i)=>`
+    <div class="brand-item">
+      <i class="${icons[i%icons.length]}"></i>
+      ${b}
+    </div>
+  `).join('');
+  track.innerHTML=items;
+}
+
+// ===================== FEATURED GRID =====================
+function buildFeaturedGrid(){
+  const featured=products.filter(p=>p.isNew||p.isHot).slice(0,8);
+  document.getElementById('featuredGrid').innerHTML=featured.map(p=>productCardHTML(p)).join('');
+}
+
+// ===================== WHY GRID =====================
+function buildWhyGrid(){
+  document.getElementById('whyGrid').innerHTML=whyItems.map(w=>`
+    <div class="why-card">
+      <div class="why-icon"><i class="${w.icon}"></i></div>
+      <div class="why-title">${w.title}</div>
+      <div class="why-desc">${w.desc}</div>
+    </div>
+  `).join('');
+}
+
+// ===================== REVIEWS =====================
+function buildReviewsGrid(){
+  document.getElementById('reviewsGrid').innerHTML=reviews.map(r=>reviewCardHTML(r)).join('');
+}
+function reviewCardHTML(r){
+  return`<div class="review-card">
+    <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+    <div class="review-text">"${r.text}"</div>
+    <div class="review-author">
+      <div class="review-avatar">${r.initials}</div>
+      <div>
+        <div class="review-name">${r.name}</div>
+        <div class="review-product">${r.product}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ===================== PRODUCT CARD =====================
+function productCardHTML(p){
+  const badge=p.isNew?`<div class="card-badge badge-new">NEW</div>`:p.isSale?`<div class="card-badge badge-sale">SALE</div>`:p.isHot?`<div class="card-badge badge-hot">🔥 HOT</div>`:'';
+  const colorDots=p.colors.map((c,i)=>`<div class="color-dot ${i===0?'active':''}" style="background:${c}" title="${c}"></div>`).join('');
+  const inWish=wishlist.some(w=>w.id===p.id);
+  const inCart=cart.some(c=>c.id===p.id);
+  return`<div class="product-card" onclick="openProduct(${p.id})">
+    <div class="card-image-wrap">
+      <img class="img-front" src="${p.img}" alt="${p.name}" loading="lazy"/>
+      <img class="img-back" src="${p.imgBack}" alt="${p.name}" loading="lazy"/>
+      ${badge}
+      <div class="color-dots" onclick="event.stopPropagation()">${colorDots}</div>
+      <button class="card-wishlist ${inWish?'active':''}" onclick="event.stopPropagation();toggleWishlist(${p.id})" id="wish-btn-${p.id}">
+        <i class="${inWish?'fas':'far'} fa-heart"></i>
+      </button>
+    </div>
+    <div class="card-body-custom">
+      <div class="card-brand">${p.brand}</div>
+      <div class="card-name">${p.name}</div>
+      <div class="card-rating">
+        <span class="star">★</span>
+        <span class="rating-val">${p.rating}</span>
+        <span class="rating-count">(${p.ratingCount.toLocaleString()})</span>
+      </div>
+      <div class="card-price-row">
+        <div>
+          <div class="card-price">₹${p.price.toLocaleString()}</div>
+          <div class="card-old-price">₹${p.oldPrice.toLocaleString()}</div>
+        </div>
+        <div class="card-discount">↓${p.discount}% OFF</div>
+      </div>
+      <button class="card-add-btn" onclick="event.stopPropagation();addToCart(${p.id})" id="cart-btn-${p.id}">
+        ${inCart?'✓ Added to Bag':'Add to Bag'}
+      </button>
+    </div>
+  </div>`;
+}
+
+// ===================== WEARABLES =====================
+function buildWearablesGrid(){
+  applyFilters();
+}
+
+function filterByCategory(cat,el){
+  currentCategory=cat;
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+
+function applyFilters(){
+  const brand=document.getElementById('filterBrand').value;
+  const gender=document.getElementById('filterGender').value;
+  const price=document.getElementById('filterPrice').value;
+  const sort=document.getElementById('filterSort').value;
+
+  let result=products.filter(p=>{
+    if(currentCategory!=='All'&&p.category!==currentCategory)return false;
+    if(brand&&p.brand!==brand)return false;
+    if(gender&&p.gender!==gender)return false;
+    if(price){
+      const[min,max]=price.split('-').map(Number);
+      if(p.price<min||p.price>max)return false;
+    }
+    return true;
+  });
+
+  if(sort==='price-asc')result.sort((a,b)=>a.price-b.price);
+  else if(sort==='price-desc')result.sort((a,b)=>b.price-a.price);
+  else if(sort==='rating')result.sort((a,b)=>b.rating-a.rating);
+  else if(sort==='newest')result.sort((a,b)=>b.isNew-a.isNew);
+
+  filteredProducts=result;
+  document.getElementById('wearableCount').textContent=`${result.length} products found`;
+  document.getElementById('resultsCount').textContent=`${result.length} results`;
+  document.getElementById('wearablesGrid').innerHTML=result.length?result.map(p=>productCardHTML(p)).join(''):'<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--muted);"><i class="fas fa-search" style="font-size:3rem;margin-bottom:1rem;display:block;"></i>No products match your filters.</div>';
+}
+
+function resetFilters(){
+  document.getElementById('filterBrand').value='';
+  document.getElementById('filterGender').value='';
+  document.getElementById('filterPrice').value='';
+  document.getElementById('filterSort').value='';
+  currentCategory='All';
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.toggle('active',t.dataset.cat==='All'));
+  applyFilters();
+}
+
+// ===================== PRODUCT DETAIL =====================
+function openProduct(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  currentProduct=p;
+  document.getElementById('productBreadcrumbName').textContent=p.name;
+  const inWish=wishlist.some(w=>w.id===p.id);
+  const inCart=cart.some(c=>c.id===p.id);
+
+  const thumbsHTML=p.thumbs.map((t,i)=>`<div class="product-thumb ${i===0?'active':''}" onclick="switchThumb(this,'${t}')"><img src="${t}" alt="thumb"/></div>`).join('');
+  const colorOptsHTML=p.colors.map((c,i)=>`<div class="color-opt ${i===0?'active':''}" style="background:${c}" onclick="selectColorOpt(this)"></div>`).join('');
+  const sizeOptsHTML=p.sizes.map((s,i)=>`<div class="size-opt ${i===0?'active':''}" onclick="selectSizeOpt(this)">${s}</div>`).join('');
+  const compareHTML=p.compare.map(c=>`
+    <div class="compare-row">
+      <div class="compare-platform"><i class="${c.icon}"></i>${c.platform}${c.best?'<span class="best-badge">BEST</span>':''}</div>
+      <div class="compare-price ${c.best?'best':''}">₹${c.price.toLocaleString()}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('productDetailInner').innerHTML=`
+    <div class="product-img-col">
+      <div class="product-main-img"><img id="mainProductImg" src="${p.img}" alt="${p.name}"/></div>
+      <div class="product-thumbs">${thumbsHTML}</div>
+    </div>
+    <div class="product-info-col">
+      <div class="product-brand-badge">${p.brand}</div>
+      ${p.isNew?'<span style="background:var(--accent);color:#000;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:3px;letter-spacing:1px;margin-left:.5rem;">NEW ARRIVAL</span>':''}
+      <h1 class="product-name">${p.name}</h1>
+      <div class="product-rating">
+        <span class="star">★</span>
+        <span style="font-weight:700;">${p.rating}</span>
+        <span class="count">(${p.ratingCount.toLocaleString()} reviews)</span>
+      </div>
+      <div class="product-price">₹${p.price.toLocaleString()}</div>
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <span class="product-old-price">₹${p.oldPrice.toLocaleString()}</span>
+        <span class="product-discount">${p.discount}% OFF — You save ₹${(p.oldPrice-p.price).toLocaleString()}</span>
+      </div>
+      <hr class="product-divider"/>
+
+      <div class="option-label">Available Colours</div>
+      <div class="color-options">${colorOptsHTML}</div>
+
+      <div class="option-label">Select Size (UK)</div>
+      <div class="size-options">${sizeOptsHTML}</div>
+
+      <div class="option-label">Quantity</div>
+      <div class="qty-control">
+        <div class="qty-btn" onclick="changeQty(-1)"><i class="fas fa-minus" style="font-size:.7rem;"></i></div>
+        <div class="qty-val" id="qtyVal">1</div>
+        <div class="qty-btn" onclick="changeQty(1)"><i class="fas fa-plus" style="font-size:.7rem;"></i></div>
+      </div>
+
+      <div class="detail-actions">
+        <button class="btn-cart" onclick="addToCart(${p.id})">${inCart?'✓ Added to Bag':'Add to Bag'}</button>
+        <button class="btn-wish" onclick="toggleWishlist(${p.id})" id="detail-wish-btn">
+          <i class="${inWish?'fas':'far'} fa-heart"></i>
+        </button>
+      </div>
+
+      <!-- Price Comparison -->
+      <div class="price-compare">
+        <div class="price-compare-header"><i class="fas fa-balance-scale me-2"></i>Price Comparison</div>
+        ${compareHTML}
+      </div>
+
+      <!-- Accordion details -->
+      <div class="detail-accordion">
+        <div class="accordion-custom" style="margin-bottom:.5rem;">
+          <button class="accordion-custom-btn open" onclick="toggleAccordion(this)">Product Details <i class="fas fa-chevron-down"></i></button>
+          <div class="accordion-custom-body show"><p>${p.desc}</p></div>
+        </div>
+        <div class="accordion-custom" style="margin-bottom:.5rem;">
+          <button class="accordion-custom-btn" onclick="toggleAccordion(this)">Return & Exchange Policy <i class="fas fa-chevron-down"></i></button>
+          <div class="accordion-custom-body"><p>We offer a 30-day hassle-free return and exchange policy. Items must be unused and in original packaging. Raise a return request from your account and we'll arrange a pickup within 2 business days. Exchanges are subject to size availability.</p></div>
+        </div>
+        <div class="accordion-custom">
+          <button class="accordion-custom-btn" onclick="toggleAccordion(this)">Shipping & Delivery <i class="fas fa-chevron-down"></i></button>
+          <div class="accordion-custom-body"><p>Free delivery on orders above ₹999. Standard delivery in 3–7 business days. Express delivery (1–2 days) available in select cities for ₹149. Tracking available after dispatch.</p></div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Product reviews
+  const shuffled=[...reviews].sort(()=>Math.random()-.5).slice(0,3);
+  document.getElementById('productReviewsGrid').innerHTML=shuffled.map(r=>reviewCardHTML(r)).join('');
+
+  showPage('product');
+}
+
+function switchThumb(el,src){
+  document.querySelectorAll('.product-thumb').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('mainProductImg').src=src;
+}
+function selectColorOpt(el){
+  document.querySelectorAll('.color-opt').forEach(o=>o.classList.remove('active'));
+  el.classList.add('active');
+}
+function selectSizeOpt(el){
+  document.querySelectorAll('.size-opt').forEach(o=>o.classList.remove('active'));
+  el.classList.add('active');
+}
+let qty=1;
+function changeQty(d){
+  qty=Math.max(1,qty+d);
+  const v=document.getElementById('qtyVal');
+  if(v)v.textContent=qty;
+}
+
+// ===================== WISHLIST =====================
+function toggleWishlist(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const idx=wishlist.findIndex(w=>w.id===id);
+  if(idx>-1){
+    wishlist.splice(idx,1);
+    showToast(`Removed from wishlist`,'warning');
+  } else {
+    wishlist.push(p);
+    showToast(`Added to wishlist ❤️`,'success');
+  }
+  updateBadges();
+  refreshCardWishBtns();
+  refreshDetailWishBtn(id);
+}
+
+function refreshCardWishBtns(){
+  wishlist.forEach(p=>{
+    const btn=document.getElementById(`wish-btn-${p.id}`);
+    if(btn){btn.classList.add('active');btn.querySelector('i').className='fas fa-heart';}
+  });
+  products.forEach(p=>{
+    if(!wishlist.find(w=>w.id===p.id)){
+      const btn=document.getElementById(`wish-btn-${p.id}`);
+      if(btn){btn.classList.remove('active');btn.querySelector('i').className='far fa-heart';}
+    }
+  });
+}
+
+function refreshDetailWishBtn(id){
+  const btn=document.getElementById('detail-wish-btn');
+  if(!btn)return;
+  const inWish=wishlist.some(w=>w.id===id);
+  btn.querySelector('i').className=inWish?'fas fa-heart':'far fa-heart';
+}
+
+// ===================== CART =====================
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const exists=cart.find(c=>c.id===id);
+  if(exists){exists.qty=(exists.qty||1)+1;}
+  else{cart.push({...p,qty:1});}
+  showToast(`${p.name} added to bag 🛍️`,'success');
+  updateBadges();
+  // update card button
+  const btn=document.getElementById(`cart-btn-${id}`);
+  if(btn)btn.textContent='✓ Added to Bag';
+}
+
+function removeFromCart(id){
+  cart=cart.filter(c=>c.id!==id);
+  updateBadges();
+  renderCart();
+}
+
+function removeFromWishlist(id){
+  wishlist=wishlist.filter(w=>w.id!==id);
+  updateBadges();
+  renderWishlist();
+  refreshCardWishBtns();
+}
+
+function updateBadges(){
+  document.getElementById('wishBadge').textContent=wishlist.length;
+  document.getElementById('cartBadge').textContent=cart.reduce((s,c)=>s+(c.qty||1),0);
+  document.getElementById('wishlistCount').textContent=wishlist.length?`(${wishlist.length})`:'';
+  document.getElementById('cartCount').textContent=cart.length?`(${cart.length} items)`:'';
+}
+
+// ===================== MODAL =====================
+function toggleModal(id){
+  const m=document.getElementById(id);
+  const isShow=m.classList.toggle('show');
+  if(isShow){
+    if(id==='wishlistModal')renderWishlist();
+    if(id==='cartModal')renderCart();
+  }
+}
+function closeModalOutside(e,id){
+  if(e.target.id===id)toggleModal(id);
+}
+
+function renderWishlist(){
+  const body=document.getElementById('wishlistBody');
+  if(!wishlist.length){
+    body.innerHTML='<div class="wishlist-empty"><i class="far fa-heart"></i><div>Your wishlist is empty</div><div style="font-size:.8rem;margin-top:.5rem;">Save items you love for later comparison</div></div>';
+    return;
+  }
+  body.innerHTML=`
+    <table class="compare-table">
+      <thead><tr>
+        <th>Product</th><th>Our Price</th><th>Platform Prices</th><th></th>
+      </tr></thead>
+      <tbody>
+        ${wishlist.map(p=>`<tr>
+          <td><div class="product-cell"><img src="${p.img}" alt="${p.name}"/><div class="product-cell-info"><div class="product-cell-brand">${p.brand}</div><div class="product-cell-name">${p.name}</div></div></div></td>
+          <td><span style="font-family:'Space Mono',monospace;font-weight:700;">₹${p.price.toLocaleString()}</span></td>
+          <td>
+            <div class="platform-prices">
+              ${p.compare.map(c=>`<div class="platform-price-row"><span class="pname">${c.platform}</span><span class="pprice ${c.best?'best':''}">₹${c.price.toLocaleString()}</span></div>`).join('')}
+            </div>
+          </td>
+          <td><button class="remove-wish-btn" onclick="removeFromWishlist(${p.id})"><i class="fas fa-trash-alt"></i></button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function renderCart(){
+  const body=document.getElementById('cartBody');
+  if(!cart.length){
+    body.innerHTML='<div class="cart-empty"><i class="fas fa-shopping-bag"></i><div>Your bag is empty</div><div style="font-size:.8rem;margin-top:.5rem;">Add some shoes to get started!</div></div>';
+    return;
+  }
+  const total=cart.reduce((s,c)=>s+c.price*(c.qty||1),0);
+  body.innerHTML=`
+    ${cart.map(p=>`
+      <div class="cart-item">
+        <img src="${p.img}" alt="${p.name}"/>
+        <div class="cart-item-info">
+          <div class="cart-item-brand">${p.brand}</div>
+          <div class="cart-item-name">${p.name}</div>
+          <div class="cart-item-meta">Qty: ${p.qty||1}</div>
+        </div>
+        <div class="cart-item-price">₹${(p.price*(p.qty||1)).toLocaleString()}</div>
+        <button class="cart-item-remove" onclick="removeFromCart(${p.id})"><i class="fas fa-times"></i></button>
+      </div>
+    `).join('')}
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-price">₹${total.toLocaleString()}</span>
+    </div>
+    <button class="btn-primary-custom" style="width:100%;justify-content:center;margin-top:.5rem;" onclick="showToast('Redirecting to best price platform...','success')">
+      Checkout at Best Price <i class="fas fa-arrow-right"></i>
+    </button>
+    <div style="text-align:center;margin-top:.75rem;font-size:.75rem;color:var(--muted);">
+      Price comparison available at checkout
+    </div>
+  `;
+}
+
+// ===================== SEARCH =====================
+function handleSearch(val){
+  if(val.length>2){
+    // Highlight wearables page
+  }
+}
+function goToSearch(){
+  const val=document.getElementById('searchInput').value.toLowerCase();
+  if(!val)return;
+  showPage('wearables');
+  setTimeout(()=>{
+    const results=products.filter(p=>p.name.toLowerCase().includes(val)||p.brand.toLowerCase().includes(val)||p.category.toLowerCase().includes(val));
+    document.getElementById('wearablesGrid').innerHTML=results.length?results.map(p=>productCardHTML(p)).join(''):'<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--muted);">No results found for "'+val+'"</div>';
+    document.getElementById('resultsCount').textContent=`${results.length} results for "${val}"`;
+    document.getElementById('wearableCount').textContent=`Showing search results for "${val}"`;
+  },50);
+}
+
+// ===================== ACCORDION =====================
+function toggleAccordion(btn){
+  const body=btn.nextElementSibling;
+  const isOpen=btn.classList.toggle('open');
+  body.classList.toggle('show',isOpen);
+}
+
+// ===================== TOAST =====================
+function showToast(msg,type='success'){
+  const c=document.getElementById('toastContainer');
+  const t=document.createElement('div');
+  t.className=`toast-custom ${type}`;
+  t.innerHTML=`<i class="fas ${type==='success'?'fa-check-circle':'fa-bell'}"></i> ${msg}`;
+  c.appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+}
+
+// ===================== CONTACT FORM =====================
+function submitForm(e){
+  e.preventDefault();
+  showToast('Message sent successfully! We\'ll get back to you within 24 hours.','success');
+}
+
+// ===================== SCROLL ANIMATIONS =====================
+function setupScrollAnimations(){
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting)e.target.classList.add('visible');
+    });
+  },{threshold:.1});
+  document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+}
+</script>
+</body>
+</html>

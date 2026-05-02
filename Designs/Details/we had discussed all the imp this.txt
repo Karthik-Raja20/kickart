@@ -1,0 +1,106 @@
+we had discussed all the imp this 
+now website flow and pages 
+nav page are 
+logo/home kicks  Brand about contact search bar Wishlist cart login/account logo or user name with hi on click and hover account setting ,+my order and sign-out
+
+required pages should have breadcrubs 
+
+imp kicks page should have two strip of filter and categories 
+first categori (all) ( snikers) ( casual ) ( formal ) (etc )  this all are buttons button
+seconde is filters drip down 
+ [brand] [gender] [price] and right shide [sort]
+and prioduct cart as discussed and details page same as nike details page 
+
+brand drop down of top brand on clicke kicks page with brand filter  
+
+inside liked page liked product page should have two more button
+move to care instred of add to cart and remove from liked
+and as discussed check box for priose comparision of multiple product 1 to infiynate 
+
+flow of cart 
+list of product slected product should be cliclable and check box for comparie
+ands on the right side stkty summary of the order and checkout button 
+
+checkout page 
+form on left side righst side product summary with name mini image price and qunaty 
+
+
+inside delivary details and paymeeny mode no cash on delivary 
+
+after plac order thany you apge and order summary confirmatiuon in email and 2 buttons view order or continu shoping 
+
+and for accout steeting user details edit page
+order page  detailed of previous order deliverd / processing and paymen 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+nice very good i appreciate your work 
+now there are certain modification are there lets list down that 
+1.hero section 
+use some cool fonts for the heading text not just caps only 
+this is the style those 3 brand will appear look same as this and design according to our project 
+
+2.products card 
+--first of all the image should be full covering the img box no padding in between 
+--the img is rotating but in want to change img on hover 
+--for color its just circle filled with color i want mini image ok selected one has a bar below
+
+3.detail page (copy this nike same like this https://www.nike.in/nike-lebron-witness-ix-ep-basketball-shoes/p/24789613)
+--image side total 6 img and 2 sample video 4 , 4 each for example blue varieant 3 diif angle image and 1 video which shoots from diierent and black varieat same 3 img one video 
+if video is not possible then ok img must of each different color (you just write according to you img url will be adding by me aftere ward for demo you put first those 6 image 3 and 3 each )
+left right button on bottom right corner to change imge angle by switching
+--make logo on color it should height lighted
+--revive shoul be cliacble should open a static window of review 
+--product details side add gender along with type men . casual 
+--no zoom in ok and mention size uk
+--not just circle color diffetren color min shoest on click image should change
+--after add to bag there should be a small desc of product and a button product details with undett line on click a windiw should apperv giving info detail about the text can be static for all so make one detailed info use on all teh product 
+--must come after this product etail button Check Delivery 
+--a drop down return and refund polcy on click a small box of message with *T&C apply 
+--after this as discussed compair table on product details side only no full width  
+--then most imp related product after that current dont have that 
+--remove this Use code KICKART10 for extra 10% off
+
+4.kicks
+--catergorie buttons should have border 
+--filtter button should show name like price , nike and even selecte option also  
+
+
+
+5.login and signup 
+--on login or signup page nav bar should not be appear
+--if not logied in then it should show login to access this feature in liked and cart even when like any product a popup window should appear and for login 
+
+6.return poly (form with issue in detail user detail order id with image and video upload support on sumbimt we will contact you within 24hrs)
+--within 7 days 
+--no tag breadk 
+--should not be damaged "
+--replacement is are main focus within 5 day
+-replacement conditions 
+*size not match
+*color not match
+*wrong product 
+*damages or tag break 
+--refund is only if replacement product is not available 
+
+
+
+
+

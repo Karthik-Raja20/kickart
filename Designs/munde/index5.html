@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRIDE - Premium Footwear</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+            transition: background-color 500ms ease, color 500ms ease;
+        }
+
+        body.street-theme {
+            background-color: #111111;
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme {
+            background-color: #F8F5F0;
+            color: #343A40;
+        }
+
+        .page-section {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .navbar {
+            transition: background-color 500ms ease, box-shadow 500ms ease;
+            padding: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        body.street-theme .navbar {
+            background-color: rgba(28, 28, 28, 0.95);
+            box-shadow: 0 2px 10px rgba(193, 18, 31, 0.3);
+        }
+
+        body.minimal-theme .navbar {
+            background-color: rgba(234, 224, 213, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            transition: color 500ms ease;
+        }
+
+        body.street-theme .navbar-brand {
+            color: #C1121F;
+        }
+
+        body.minimal-theme .navbar-brand {
+            color: #B08968;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            margin: 0 10px;
+            transition: color 400ms ease;
+            cursor: pointer;
+        }
+
+        body.street-theme .nav-link {
+            color: rgba(245, 245, 245, 0.9);
+        }
+
+        body.street-theme .nav-link:hover {
+            color: #C1121F;
+        }
+
+        body.minimal-theme .nav-link {
+            color: #5a5a5a;
+        }
+
+        body.minimal-theme .nav-link:hover {
+            color: #B08968;
+        }
+
+        .nav-icon {
+            position: relative;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .nav-icon {
+            color: #C1121F;
+        }
+
+        body.minimal-theme .nav-icon {
+            color: #B08968;
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            transition: all 500ms ease;
+        }
+
+        body.street-theme .badge-count {
+            background-color: #C1121F;
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme .badge-count {
+            background-color: #B08968;
+            color: #fff;
+        }
+
+        .hero-section {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 500ms ease;
+        }
+
+        body.street-theme .hero-section {
+            background: linear-gradient(180deg, rgba(28, 28, 28, 0.8) 0%, rgba(17, 17, 17, 0.9) 100%);
+        }
+
+        body.minimal-theme .hero-section {
+            background: linear-gradient(180deg, rgba(234, 224, 213, 0.5) 0%, rgba(248, 245, 240, 0.8) 100%);
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            transition: color 500ms ease;
+        }
+
+        body.street-theme .hero-title {
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme .hero-title {
+            color: #343A40;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            transition: color 500ms ease;
+        }
+
+        body.street-theme .hero-subtitle {
+            color: #C1121F;
+        }
+
+        body.minimal-theme .hero-subtitle {
+            color: #B08968;
+        }
+
+        .btn-primary-custom {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 0;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 400ms ease;
+            cursor: pointer;
+        }
+
+        body.street-theme .btn-primary-custom {
+            background-color: #C1121F;
+            color: #F5F5F5;
+        }
+
+        body.street-theme .btn-primary-custom:hover {
+            background-color: #780000;
+            transform: scale(1.03);
+        }
+
+        body.minimal-theme .btn-primary-custom {
+            background-color: #B08968;
+            color: #fff;
+        }
+
+        body.minimal-theme .btn-primary-custom:hover {
+            background-color: #9a7558;
+            transform: scale(1.02);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            transition: color 500ms ease;
+        }
+
+        body.street-theme .section-title {
+            color: #C1121F;
+        }
+
+        body.minimal-theme .section-title {
+            color: #B08968;
+        }
+
+        .category-card {
+            border-radius: 0;
+            overflow: hidden;
+            margin-bottom: 30px;
+            cursor: pointer;
+            position: relative;
+            height: 250px;
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .category-card {
+            background-color: #1C1C1C;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        body.street-theme .category-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(193, 18, 31, 0.4);
+        }
+
+        body.street-theme .category-card.active {
+            border: 3px solid #C1121F;
+            box-shadow: 0 8px 30px rgba(193, 18, 31, 0.6);
+        }
+
+        body.minimal-theme .category-card {
+            background-color: #EAE0D5;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body.minimal-theme .category-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        body.minimal-theme .category-card.active {
+            border: 3px solid #B08968;
+            box-shadow: 0 8px 30px rgba(176, 137, 104, 0.3);
+        }
+
+        .category-content {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 500ms ease;
+        }
+
+        body.street-theme .category-content {
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme .category-content {
+            color: #343A40;
+        }
+
+        .product-card {
+            border-radius: 0;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 400ms ease;
+            position: relative;
+        }
+
+        body.street-theme .product-card {
+            background-color: #1C1C1C;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        body.street-theme .product-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(193, 18, 31, 0.3);
+        }
+
+        body.minimal-theme .product-card {
+            background-color: #EAE0D5;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body.minimal-theme .product-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 280px;
+            transition: background-color 500ms ease;
+        }
+
+        body.street-theme .product-image-container {
+            background-color: #111111;
+        }
+
+        body.minimal-theme .product-image-container {
+            background-color: #F8F5F0;
+        }
+
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 400ms ease;
+        }
+
+        .product-image-container .secondary-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .product-card:hover .secondary-image {
+            opacity: 1;
+        }
+
+        .product-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .action-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 0;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 400ms ease;
+            font-size: 1.2rem;
+        }
+
+        body.street-theme .action-btn {
+            background-color: #C1121F;
+            color: #F5F5F5;
+        }
+
+        body.street-theme .action-btn:hover {
+            background-color: #780000;
+        }
+
+        body.minimal-theme .action-btn {
+            background-color: #B08968;
+            color: #fff;
+        }
+
+        body.minimal-theme .action-btn:hover {
+            background-color: #9a7558;
+        }
+
+        .product-info {
+            padding: 20px;
+            transition: background-color 500ms ease;
+        }
+
+        body.street-theme .product-info {
+            background-color: #1C1C1C;
+        }
+
+        body.minimal-theme .product-info {
+            background-color: #EAE0D5;
+        }
+
+        .product-brand {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            transition: color 500ms ease;
+        }
+
+        body.street-theme .product-brand {
+            color: #C1121F;
+        }
+
+        body.minimal-theme .product-brand {
+            color: #B08968;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 8px 0;
+            transition: color 500ms ease;
+        }
+
+        body.street-theme .product-name {
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme .product-name {
+            color: #343A40;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            margin: 5px 0;
+            transition: color 500ms ease;
+        }
+
+        body.street-theme .product-category {
+            color: #888;
+        }
+
+        body.minimal-theme .product-category {
+            color: #6a6a6a;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 10px 0;
+            transition: color 500ms ease;
+        }
+
+        body.street-theme .product-price {
+            color: #C1121F;
+        }
+
+        body.minimal-theme .product-price {
+            color: #B08968;
+        }
+
+        .filter-sidebar {
+            border-radius: 0;
+            padding: 30px;
+            position: sticky;
+            top: 100px;
+            transition: all 500ms ease;
+        }
+
+        body.street-theme .filter-sidebar {
+            background-color: #1C1C1C;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        body.minimal-theme .filter-sidebar {
+            background-color: #EAE0D5;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .filter-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            transition: color 500ms ease;
+        }
+
+        body.street-theme .filter-title {
+            color: #C1121F;
+        }
+
+        body.minimal-theme .filter-title {
+            color: #B08968;
+        }
+
+        .filter-option label {
+            transition: color 500ms ease;
+            cursor: pointer;
+        }
+
+        body.street-theme .filter-option label {
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme .filter-option label {
+            color: #5a5a5a;
+        }
+
+        .form-select, .form-control {
+            transition: all 500ms ease;
+            border-radius: 0;
+        }
+
+        body.street-theme .form-select,
+        body.street-theme .form-control {
+            background-color: #111111;
+            border: 2px solid #C1121F;
+            color: #F5F5F5;
+        }
+
+        body.street-theme .form-select:focus,
+        body.street-theme .form-control:focus {
+            background-color: #1C1C1C;
+            border-color: #780000;
+            box-shadow: none;
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme .form-select,
+        body.minimal-theme .form-control {
+            background-color: #F8F5F0;
+            border: 2px solid #B08968;
+            color: #343A40;
+        }
+
+        body.minimal-theme .form-select:focus,
+        body.minimal-theme .form-control:focus {
+            background-color: #EAE0D5;
+            border-color: #9a7558;
+            box-shadow: none;
+        }
+
+        .cart-item, .wishlist-item, .order-item {
+            border-radius: 0;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 500ms ease;
+        }
+
+        body.street-theme .cart-item,
+        body.street-theme .wishlist-item,
+        body.street-theme .order-item {
+            background-color: #1C1C1C;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        body.minimal-theme .cart-item,
+        body.minimal-theme .wishlist-item,
+        body.minimal-theme .order-item {
+            background-color: #EAE0D5;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .auth-container {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .auth-box {
+            padding: 50px;
+            border-radius: 0;
+            max-width: 500px;
+            width: 100%;
+            transition: all 500ms ease;
+        }
+
+        body.street-theme .auth-box {
+            background-color: #1C1C1C;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        body.minimal-theme .auth-box {
+            background-color: #EAE0D5;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-align: center;
+            transition: color 500ms ease;
+        }
+
+        body.street-theme .auth-title {
+            color: #C1121F;
+        }
+
+        body.minimal-theme .auth-title {
+            color: #B08968;
+        }
+
+        footer {
+            padding: 50px 0 20px;
+            margin-top: 80px;
+            transition: all 500ms ease;
+        }
+
+        body.street-theme footer {
+            background-color: #1C1C1C;
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme footer {
+            background-color: #EAE0D5;
+            color: #5a5a5a;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .footer-links a {
+            color: rgba(245, 245, 245, 0.8);
+        }
+
+        body.street-theme .footer-links a:hover {
+            color: #C1121F;
+        }
+
+        body.minimal-theme .footer-links a {
+            color: #5a5a5a;
+        }
+
+        body.minimal-theme .footer-links a:hover {
+            color: #B08968;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 1.8rem;
+        }
+
+        .social-icons i {
+            cursor: pointer;
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .social-icons i {
+            color: #C1121F;
+        }
+
+        body.street-theme .social-icons i:hover {
+            color: #780000;
+        }
+
+        body.minimal-theme .social-icons i {
+            color: #B08968;
+        }
+
+        body.minimal-theme .social-icons i:hover {
+            color: #9a7558;
+        }
+
+        .size-btn, .qty-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 400ms ease;
+            margin: 5px;
+        }
+
+        body.street-theme .size-btn,
+        body.street-theme .qty-btn {
+            background-color: #111111;
+            border: 2px solid #C1121F;
+            color: #F5F5F5;
+        }
+
+        body.street-theme .size-btn:hover,
+        body.street-theme .qty-btn:hover,
+        body.street-theme .size-btn.active,
+        body.street-theme .qty-btn.active {
+            background-color: #C1121F;
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme .size-btn,
+        body.minimal-theme .qty-btn {
+            background-color: #F8F5F0;
+            border: 2px solid #B08968;
+            color: #343A40;
+        }
+
+        body.minimal-theme .size-btn:hover,
+        body.minimal-theme .qty-btn:hover,
+        body.minimal-theme .size-btn.active,
+        body.minimal-theme .qty-btn.active {
+            background-color: #B08968;
+            color: #fff;
+        }
+
+        .modal-content {
+            border-radius: 0;
+            transition: all 500ms ease;
+        }
+
+        body.street-theme .modal-content {
+            background-color: #1C1C1C;
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme .modal-content {
+            background-color: #EAE0D5;
+            color: #343A40;
+        }
+
+        body.street-theme .btn-close {
+            filter: invert(1);
+        }
+
+        .btn-outline-secondary, .btn-outline-danger {
+            transition: all 400ms ease;
+            border-radius: 0;
+        }
+
+        body.street-theme .btn-outline-secondary {
+            border-color: #C1121F;
+            color: #C1121F;
+        }
+
+        body.street-theme .btn-outline-secondary:hover {
+            background-color: #C1121F;
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme .btn-outline-secondary {
+            border-color: #B08968;
+            color: #B08968;
+        }
+
+        body.minimal-theme .btn-outline-secondary:hover {
+            background-color: #B08968;
+            color: #fff;
+        }
+
+        body.street-theme .btn-outline-danger,
+        body.street-theme .btn-danger {
+            background-color: #780000;
+            border-color: #780000;
+            color: #F5F5F5;
+        }
+
+        body.minimal-theme .btn-outline-danger,
+        body.minimal-theme .btn-danger {
+            background-color: #d9534f;
+            border-color: #d9534f;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .filter-sidebar {
+                position: static;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body class="street-theme">
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home')">STRIDE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('shop')">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('about')">About</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('contact')">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('login')">Login</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-icon" onclick="showPage('wishlist')">
+                            <i class="bi bi-heart"></i>
+                            <span class="badge-count" id="wishlistCount">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-icon" onclick="showPage('cart')">
+                            <i class="bi bi-cart3"></i>
+                            <span class="badge-count" id="cartCount">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-icon" onclick="showPage('profile')">
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="home" class="page-section active">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">STRIDE</h1>
+                <p class="hero-subtitle">Premium Footwear Collection</p>
+                <button class="btn-primary-custom" onclick="showPage('shop')">SHOP NOW</button>
+            </div>
+        </div>
+
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title">CATEGORIES</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="category-card" id="cat-sneakers" onclick="selectCategory('sneakers')">
+                            <div class="category-content">SNEAKERS</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" id="cat-running" onclick="selectCategory('running')">
+                            <div class="category-content">RUNNING</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" id="cat-sports" onclick="selectCategory('sports')">
+                            <div class="category-content">SPORTS</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" id="cat-casual" onclick="selectCategory('casual')">
+                            <div class="category-content">CASUAL</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" id="cat-loafers" onclick="selectCategory('loafers')">
+                            <div class="category-content">LOAFERS</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" id="cat-formal" onclick="selectCategory('formal')">
+                            <div class="category-content">FORMAL</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title">FEATURED</h2>
+                <div class="row" id="featuredProducts"></div>
+            </div>
+        </section>
+    </div>
+
+    <div id="shop" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">ALL PRODUCTS</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="filter-sidebar">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5>FILTERS</h5>
+                            <button class="btn btn-sm btn-outline-danger" onclick="clearFilters()">Clear</button>
+                        </div>
+
+                        <div class="filter-group mb-4">
+                            <div class="filter-title">Category</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterSneakers" value="sneakers" onchange="applyFilters()">
+                                <label for="filterSneakers">Sneakers</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterRunning" value="running" onchange="applyFilters()">
+                                <label for="filterRunning">Running</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterSports" value="sports" onchange="applyFilters()">
+                                <label for="filterSports">Sports</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterCasual" value="casual" onchange="applyFilters()">
+                                <label for="filterCasual">Casual</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterLoafers" value="loafers" onchange="applyFilters()">
+                                <label for="filterLoafers">Loafers</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterFormal" value="formal" onchange="applyFilters()">
+                                <label for="filterFormal">Formal</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group mb-4">
+                            <div class="filter-title">Brand</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandNike" value="Nike" onchange="applyFilters()">
+                                <label for="brandNike">Nike</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandAdidas" value="Adidas" onchange="applyFilters()">
+                                <label for="brandAdidas">Adidas</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandPuma" value="Puma" onchange="applyFilters()">
+                                <label for="brandPuma">Puma</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group mb-4">
+                            <div class="filter-title">Price</div>
+                            <select class="form-select" id="priceRange" onchange="applyFilters()">
+                                <option value="">All</option>
+                                <option value="0-2000">Under ₹2000</option>
+                                <option value="2000-4000">₹2000 - ₹4000</option>
+                                <option value="4000-6000">₹4000 - ₹6000</option>
+                                <option value="6000-99999">Above ₹6000</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div><span id="productCount">0</span> Products</div>
+                        <select class="form-select w-auto" id="sortBy" onchange="applySorting()">
+                            <option value="">Sort By</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name">Name: A to Z</option>
+                        </select>
+                    </div>
+                    <div class="row" id="shopProducts"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="productDetail" class="page-section">
+        <div class="container py-5">
+            <button class="btn btn-outline-secondary mb-4" onclick="showPage('shop')">
+                <i class="bi bi-arrow-left"></i> Back
+            </button>
+            <div class="row" id="productDetailContent"></div>
+        </div>
+    </div>
+
+    <div id="cart" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">CART</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="cartItems"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Summary</h4>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Subtotal:</span>
+                            <span id="cartSubtotal">₹0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Shipping:</span>
+                            <span id="shippingCost">₹0</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <strong>Total:</strong>
+                            <strong id="cartTotal">₹0</strong>
+                        </div>
+                        <button class="btn btn-primary-custom w-100" onclick="showPage('checkout')">CHECKOUT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkout" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">CHECKOUT</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Billing Details</h4>
+                        <form id="checkoutForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">PLACE ORDER</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Order Summary</h4>
+                        <div id="checkoutSummary"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="login" class="page-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2 class="auth-title">LOGIN</h2>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">LOGIN</button>
+                    <div class="text-center">
+                        <a href="#" onclick="showPage('signup')" style="color: inherit;">Sign Up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="signup" class="page-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2 class="auth-title">SIGN UP</h2>
+                <form id="signupForm">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="signupEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="signupPassword" required minlength="6">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="signupConfirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">SIGN UP</button>
+                    <div class="text-center">
+                        <a href="#" onclick="showPage('login')" style="color: inherit;">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="wishlist" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">WISHLIST</h2>
+            <div class="row" id="wishlistItems"></div>
+        </div>
+    </div>
+
+    <div id="profile" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">PROFILE</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="cart-item">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-person-circle" style="font-size: 5rem;"></i>
+                            <h4 class="mt-3">John Doe</h4>
+                            <p>john@example.com</p>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-secondary">Orders</button>
+                            <button class="btn btn-outline-secondary" onclick="showPage('wishlist')">Wishlist</button>
+                            <button class="btn btn-outline-secondary" onclick="showPage('refund')">Refund</button>
+                            <button class="btn btn-outline-danger">Logout</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Order History</h4>
+                        <div class="order-item mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <strong>Order #12345</strong>
+                                    <p class="mb-0">Date: 15 Jan 2024</p>
+                                </div>
+                                <span class="badge bg-success">Delivered</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="refund" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">REFUND REQUEST</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="cart-item">
+                        <form id="refundForm">
+                            <div class="mb-3">
+                                <label class="form-label">Order ID</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Reason</label>
+                                <select class="form-select" required>
+                                    <option value="">Select</option>
+                                    <option value="defective">Defective</option>
+                                    <option value="wrong">Wrong Product</option>
+                                    <option value="size">Size Issue</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Details</label>
+                                <textarea class="form-control" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">SUBMIT</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">ABOUT US</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="cart-item">
+                        <h3 class="mb-4">Our Story</h3>
+                        <p class="mb-4">STRIDE is your destination for premium footwear. We offer authentic products from top brands.</p>
+                        
+                        <h3 class="mb-4">Our Mission</h3>
+                        <p class="mb-4">To provide quality footwear with exceptional service.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">CONTACT US</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Send Message</h4>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">SEND</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Info</h4>
+                        <div class="mb-4">
+                            <i class="bi bi-geo-alt-fill me-2"></i>
+                            <strong>Address:</strong>
+                            <p class="ms-4">123 Street, City, 400001</p>
+                        </div>
+                        <div class="mb-4">
+                            <i class="bi bi-telephone-fill me-2"></i>
+                            <strong>Phone:</strong>
+                            <p class="ms-4">+91 98765 43210</p>
+                        </div>
+                        <div class="mb-4">
+                            <i class="bi bi-envelope-fill me-2"></i>
+                            <strong>Email:</strong>
+                            <p class="ms-4">support@stride.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">STRIDE</h5>
+                    <p>Premium footwear destination.</p>
+                    <div class="social-icons mt-3">
+                        <i class="bi bi-facebook"></i>
+                        <i class="bi bi-instagram"></i>
+                        <i class="bi bi-twitter"></i>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="#" onclick="showPage('about')">About</a>
+                        <a href="#" onclick="showPage('contact')">Contact</a>
+                        <a href="#" onclick="showPage('shop')">Shop</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Support</h5>
+                    <div class="footer-links">
+                        <a href="#">Track Order</a>
+                        <a href="#" onclick="showPage('refund')">Returns</a>
+                        <a href="#">Shipping</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Legal</h5>
+                    <div class="footer-links">
+                        <a href="#">Privacy</a>
+                        <a href="#">Terms</a>
+                    </div>
+                </div>
+            </div>
+            <hr style="opacity: 0.2;">
+            <div class="text-center py-3">
+                <p>&copy; 2024 STRIDE. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="quickViewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Quick View</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="quickViewContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const products = [
+            { id: 1, name: 'Air Max Pro', brand: 'Nike', category: 'sneakers', price: 4999, image1: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', image2: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400', desc: 'Premium sneakers with air cushioning.' },
+            { id: 2, name: 'Boost Runner', brand: 'Adidas', category: 'running', price: 5499, image1: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400', image2: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400', desc: 'Energy-returning running shoes.' },
+            { id: 3, name: 'Speed Trainer', brand: 'Puma', category: 'sports', price: 3999, image1: 'https://images.unsplash.com/photo-1608667508764-33cf0726b13a?w=400', image2: 'https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=400', desc: 'High-performance training shoes.' },
+            { id: 4, name: 'Comfort Walk', brand: 'Nike', category: 'casual', price: 2999, image1: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400', image2: 'https://images.unsplash.com/photo-1612902376152-8a3e7db5b40d?w=400', desc: 'Comfortable casual footwear.' },
+            { id: 5, name: 'Classic Loafer', brand: 'Adidas', category: 'loafers', price: 3499, image1: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400', image2: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400', desc: 'Elegant loafers for any occasion.' },
+            { id: 6, name: 'Oxford Elite', brand: 'Puma', category: 'formal', price: 4599, image1: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=400', image2: 'https://images.unsplash.com/photo-1606932836120-66d63bb42815?w=400', desc: 'Premium formal shoes.' },
+            { id: 7, name: 'Street Runner', brand: 'Nike', category: 'running', price: 4299, image1: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400', image2: 'https://images.unsplash.com/photo-1603808033587-4a40fcb7c777?w=400', desc: 'Urban running shoes.' },
+            { id: 8, name: 'Sport Pro', brand: 'Adidas', category: 'sports', price: 5999, image1: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400', image2: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400', desc: 'Professional sports footwear.' }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        let filteredProducts = [...products];
+        let currentProduct = null;
+        let selectedCategory = localStorage.getItem('selectedCategory') || 'sneakers';
+
+        function applyThemeForCategory(category) {
+            const streetCategories = ['sneakers', 'running', 'sports'];
+            const minimalCategories = ['casual', 'loafers', 'formal'];
+            
+            document.body.classList.remove('street-theme', 'minimal-theme');
+            
+            if (streetCategories.includes(category)) {
+                document.body.classList.add('street-theme');
+            } else if (minimalCategories.includes(category)) {
+                document.body.classList.add('minimal-theme');
+            }
+        }
+
+        function selectCategory(category) {
+            selectedCategory = category;
+            localStorage.setItem('selectedCategory', category);
+            
+            document.querySelectorAll('.category-card').forEach(card => card.classList.remove('active'));
+            document.getElementById('cat-' + category).classList.add('active');
+            
+            applyThemeForCategory(category);
+            
+            document.querySelectorAll('.filter-option input[type="checkbox"]').forEach(cb => cb.checked = false);
+            const filterCheckbox = document.getElementById('filter' + category.charAt(0).toUpperCase() + category.slice(1));
+            if (filterCheckbox) filterCheckbox.checked = true;
+            
+            applyFilters();
+            showPage('shop');
+        }
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(pageName).classList.add('active');
+            window.scrollTo(0, 0);
+
+            if (pageName === 'home') renderFeaturedProducts();
+            else if (pageName === 'shop') renderShopProducts();
+            else if (pageName === 'cart') renderCart();
+            else if (pageName === 'checkout') renderCheckoutSummary();
+            else if (pageName === 'wishlist') renderWishlist();
+        }
+
+        function renderFeaturedProducts() {
+            const container = document.getElementById('featuredProducts');
+            const featured = products.slice(0, 4);
+            container.innerHTML = featured.map(product => `
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="${product.image1}" class="primary-image" alt="${product.name}">
+                            <img src="${product.image2}" class="secondary-image" alt="${product.name}">
+                            <div class="product-actions">
+                                <button class="action-btn" onclick="addToWishlist(${product.id})">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">${product.brand}</div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-category">${product.category}</div>
+                            <div class="product-price">₹${product.price}</div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-primary-custom flex-fill" onclick="viewProduct(${product.id})">VIEW</button>
+                                <button class="btn btn-outline-secondary" onclick="addToCart(${product.id})">
+                                    <i class="bi bi-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderShopProducts() {
+            const container = document.getElementById('shopProducts');
+            const count = document.getElementById('productCount');
+            count.textContent = filteredProducts.length;
+
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="${product.image1}" class="primary-image" alt="${product.name}">
+                            <img src="${product.image2}" class="secondary-image" alt="${product.name}">
+                            <div class="product-actions">
+                                <button class="action-btn" onclick="addToWishlist(${product.id})">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">${product.brand}</div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-category">${product.category}</div>
+                            <div class="product-price">₹${product.price}</div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-primary-custom flex-fill" onclick="viewProduct(${product.id})">VIEW</button>
+                                <button class="btn btn-outline-secondary" onclick="addToCart(${product.id})">
+                                    <i class="bi bi-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function applyFilters() {
+            const categories = [];
+            if (document.getElementById('filterSneakers')?.checked) categories.push('sneakers');
+            if (document.getElementById('filterRunning')?.checked) categories.push('running');
+            if (document.getElementById('filterSports')?.checked) categories.push('sports');
+            if (document.getElementById('filterCasual')?.checked) categories.push('casual');
+            if (document.getElementById('filterLoafers')?.checked) categories.push('loafers');
+            if (document.getElementById('filterFormal')?.checked) categories.push('formal');
+
+            const brands = [];
+            if (document.getElementById('brandNike')?.checked) brands.push('Nike');
+            if (document.getElementById('brandAdidas')?.checked) brands.push('Adidas');
+            if (document.getElementById('brandPuma')?.checked) brands.push('Puma');
+
+            const priceRange = document.getElementById('priceRange')?.value;
+
+            filteredProducts = products.filter(product => {
+                let match = true;
+                if (categories.length > 0 && !categories.includes(product.category)) match = false;
+                if (brands.length > 0 && !brands.includes(product.brand)) match = false;
+
+                if (priceRange) {
+                    const [min, max] = priceRange.split('-').map(Number);
+                    if (product.price < min || product.price > max) match = false;
+                }
+
+                return match;
+            });
+
+            applySorting();
+        }
+
+        function applySorting() {
+            const sortBy = document.getElementById('sortBy')?.value;
+            if (sortBy === 'price-low') filteredProducts.sort((a, b) => a.price - b.price);
+            else if (sortBy === 'price-high') filteredProducts.sort((a, b) => b.price - a.price);
+            else if (sortBy === 'name') filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+            renderShopProducts();
+        }
+
+        function clearFilters() {
+            document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.getElementById('priceRange').value = '';
+            document.getElementById('sortBy').value = '';
+            filteredProducts = [...products];
+            renderShopProducts();
+        }
+
+        function viewProduct(id) {
+            currentProduct = products.find(p => p.id === id);
+            const container = document.getElementById('productDetailContent');
+
+            container.innerHTML = `
+                <div class="col-md-6">
+                    <img src="${currentProduct.image1}" style="width: 100%; border-radius: 0; margin-bottom: 20px;" alt="${currentProduct.name}">
+                </div>
+                <div class="col-md-6">
+                    <div class="product-brand mb-2">${currentProduct.brand}</div>
+                    <h2 class="mb-3">${currentProduct.name}</h2>
+                    <div class="product-price mb-4">₹${currentProduct.price}</div>
+                    <p class="mb-4">${currentProduct.desc}</p>
+
+                    <h5 class="mb-3">SIZE</h5>
+                    <div class="d-flex flex-wrap mb-4">
+                        ${[6, 7, 8, 9, 10, 11].map(size => `<button class="size-btn" onclick="selectSize(this)">${size}</button>`).join('')}
+                    </div>
+
+                    <h5 class="mb-3">QUANTITY</h5>
+                    <div class="d-flex align-items-center mb-4">
+                        <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                        <span id="productQty" style="margin: 0 20px; font-size: 1.5rem; font-weight: 700;">1</span>
+                        <button class="qty-btn" onclick="changeQty(1)">+</button>
+                    </div>
+
+                    <div class="d-flex gap-3 mb-4">
+                        <button class="btn btn-primary-custom flex-fill" onclick="addToCartFromDetail()">ADD TO CART</button>
+                        <button class="btn btn-outline-danger" onclick="addToWishlist(${currentProduct.id})">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            showPage('productDetail');
+        }
+
+        let selectedSize = null;
+        let productQty = 1;
+
+        function selectSize(element) {
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            selectedSize = element.textContent;
+        }
+
+        function changeQty(delta) {
+            productQty = Math.max(1, productQty + delta);
+            document.getElementById('productQty').textContent = productQty;
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existingItem = cart.find(item => item.id === id);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    brand: product.brand,
+                    price: product.price,
+                    image: product.image1,
+                    size: 9,
+                    quantity: 1
+                });
+            }
+
+            updateCartCount();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('Added to cart!');
+        }
+
+        function addToCartFromDetail() {
+            if (!selectedSize) {
+                alert('Please select a size');
+                return;
+            }
+
+            const existingItem = cart.find(item => item.id === currentProduct.id && item.size == selectedSize);
+
+            if (existingItem) {
+                existingItem.quantity += productQty;
+            } else {
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    brand: currentProduct.brand,
+                    price: currentProduct.price,
+                    image: currentProduct.image1,
+                    size: selectedSize,
+                    quantity: productQty
+                });
+            }
+
+            updateCartCount();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('Added to cart!');
+            productQty = 1;
+            selectedSize = null;
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-center py-5"><h4>Your cart is empty</h4></div>';
+                document.getElementById('cartSubtotal').textContent = '₹0';
+                document.getElementById('shippingCost').textContent = '₹0';
+                document.getElementById('cartTotal').textContent = '₹0';
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img src="${item.image}" style="width: 100%; border-radius: 0;" alt="${item.name}">
+                        </div>
+                        <div class="col-md-4">
+                            <h6>${item.name}</h6>
+                            <p class="mb-0">${item.brand} | Size: ${item.size}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>₹${item.price}</strong>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="d-flex align-items-center">
+                                <button class="qty-btn" onclick="updateCartQty(${index}, -1)">-</button>
+                                <span style="margin: 0 10px; font-weight: 700;">${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateCartQty(${index}, 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            updateCartTotals();
+        }
+
+        function updateCartQty(index, delta) {
+            cart[index].quantity = Math.max(1, cart[index].quantity + delta);
+            renderCart();
+            updateCartCount();
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+            updateCartCount();
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function updateCartTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 999 ? 0 : 100;
+            const total = subtotal + shipping;
+
+            document.getElementById('cartSubtotal').textContent = '₹' + subtotal;
+            document.getElementById('shippingCost').textContent = shipping === 0 ? 'FREE' : '₹' + shipping;
+            document.getElementById('cartTotal').textContent = '₹' + total;
+        }
+
+        function renderCheckoutSummary() {
+            const container = document.getElementById('checkoutSummary');
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 999 ? 0 : 100;
+            const total = subtotal + shipping;
+
+            container.innerHTML = `
+                ${cart.map(item => `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>${item.name} (${item.quantity}x)</span>
+                        <span>₹${item.price * item.quantity}</span>
+                    </div>
+                `).join('')}
+                <hr>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span>₹${subtotal}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Shipping:</span>
+                    <span>${shipping === 0 ? 'FREE' : '₹' + shipping}</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total:</strong>
+                    <strong>₹${total}</strong>
+                </div>
+            `;
+        }
+
+        function addToWishlist(id) {
+            const product = products.find(p => p.id === id);
+            const existing = wishlist.find(item => item.id === id);
+
+            if (existing) {
+                alert('Already in wishlist!');
+                return;
+            }
+
+            wishlist.push({
+                id: product.id,
+                name: product.name,
+                brand: product.brand,
+                price: product.price,
+                image: product.image1
+            });
+
+            updateWishlistCount();
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            alert('Added to wishlist!');
+        }
+
+        function updateWishlistCount() {
+            document.getElementById('wishlistCount').textContent = wishlist.length;
+        }
+
+        function renderWishlist() {
+            const container = document.getElementById('wishlistItems');
+
+            if (wishlist.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center py-5"><h4>Your wishlist is empty</h4></div>';
+                return;
+            }
+
+            container.innerHTML = wishlist.map((item, index) => `
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">${item.brand}</div>
+                            <div class="product-name">${item.name}</div>
+                            <div class="product-price">₹${item.price}</div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-primary-custom flex-fill" onclick="moveToCart(${index})">MOVE TO CART</button>
+                                <button class="btn btn-outline-danger" onclick="removeFromWishlist(${index})">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function moveToCart(index) {
+            const item = wishlist[index];
+            addToCart(item.id);
+            wishlist.splice(index, 1);
+            updateWishlistCount();
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            renderWishlist();
+        }
+
+        function removeFromWishlist(index) {
+            wishlist.splice(index, 1);
+            updateWishlistCount();
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            renderWishlist();
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login successful!');
+            showPage('home');
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            alert('Account created!');
+            showPage('login');
+        });
+
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (cart.length === 0) {
+                alert('Cart is empty!');
+                return;
+            }
+            alert('Order placed successfully!');
+            cart = [];
+            updateCartCount();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showPage('home');
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Message sent!');
+            this.reset();
+        });
+
+        document.getElementById('refundForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Request submitted!');
+            this.reset();
+        });
+
+        applyThemeForCategory(selectedCategory);
+        document.getElementById('cat-' + selectedCategory).classList.add('active');
+        updateCartCount();
+        updateWishlistCount();
+        renderFeaturedProducts();
+    </script>
+</body>
+</html>

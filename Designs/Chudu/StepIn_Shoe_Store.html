@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StepIn - Premium Footwear India</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --ink: #0d0d0d;
+  --cream: #f5f0e8;
+  --gold: #c8a96e;
+  --rust: #c94f2c;
+  --sage: #7a8c6e;
+  --light: #faf8f4;
+  --mid: #e8e2d6;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: var(--font-body); background: var(--light); color: var(--ink); }
+.page { display:none; }
+.page.active { display:block; }
+
+/* NAV */
+nav {
+  background: var(--ink);
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: -1px;
+  cursor: pointer;
+}
+.logo span { color: #fff; }
+.nav-links { display:flex; gap:1.5rem; list-style:none; }
+.nav-links a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-actions { display:flex; align-items:center; gap:1rem; }
+.nav-search {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: #fff;
+  font-size: 0.8rem;
+  width: 180px;
+  outline: none;
+}
+.nav-search::placeholder { color: rgba(255,255,255,0.5); }
+.nav-icon {
+  color: #ccc;
+  font-size: 1.1rem;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+.nav-icon:hover { color: var(--gold); }
+.cart-badge {
+  position: absolute;
+  top: -8px; right: -8px;
+  background: var(--rust);
+  color: #fff;
+  font-size: 0.6rem;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a1208 40%, #2d1f0a 100%);
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(200,169,110,0.15) 0%, transparent 60%);
+}
+.hero-content { max-width:1400px; margin:0 auto; padding: 4rem 2rem; display:flex; align-items:center; gap:4rem; width:100%; }
+.hero-text { flex:1; z-index:1; }
+.hero-badge {
+  display: inline-block;
+  background: var(--rust);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+}
+.hero-title .accent { color: var(--gold); }
+.hero-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 2.5rem;
+  max-width: 440px;
+  line-height: 1.7;
+}
+.btn-hero {
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  padding: 14px 36px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-right: 1rem;
+}
+.btn-hero:hover { background: #d4b87a; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(200,169,110,0.4); }
+.btn-hero-outline {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 14px 36px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-hero-outline:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+.hero-visual { flex:1; display:flex; justify-content:center; align-items:center; position:relative; }
+.hero-shoe-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-width: 420px;
+}
+.hero-shoe-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+.hero-shoe-card:first-child { margin-top: 2rem; }
+.shoe-img-placeholder {
+  width: 100%;
+  height: 110px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+.shoe-img-placeholder.men { background: linear-gradient(135deg, #1a2a3a, #2c4a6a); }
+.shoe-img-placeholder.women { background: linear-gradient(135deg, #3a1a2a, #6a2c4a); }
+.hero-shoe-name { color: #fff; font-size: 0.75rem; font-weight: 500; }
+.hero-shoe-price { color: var(--gold); font-size: 0.8rem; font-weight: 700; }
+
+/* BRANDS TICKER */
+.brands-bar {
+  background: var(--cream);
+  border-top: 1px solid var(--mid);
+  border-bottom: 1px solid var(--mid);
+  padding: 1rem 0;
+  overflow: hidden;
+}
+.brands-track {
+  display: flex;
+  gap: 4rem;
+  animation: ticker 20s linear infinite;
+  white-space: nowrap;
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.brand-item {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* SECTIONS */
+.section { padding: 5rem 2rem; max-width: 1400px; margin: 0 auto; }
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 0.5rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  color: var(--ink);
+  margin-bottom: 3rem;
+}
+
+/* PRODUCT GRID */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--mid);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+}
+.product-img {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  position: relative;
+}
+.product-img.bg1 { background: linear-gradient(135deg, #e8f4f8, #b8dce8); }
+.product-img.bg2 { background: linear-gradient(135deg, #f8e8f4, #e8b8dc); }
+.product-img.bg3 { background: linear-gradient(135deg, #f4f8e8, #dce8b8); }
+.product-img.bg4 { background: linear-gradient(135deg, #f8f4e8, #e8dcb8); }
+.product-img.bg5 { background: linear-gradient(135deg, #e8e8f8, #b8b8e8); }
+.product-img.bg6 { background: linear-gradient(135deg, #f8e8e8, #e8b8b8); }
+.product-badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  background: var(--rust);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+.product-wishlist {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: #fff;
+  border: none;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #aaa;
+  transition: color 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.product-wishlist:hover, .product-wishlist.active { color: var(--rust); }
+.product-info { padding: 1.2rem; }
+.product-brand { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.3rem; }
+.product-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--ink); }
+.product-rating { display:flex; align-items:center; gap:0.3rem; margin-bottom: 0.8rem; }
+.stars { color: var(--gold); font-size: 0.8rem; }
+.rating-count { font-size: 0.75rem; color: #999; }
+.product-price-row { display:flex; align-items:center; justify-content:space-between; margin-bottom: 1rem; }
+.price-current { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--ink); }
+.price-original { font-size: 0.85rem; color: #aaa; text-decoration: line-through; margin-left: 0.5rem; }
+.price-discount { font-size: 0.75rem; color: var(--rust); font-weight: 600; }
+.product-sizes { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom: 1rem; }
+.size-btn {
+  border: 1px solid var(--mid);
+  background: #fff;
+  color: #666;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.size-btn:hover, .size-btn.active { border-color: var(--ink); background: var(--ink); color: #fff; }
+.btn-add-cart {
+  width: 100%;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-add-cart:hover { background: var(--rust); }
+
+/* FILTERS */
+.filter-bar {
+  background: #fff;
+  border: 1px solid var(--mid);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-select {
+  border: 1px solid var(--mid);
+  background: var(--light);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--ink);
+  outline: none;
+  cursor: pointer;
+}
+.filter-label { font-size: 0.8rem; font-weight: 600; color: #666; }
+
+/* CART */
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--mid);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+.cart-item-img {
+  width: 80px; height: 80px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+.cart-item-info { flex: 1; }
+.cart-item-name { font-weight: 600; margin-bottom: 0.3rem; }
+.cart-item-meta { font-size: 0.8rem; color: #999; margin-bottom: 0.5rem; }
+.qty-controls { display:flex; align-items:center; gap:0.5rem; }
+.qty-btn {
+  width: 28px; height: 28px;
+  border: 1px solid var(--mid);
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.qty-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.qty-display { min-width: 30px; text-align:center; font-weight:600; }
+.cart-item-price { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; }
+.cart-remove { color: #ccc; cursor: pointer; font-size: 1.1rem; transition: color 0.2s; }
+.cart-remove:hover { color: var(--rust); }
+
+.order-summary {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  position: sticky;
+  top: 80px;
+}
+.summary-row { display:flex; justify-content:space-between; margin-bottom: 0.8rem; font-size: 0.9rem; }
+.summary-total { display:flex; justify-content:space-between; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem; margin-top: 0.5rem; font-size: 1.1rem; font-weight: 700; }
+.summary-total .gold { color: var(--gold); font-family: var(--font-display); font-size: 1.4rem; }
+
+/* CHECKOUT */
+.form-section-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--gold);
+  color: var(--ink);
+}
+.form-group { margin-bottom: 1.2rem; }
+.form-label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #666; margin-bottom: 0.4rem; display:block; }
+.form-control {
+  border: 1px solid var(--mid);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  background: #fff;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-control:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,169,110,0.15); }
+.payment-option {
+  border: 2px solid var(--mid);
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color 0.2s;
+}
+.payment-option:hover, .payment-option.selected { border-color: var(--gold); background: rgba(200,169,110,0.05); }
+.payment-icon { font-size: 1.5rem; }
+.payment-label { font-weight: 600; font-size: 0.9rem; }
+.payment-sub { font-size: 0.75rem; color: #999; }
+
+/* PRODUCT DETAIL */
+.detail-gallery { display:flex; gap:1rem; margin-bottom: 2rem; }
+.detail-main-img {
+  flex: 1;
+  background: linear-gradient(135deg, #e8f4f8, #b8dce8);
+  border-radius: 16px;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8rem;
+}
+.detail-thumbs { display:flex; flex-direction:column; gap:0.5rem; }
+.thumb {
+  width: 70px; height: 70px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.thumb:hover, .thumb.active { border-color: var(--gold); }
+.thumb:nth-child(1) { background: linear-gradient(135deg, #e8f4f8, #b8dce8); }
+.thumb:nth-child(2) { background: linear-gradient(135deg, #f4f8e8, #dce8b8); }
+.thumb:nth-child(3) { background: linear-gradient(135deg, #f8f4e8, #e8dcb8); }
+.thumb:nth-child(4) { background: linear-gradient(135deg, #f8e8e8, #e8b8b8); }
+
+.color-options { display:flex; gap:0.6rem; margin-bottom: 1.5rem; }
+.color-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.color-dot.active, .color-dot:hover { border-color: var(--gold); outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* LOGIN */
+.auth-container {
+  min-height: calc(100vh - 64px);
+  background: linear-gradient(135deg, var(--ink) 0%, #1a1a1a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
+.auth-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 3rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+.auth-logo {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.auth-logo span { color: var(--gold); }
+.auth-subtitle { text-align: center; color: #999; font-size: 0.9rem; margin-bottom: 2rem; }
+.btn-primary-custom {
+  width: 100%;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 0.05em;
+}
+.btn-primary-custom:hover { background: var(--rust); }
+.auth-divider { display:flex; align-items:center; gap:1rem; margin: 1.5rem 0; }
+.auth-divider::before, .auth-divider::after { content:''; flex:1; height:1px; background: var(--mid); }
+.auth-divider span { font-size: 0.8rem; color: #aaa; }
+
+/* ABOUT */
+.about-hero {
+  background: linear-gradient(135deg, var(--ink) 50%, #1a1208 100%);
+  color: #fff;
+  padding: 6rem 2rem;
+  text-align: center;
+}
+.about-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+}
+.about-hero h1 span { color: var(--gold); }
+.about-hero p { max-width: 600px; margin: 0 auto; color: rgba(255,255,255,0.7); font-size: 1.05rem; line-height: 1.8; }
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--gold);
+}
+.stat-label { font-size: 0.85rem; color: #666; text-transform: uppercase; letter-spacing: 0.1em; }
+
+.about-values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+.value-card {
+  background: #fff;
+  border: 1px solid var(--mid);
+  border-radius: 12px;
+  padding: 2rem;
+  border-top: 4px solid var(--gold);
+}
+.value-icon { font-size: 2rem; margin-bottom: 1rem; }
+.value-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.8rem; }
+.value-text { color: #666; font-size: 0.9rem; line-height: 1.7; }
+
+/* CONTACT */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+.contact-info-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.contact-icon {
+  width: 48px; height: 48px;
+  background: var(--gold);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.contact-info-title { font-weight: 700; margin-bottom: 0.3rem; }
+.contact-info-text { color: #666; font-size: 0.9rem; }
+
+/* FOOTER */
+footer {
+  background: var(--ink);
+  color: #ccc;
+  padding: 4rem 2rem 2rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  max-width: 1400px;
+  margin: 0 auto 3rem;
+}
+.footer-brand-name {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+.footer-brand-name span { color: #fff; }
+.footer-tagline { font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; }
+.social-links { display:flex; gap:0.8rem; }
+.social-link {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.social-link:hover { background: var(--gold); color: var(--ink); }
+.footer-heading { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #fff; margin-bottom: 1.2rem; }
+.footer-links { list-style:none; }
+.footer-links li { margin-bottom: 0.7rem; }
+.footer-links a { color: rgba(255,255,255,0.5); text-decoration:none; font-size: 0.85rem; transition: color 0.2s; cursor: pointer; }
+.footer-links a:hover { color: var(--gold); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ALERTS */
+.toast-container { position:fixed; bottom:2rem; right:2rem; z-index:9999; }
+.toast-msg {
+  background: var(--ink);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--gold);
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+@keyframes slideIn {
+  from { transform: translateX(100px); opacity:0; }
+  to { transform: translateX(0); opacity:1; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .nav-links { display:none; }
+  .hero-visual { display:none; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .detail-gallery { flex-direction: column; }
+  .detail-thumbs { flex-direction: row; }
+}
+
+/* PAGE TRANSITIONS */
+.page-header {
+  background: linear-gradient(135deg, var(--ink), #1a1208);
+  padding: 3rem 2rem;
+  color: #fff;
+  text-align: center;
+}
+.page-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  color: #fff;
+}
+.page-header p { color: rgba(255,255,255,0.6); margin-top: 0.5rem; }
+
+/* REVIEW */
+.review-card {
+  background: #fff;
+  border: 1px solid var(--mid);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+.reviewer { display:flex; align-items:center; gap:1rem; margin-bottom: 0.8rem; }
+.reviewer-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+.reviewer-name { font-weight: 600; font-size: 0.9rem; }
+.review-date { font-size: 0.75rem; color: #aaa; }
+.review-text { font-size: 0.88rem; color: #555; line-height: 1.7; }
+
+/* Category Pills */
+.cat-pills { display:flex; gap:0.8rem; flex-wrap:wrap; margin-bottom: 2rem; }
+.cat-pill {
+  padding: 8px 20px;
+  border: 2px solid var(--mid);
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #fff;
+}
+.cat-pill:hover, .cat-pill.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="showPage('home')">Step<span>In</span></div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home')">Home</a></li>
+      <li><a href="#" onclick="showPage('shop')">Shop</a></li>
+      <li><a href="#" onclick="showPage('shop'); filterGender('men')">Men</a></li>
+      <li><a href="#" onclick="showPage('shop'); filterGender('women')">Women</a></li>
+      <li><a href="#" onclick="showPage('about')">About</a></li>
+      <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <input class="nav-search" type="text" placeholder="Search shoes...">
+      <span class="nav-icon" onclick="showPage('wishlist')"><i class="far fa-heart"></i></span>
+      <span class="nav-icon" onclick="showPage('cart')">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </span>
+      <span class="nav-icon" onclick="showPage('login')"><i class="far fa-user"></i></span>
+    </div>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div id="page-home" class="page active">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="hero-badge">🇮🇳 India's Premium Shoe Store</span>
+        <h1 class="hero-title">Comfort for<br>Every <span class="accent">Step</span></h1>
+        <p class="hero-sub">Discover premium footwear from Nike, Adidas, Bata, Puma & more. Style that speaks, comfort that lasts.</p>
+        <button class="btn-hero" onclick="showPage('shop')">Shop Now →</button>
+        <button class="btn-hero-outline" onclick="showPage('shop'); filterGender('women')">Women's Collection</button>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-shoe-grid">
+          <div class="hero-shoe-card">
+            <div class="shoe-img-placeholder men">👟</div>
+            <div class="hero-shoe-name">Nike Air Max</div>
+            <div class="hero-shoe-price">₹8,999</div>
+          </div>
+          <div class="hero-shoe-card" style="margin-top:0; margin-bottom:2rem;">
+            <div class="shoe-img-placeholder women">👠</div>
+            <div class="hero-shoe-name">Adidas Heels</div>
+            <div class="hero-shoe-price">₹5,499</div>
+          </div>
+          <div class="hero-shoe-card">
+            <div class="shoe-img-placeholder women">🥿</div>
+            <div class="hero-shoe-name">Bata Flats</div>
+            <div class="hero-shoe-price">₹2,299</div>
+          </div>
+          <div class="hero-shoe-card">
+            <div class="shoe-img-placeholder men">🥾</div>
+            <div class="hero-shoe-name">Puma Boots</div>
+            <div class="hero-shoe-price">₹6,799</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brands Bar -->
+  <div class="brands-bar">
+    <div class="brands-track">
+      <span class="brand-item">Nike</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Adidas</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Bata</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Puma</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Reebok</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Woodland</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Sketchers</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">New Balance</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Nike</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Adidas</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Bata</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Puma</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Reebok</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Woodland</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">Sketchers</span>
+      <span class="brand-item">•</span>
+      <span class="brand-item">New Balance</span>
+    </div>
+  </div>
+
+  <!-- Featured Products -->
+  <div class="section">
+    <div class="section-label">Best Sellers</div>
+    <h2 class="section-title">Featured Shoes</h2>
+    <div id="homeFeatured" class="products-grid"></div>
+  </div>
+
+  <!-- Category Section -->
+  <div style="background: var(--cream); padding: 5rem 0;">
+    <div class="section" style="padding-top:0; padding-bottom:0;">
+      <div class="section-label">Browse by</div>
+      <h2 class="section-title">Shop by Category</h2>
+      <div class="row g-3">
+        <div class="col-md-3 col-6">
+          <div class="p-4 text-center rounded-3 cursor-pointer" style="background: linear-gradient(135deg, #1a2a3a, #2c4a6a); color:#fff; cursor:pointer;" onclick="showPage('shop'); filterGender('men')">
+            <div style="font-size:3rem; margin-bottom:0.8rem;">👟</div>
+            <div style="font-family: var(--font-display); font-size:1.2rem; font-weight:700;">Men's Shoes</div>
+            <div style="font-size:0.8rem; opacity:0.7; margin-top:0.3rem;">120+ Styles</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="p-4 text-center rounded-3" style="background: linear-gradient(135deg, #3a1a2a, #6a2c4a); color:#fff; cursor:pointer;" onclick="showPage('shop'); filterGender('women')">
+            <div style="font-size:3rem; margin-bottom:0.8rem;">👠</div>
+            <div style="font-family: var(--font-display); font-size:1.2rem; font-weight:700;">Women's Shoes</div>
+            <div style="font-size:0.8rem; opacity:0.7; margin-top:0.3rem;">180+ Styles</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="p-4 text-center rounded-3" style="background: linear-gradient(135deg, #1a3a2a, #2c6a4a); color:#fff; cursor:pointer;" onclick="showPage('shop')">
+            <div style="font-size:3rem; margin-bottom:0.8rem;">👞</div>
+            <div style="font-family: var(--font-display); font-size:1.2rem; font-weight:700;">Formal</div>
+            <div style="font-size:0.8rem; opacity:0.7; margin-top:0.3rem;">60+ Styles</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="p-4 text-center rounded-3" style="background: linear-gradient(135deg, #3a3a1a, #6a6a2c); color:#fff; cursor:pointer;" onclick="showPage('shop')">
+            <div style="font-size:3rem; margin-bottom:0.8rem;">🥾</div>
+            <div style="font-family: var(--font-display); font-size:1.2rem; font-weight:700;">Boots</div>
+            <div style="font-size:0.8rem; opacity:0.7; margin-top:0.3rem;">45+ Styles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Step<span>In</span></div>
+        <p class="footer-tagline">India's premier online destination for premium footwear. Quality, comfort, and style — delivered to your doorstep.</p>
+        <div class="social-links">
+          <div class="social-link"><i class="fab fa-instagram"></i></div>
+          <div class="social-link"><i class="fab fa-facebook-f"></i></div>
+          <div class="social-link"><i class="fab fa-twitter"></i></div>
+          <div class="social-link"><i class="fab fa-youtube"></i></div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Quick Links</div>
+        <ul class="footer-links">
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('shop')">Shop All</a></li>
+          <li><a onclick="showPage('about')">About Us</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Customer</div>
+        <ul class="footer-links">
+          <li><a onclick="showPage('cart')">My Cart</a></li>
+          <li><a onclick="showPage('login')">Login</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Returns & Refunds</a></li>
+          <li><a href="#">Size Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 StepIn. All rights reserved.</span>
+      <span>Made with ❤️ in India</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ===================== SHOP PAGE ===================== -->
+<div id="page-shop" class="page">
+  <div class="page-header">
+    <h1>Shop All Shoes</h1>
+    <p>Discover our complete collection of premium footwear</p>
+  </div>
+  <div class="section">
+    <div class="cat-pills" id="shopCatPills">
+      <span class="cat-pill active" onclick="setActivePill(this); filterShop('all')">All</span>
+      <span class="cat-pill" onclick="setActivePill(this); filterShop('men')">Men</span>
+      <span class="cat-pill" onclick="setActivePill(this); filterShop('women')">Women</span>
+      <span class="cat-pill" onclick="setActivePill(this); filterShop('sneakers')">Sneakers</span>
+      <span class="cat-pill" onclick="setActivePill(this); filterShop('formal')">Formal</span>
+      <span class="cat-pill" onclick="setActivePill(this); filterShop('boots')">Boots</span>
+    </div>
+    <div class="filter-bar">
+      <span class="filter-label">Filter by:</span>
+      <select class="filter-select" id="brandFilter" onchange="applyFilters()">
+        <option value="">All Brands</option>
+        <option>Nike</option><option>Adidas</option><option>Bata</option>
+        <option>Puma</option><option>Reebok</option><option>Woodland</option>
+      </select>
+      <select class="filter-select" id="priceFilter" onchange="applyFilters()">
+        <option value="">All Prices</option>
+        <option value="0-2000">Under ₹2,000</option>
+        <option value="2000-5000">₹2,000 – ₹5,000</option>
+        <option value="5000-10000">₹5,000 – ₹10,000</option>
+        <option value="10000-99999">Above ₹10,000</option>
+      </select>
+      <select class="filter-select" id="sortFilter" onchange="applyFilters()">
+        <option>Sort: Featured</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+        <option>Top Rated</option>
+        <option>Newest</option>
+      </select>
+    </div>
+    <div id="shopGrid" class="products-grid"></div>
+  </div>
+</div>
+
+<!-- ===================== PRODUCT DETAIL PAGE ===================== -->
+<div id="page-product" class="page">
+  <div class="section">
+    <button onclick="showPage('shop')" style="background:none; border:none; color:var(--gold); font-weight:600; cursor:pointer; margin-bottom:1.5rem;">← Back to Shop</button>
+    <div class="row g-5">
+      <div class="col-lg-6">
+        <div class="detail-gallery">
+          <div class="detail-thumbs">
+            <div class="thumb active">👟</div>
+            <div class="thumb">👟</div>
+            <div class="thumb">👟</div>
+            <div class="thumb">👟</div>
+          </div>
+          <div class="detail-main-img" id="detailMainImg">👟</div>
+        </div>
+      </div>
+      <div class="col-lg-6" id="detailInfo">
+        <!-- filled by JS -->
+      </div>
+    </div>
+    <!-- Reviews -->
+    <div class="mt-5">
+      <h3 style="font-family: var(--font-display); font-size:1.5rem; font-weight:700; margin-bottom:1.5rem;">Customer Reviews</h3>
+      <div class="review-card">
+        <div class="reviewer"><div class="reviewer-avatar">RS</div><div><div class="reviewer-name">Rahul Sharma</div><div class="review-date">January 2026</div></div><div class="stars ms-auto">★★★★★</div></div>
+        <p class="review-text">Absolutely love these shoes! The quality is outstanding and they're incredibly comfortable. Perfect for long walks and daily wear. Worth every rupee!</p>
+      </div>
+      <div class="review-card">
+        <div class="reviewer"><div class="reviewer-avatar">PK</div><div><div class="reviewer-name">Priya Kumar</div><div class="review-date">December 2025</div></div><div class="stars ms-auto">★★★★☆</div></div>
+        <p class="review-text">Great shoes, very stylish and the material is top notch. Delivery was fast. The only thing is they run slightly small so order one size up.</p>
+      </div>
+      <div class="review-card">
+        <div class="reviewer"><div class="reviewer-avatar">AM</div><div><div class="reviewer-name">Arjun Mehta</div><div class="review-date">November 2025</div></div><div class="stars ms-auto">★★★★★</div></div>
+        <p class="review-text">Best purchase this year. The shoe's cushioning is amazing, my feet don't hurt after 8 hours of work. Highly recommend to everyone!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CART PAGE ===================== -->
+<div id="page-cart" class="page">
+  <div class="page-header">
+    <h1>Shopping Cart</h1>
+    <p id="cartCountText">0 items in your cart</p>
+  </div>
+  <div class="section">
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div id="cartItems">
+          <div class="text-center py-5" id="emptyCart">
+            <div style="font-size:4rem; margin-bottom:1rem;">🛒</div>
+            <h4 style="font-family:var(--font-display)">Your cart is empty</h4>
+            <p style="color:#999; margin-bottom:1.5rem;">Add some shoes to get started!</p>
+            <button class="btn-hero" onclick="showPage('shop')">Continue Shopping</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="order-summary">
+          <h5 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:1.5rem; color:#fff;">Order Summary</h5>
+          <div class="summary-row"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
+          <div class="summary-row"><span>Shipping</span><span style="color:var(--sage)">FREE</span></div>
+          <div class="summary-row"><span>GST (18%)</span><span id="cartGST">₹0</span></div>
+          <div class="summary-row"><span>Discount</span><span style="color:var(--rust)" id="cartDiscount">-₹0</span></div>
+          <div class="summary-total"><span>Total</span><span class="gold" id="cartTotal">₹0</span></div>
+          <button class="btn-hero mt-4 w-100" onclick="showPage('checkout')">Proceed to Checkout →</button>
+          <p style="font-size:0.75rem; color:rgba(255,255,255,0.4); text-align:center; margin-top:1rem;">Free delivery on orders above ₹999</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CHECKOUT PAGE ===================== -->
+<div id="page-checkout" class="page">
+  <div class="page-header">
+    <h1>Checkout</h1>
+    <p>Complete your order securely</p>
+  </div>
+  <div class="section">
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <div style="background:#fff; border-radius:12px; padding:2rem; border:1px solid var(--mid); margin-bottom:1.5rem;">
+          <div class="form-section-title">Delivery Address</div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">First Name</label>
+              <input class="form-control" placeholder="Rahul">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Last Name</label>
+              <input class="form-control" placeholder="Sharma">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Mobile Number</label>
+              <input class="form-control" placeholder="+91 9876543210">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Address Line 1</label>
+              <input class="form-control" placeholder="House/Flat No., Street">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Address Line 2</label>
+              <input class="form-control" placeholder="Landmark, Area">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">City</label>
+              <input class="form-control" placeholder="Mumbai">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">State</label>
+              <input class="form-control" placeholder="Maharashtra">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">PIN Code</label>
+              <input class="form-control" placeholder="400001">
+            </div>
+          </div>
+        </div>
+        <div style="background:#fff; border-radius:12px; padding:2rem; border:1px solid var(--mid);">
+          <div class="form-section-title">Payment Method</div>
+          <div class="payment-option selected" onclick="selectPayment(this)">
+            <div class="payment-icon">📱</div>
+            <div><div class="payment-label">UPI Payment</div><div class="payment-sub">GPay, PhonePe, Paytm, BHIM</div></div>
+          </div>
+          <div class="payment-option" onclick="selectPayment(this)">
+            <div class="payment-icon">💳</div>
+            <div><div class="payment-label">Credit / Debit Card</div><div class="payment-sub">Visa, Mastercard, RuPay</div></div>
+          </div>
+          <div class="payment-option" onclick="selectPayment(this)">
+            <div class="payment-icon">🏦</div>
+            <div><div class="payment-label">Net Banking</div><div class="payment-sub">All major Indian banks</div></div>
+          </div>
+          <div class="payment-option" onclick="selectPayment(this)">
+            <div class="payment-icon">💵</div>
+            <div><div class="payment-label">Cash on Delivery</div><div class="payment-sub">Pay when you receive</div></div>
+          </div>
+          <button class="btn-hero mt-3 w-100" onclick="placeOrder()">Place Order →</button>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="order-summary">
+          <h5 style="font-family:var(--font-display); font-size:1.2rem; margin-bottom:1.5rem; color:#fff;">Order Summary</h5>
+          <div id="checkoutItems" style="margin-bottom:1rem;"></div>
+          <div class="summary-row"><span>Subtotal</span><span id="checkoutSubtotal">₹0</span></div>
+          <div class="summary-row"><span>Shipping</span><span style="color:var(--sage)">FREE</span></div>
+          <div class="summary-row"><span>GST (18%)</span><span id="checkoutGST">₹0</span></div>
+          <div class="summary-total"><span>Total</span><span class="gold" id="checkoutTotal">₹0</span></div>
+          <div style="margin-top:1.5rem; padding:1rem; background:rgba(122,140,110,0.2); border-radius:8px;">
+            <p style="font-size:0.75rem; color:rgba(255,255,255,0.6); margin:0;"><i class="fas fa-shield-alt" style="color:var(--sage);"></i> 100% Secure Payment. Your data is encrypted and protected.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LOGIN PAGE ===================== -->
+<div id="page-login" class="page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">Step<span>In</span></div>
+      <p class="auth-subtitle">Welcome back! Sign in to your account</p>
+      <div class="form-group">
+        <label class="form-label">Email or Mobile</label>
+        <input class="form-control" placeholder="Enter your email or phone">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-control" type="password" placeholder="Enter your password">
+      </div>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div><input type="checkbox" id="remember" class="me-2"><label for="remember" style="font-size:0.85rem;">Remember me</label></div>
+        <a href="#" style="color:var(--rust); font-size:0.85rem; text-decoration:none;">Forgot password?</a>
+      </div>
+      <button class="btn-primary-custom" onclick="showToast('Welcome back! Logged in successfully.')">Login</button>
+      <div class="auth-divider"><span>or continue with</span></div>
+      <div class="d-flex gap-2 mb-3">
+        <button class="btn btn-outline-secondary flex-fill" style="font-size:0.85rem;"><i class="fab fa-google me-2"></i>Google</button>
+        <button class="btn btn-outline-secondary flex-fill" style="font-size:0.85rem;"><i class="fab fa-facebook me-2"></i>Facebook</button>
+      </div>
+      <p style="text-align:center; font-size:0.88rem; color:#999;">Don't have an account? <a href="#" onclick="showPage('signup')" style="color:var(--ink); font-weight:700;">Sign Up</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SIGNUP PAGE ===================== -->
+<div id="page-signup" class="page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">Step<span>In</span></div>
+      <p class="auth-subtitle">Create your account and start shopping</p>
+      <div class="row g-2 mb-2">
+        <div class="col-6">
+          <label class="form-label">First Name</label>
+          <input class="form-control" placeholder="Rahul">
+        </div>
+        <div class="col-6">
+          <label class="form-label">Last Name</label>
+          <input class="form-control" placeholder="Sharma">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-control" placeholder="rahul@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mobile</label>
+        <input class="form-control" placeholder="+91 9876543210">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-control" type="password" placeholder="Create a strong password">
+      </div>
+      <button class="btn-primary-custom" onclick="showToast('Account created! Welcome to StepIn.')">Create Account</button>
+      <p style="text-align:center; font-size:0.88rem; color:#999; margin-top:1rem;">Already have an account? <a href="#" onclick="showPage('login')" style="color:var(--ink); font-weight:700;">Login</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ABOUT PAGE ===================== -->
+<div id="page-about" class="page">
+  <div class="about-hero">
+    <h1>Our <span>Story</span></h1>
+    <p>Born in India, built for the world. StepIn is more than a shoe store — it's a commitment to quality, comfort, and authentic style.</p>
+  </div>
+  <div class="about-stats">
+    <div><div class="stat-number">50+</div><div class="stat-label">Premium Brands</div></div>
+    <div><div class="stat-number">2L+</div><div class="stat-label">Happy Customers</div></div>
+    <div><div class="stat-number">500+</div><div class="stat-label">Shoe Styles</div></div>
+    <div><div class="stat-number">7 Years</div><div class="stat-label">In Business</div></div>
+  </div>
+  <div class="about-values">
+    <div class="value-card">
+      <div class="value-icon">🏆</div>
+      <div class="value-title">Quality Promise</div>
+      <p class="value-text">Every shoe in our collection is handpicked for quality and authenticity. We partner directly with brands to ensure you get 100% genuine products.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🚚</div>
+      <div class="value-title">Fast Delivery</div>
+      <p class="value-text">Pan-India delivery within 3–5 business days. Express delivery available in major cities. Free returns within 30 days, no questions asked.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🎯</div>
+      <div class="value-title">Our Mission</div>
+      <p class="value-text">To make premium footwear accessible to every Indian. We believe everyone deserves to walk in comfort and style without breaking the bank.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">👁</div>
+      <div class="value-title">Our Vision</div>
+      <p class="value-text">To become India's most loved footwear destination — where style meets affordability, and every step tells a story of quality and craftsmanship.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CONTACT PAGE ===================== -->
+<div id="page-contact" class="page">
+  <div class="page-header">
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you. Get in touch!</p>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <div class="section-label">Get in Touch</div>
+      <h2 style="font-family:var(--font-display); font-size:2rem; font-weight:900; margin-bottom:2rem;">We're here to help</h2>
+      <div class="contact-info-item">
+        <div class="contact-icon"><i class="fas fa-phone"></i></div>
+        <div><div class="contact-info-title">Phone</div><div class="contact-info-text">+91 98765 43210<br>Mon-Sat, 9am – 8pm IST</div></div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+        <div><div class="contact-info-title">Email</div><div class="contact-info-text">support@stepin.in<br>We reply within 24 hours</div></div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div><div class="contact-info-title">Address</div><div class="contact-info-text">12, Linking Road, Bandra West<br>Mumbai, Maharashtra 400050</div></div>
+      </div>
+      <!-- Map placeholder -->
+      <div style="background: linear-gradient(135deg, #e8e8e8, #d0d0d0); border-radius:12px; height:200px; display:flex; align-items:center; justify-content:center; margin-top:1rem; border:1px solid var(--mid);">
+        <div style="text-align:center; color:#999;"><div style="font-size:2rem;">📍</div><div style="font-size:0.85rem; margin-top:0.5rem;">Google Maps would load here</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="background:#fff; border-radius:12px; padding:2.5rem; border:1px solid var(--mid);">
+        <div class="form-section-title">Send us a Message</div>
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input class="form-control" placeholder="Rahul Sharma">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-control" placeholder="rahul@email.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <input class="form-control" placeholder="Order enquiry...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-control" rows="5" placeholder="Tell us how we can help..."></textarea>
+        </div>
+        <button class="btn-hero w-100" onclick="showToast('Message sent! We will get back to you soon.')">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ORDER SUCCESS ===================== -->
+<div id="page-success" class="page">
+  <div style="min-height:80vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:4rem 2rem;">
+    <div>
+      <div style="font-size:5rem; margin-bottom:1.5rem;">🎉</div>
+      <h1 style="font-family:var(--font-display); font-size:2.5rem; font-weight:900; margin-bottom:1rem;">Order Placed!</h1>
+      <p style="color:#666; max-width:400px; margin:0 auto 2rem; font-size:1.05rem; line-height:1.7;">Your order has been successfully placed. You'll receive a confirmation on your email and WhatsApp shortly.</p>
+      <div style="background:#f8f8f8; border-radius:12px; padding:1.5rem; margin-bottom:2rem; display:inline-block;">
+        <div style="font-size:0.8rem; color:#999; margin-bottom:0.3rem;">Order ID</div>
+        <div style="font-family:var(--font-display); font-size:1.4rem; font-weight:700;" id="orderId">SI-2026-00001</div>
+      </div>
+      <br>
+      <button class="btn-hero me-2" onclick="showPage('home')">Continue Shopping</button>
+      <button class="btn-hero-outline" style="color:var(--ink); border-color:var(--mid);" onclick="showPage('home')">Track Order</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// DATA
+const products = [
+  { id:1, name:"Air Max 270", brand:"Nike", gender:"men", category:"sneakers", price:8999, original:11999, discount:25, rating:4.8, reviews:234, emoji:"👟", bg:"bg1", sizes:["UK 6","UK 7","UK 8","UK 9","UK 10"], colors:["#111","#e63","#29a"] },
+  { id:2, name:"Ultraboost 22", brand:"Adidas", gender:"women", category:"sneakers", price:11499, original:14999, discount:23, rating:4.9, reviews:189, emoji:"👟", bg:"bg2", sizes:["UK 4","UK 5","UK 6","UK 7"], colors:["#fff","#f9a","#88f"] },
+  { id:3, name:"Marie Claire Heels", brand:"Bata", gender:"women", category:"formal", price:2299, original:3499, discount:34, rating:4.5, reviews:312, emoji:"👠", bg:"bg3", sizes:["UK 4","UK 5","UK 6","UK 7"], colors:["#222","#c44","#a83"] },
+  { id:4, name:"Prowl Alt Running", brand:"Puma", gender:"men", category:"sneakers", price:4999, original:6499, discount:23, rating:4.6, reviews:156, emoji:"👟", bg:"bg4", sizes:["UK 6","UK 7","UK 8","UK 9","UK 10","UK 11"], colors:["#111","#e44","#292"] },
+  { id:5, name:"Classic Leather", brand:"Reebok", gender:"men", category:"sneakers", price:6799, original:8999, discount:24, rating:4.7, reviews:98, emoji:"👞", bg:"bg5", sizes:["UK 7","UK 8","UK 9","UK 10"], colors:["#fff","#ddd","#666"] },
+  { id:6, name:"Terrex Free Hiker", brand:"Adidas", gender:"men", category:"boots", price:13999, original:17999, discount:22, rating:4.8, reviews:67, emoji:"🥾", bg:"bg1", sizes:["UK 7","UK 8","UK 9","UK 10"], colors:["#4a3","#333","#964"] },
+  { id:7, name:"Saheli Sandals", brand:"Bata", gender:"women", category:"sandals", price:1499, original:2199, discount:32, rating:4.3, reviews:445, emoji:"🥿", bg:"bg6", sizes:["UK 4","UK 5","UK 6","UK 7","UK 8"], colors:["#c96","#f9a","#fff"] },
+  { id:8, name:"Woodland Boots", brand:"Woodland", gender:"men", category:"boots", price:5999, original:7999, discount:25, rating:4.6, reviews:203, emoji:"🥾", bg:"bg2", sizes:["UK 7","UK 8","UK 9","UK 10","UK 11"], colors:["#6a4","#444","#a63"] },
+  { id:9, name:"Nike Blazer Mid", brand:"Nike", gender:"women", category:"sneakers", price:7999, original:9999, discount:20, rating:4.7, reviews:321, emoji:"👟", bg:"bg3", sizes:["UK 4","UK 5","UK 6","UK 7"], colors:["#fff","#f44","#222"] },
+  { id:10, name:"Adidas NMD R1", brand:"Adidas", gender:"men", category:"sneakers", price:9499, original:12999, discount:27, rating:4.8, reviews:178, emoji:"👟", bg:"bg4", sizes:["UK 6","UK 7","UK 8","UK 9","UK 10"], colors:["#111","#fff","#e44"] },
+  { id:11, name:"Puma Suede Classic", brand:"Puma", gender:"women", category:"sneakers", price:5499, original:6999, discount:21, rating:4.5, reviews:267, emoji:"👟", bg:"bg5", sizes:["UK 4","UK 5","UK 6","UK 7","UK 8"], colors:["#444","#9a4","#f9a"] },
+  { id:12, name:"Bata Power Flex", brand:"Bata", gender:"men", category:"sneakers", price:1799, original:2499, discount:28, rating:4.2, reviews:534, emoji:"👟", bg:"bg6", sizes:["UK 6","UK 7","UK 8","UK 9","UK 10"], colors:["#14a","#333","#c44"] },
+];
+
+let cart = [];
+let currentFilter = 'all';
+let currentProduct = null;
+
+function fmt(n) { return '₹' + n.toLocaleString('en-IN'); }
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0,0);
+  if(page === 'home') renderHomeFeatured();
+  if(page === 'shop') renderShop(products);
+  if(page === 'cart') renderCart();
+  if(page === 'checkout') renderCheckout();
+}
+
+function renderCard(p) {
+  return `<div class="product-card" onclick="openProduct(${p.id})">
+    <div class="product-img ${p.bg}">
+      ${p.discount ? `<span class="product-badge">${p.discount}% OFF</span>` : ''}
+      <button class="product-wishlist" onclick="event.stopPropagation(); toggleWish(this)"><i class="far fa-heart"></i></button>
+      <span style="font-size:3.5rem;">${p.emoji}</span>
+    </div>
+    <div class="product-info">
+      <div class="product-brand">${p.brand}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-rating">
+        <span class="stars">${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5-Math.round(p.rating))}</span>
+        <span class="rating-count">(${p.reviews})</span>
+      </div>
+      <div class="product-price-row">
+        <div><span class="price-current">${fmt(p.price)}</span><span class="price-original">${fmt(p.original)}</span></div>
+        <span class="price-discount">Save ${fmt(p.original - p.price)}</span>
+      </div>
+      <div class="product-sizes">
+        ${p.sizes.slice(0,4).map((s,i) => `<button class="size-btn${i===0?' active':''}" onclick="event.stopPropagation(); setSizeActive(this)">${s}</button>`).join('')}
+        ${p.sizes.length > 4 ? '<span style="font-size:0.75rem;color:#999;align-self:center">+more</span>' : ''}
+      </div>
+      <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(${p.id})">Add to Cart 🛒</button>
+    </div>
+  </div>`;
+}
+
+function renderHomeFeatured() {
+  document.getElementById('homeFeatured').innerHTML = products.slice(0,4).map(renderCard).join('');
+}
+
+function renderShop(list) {
+  document.getElementById('shopGrid').innerHTML = list.length ? list.map(renderCard).join('') : '<p style="grid-column:1/-1;text-align:center;color:#999;padding:3rem 0;">No shoes found for this filter.</p>';
+}
+
+function setActivePill(el) {
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function filterShop(cat) {
+  currentFilter = cat;
+  applyFilters();
+}
+
+function filterGender(g) {
+  showPage('shop');
+  currentFilter = g;
+  const pills = document.querySelectorAll('.cat-pill');
+  pills.forEach(p => { p.classList.remove('active'); if(p.textContent.toLowerCase() === g) p.classList.add('active'); });
+  applyFilters();
+}
+
+function applyFilters() {
+  let list = [...products];
+  if(currentFilter !== 'all') {
+    list = list.filter(p => p.gender === currentFilter || p.category === currentFilter);
+  }
+  const brand = document.getElementById('brandFilter')?.value;
+  if(brand) list = list.filter(p => p.brand === brand);
+  const price = document.getElementById('priceFilter')?.value;
+  if(price) {
+    const [min,max] = price.split('-').map(Number);
+    list = list.filter(p => p.price >= min && p.price <= max);
+  }
+  const sort = document.getElementById('sortFilter')?.value;
+  if(sort === 'Price: Low to High') list.sort((a,b) => a.price - b.price);
+  if(sort === 'Price: High to Low') list.sort((a,b) => b.price - a.price);
+  if(sort === 'Top Rated') list.sort((a,b) => b.rating - a.rating);
+  renderShop(list);
+}
+
+function setSizeActive(el) {
+  const card = el.closest('.product-sizes');
+  card.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function toggleWish(btn) {
+  btn.classList.toggle('active');
+  btn.innerHTML = btn.classList.contains('active') ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+  showToast(btn.classList.contains('active') ? 'Added to wishlist ❤️' : 'Removed from wishlist');
+}
+
+function openProduct(id) {
+  currentProduct = products.find(p => p.id === id);
+  const p = currentProduct;
+  document.getElementById('detailMainImg').innerHTML = `<span style="font-size:8rem;">${p.emoji}</span>`;
+  document.getElementById('detailInfo').innerHTML = `
+    <span class="product-brand" style="font-size:0.9rem;">${p.brand}</span>
+    <h1 style="font-family:var(--font-display); font-size:2rem; font-weight:900; margin: 0.5rem 0;">${p.name}</h1>
+    <div class="product-rating mb-3">
+      <span class="stars" style="font-size:1rem;">${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5-Math.round(p.rating))}</span>
+      <span style="font-size:0.9rem; color:#666;">${p.rating} · ${p.reviews} reviews</span>
+    </div>
+    <div style="display:flex; align-items:baseline; gap:1rem; margin-bottom:1.5rem;">
+      <span style="font-family:var(--font-display); font-size:2.2rem; font-weight:900;">${fmt(p.price)}</span>
+      <span style="font-size:1rem; color:#aaa; text-decoration:line-through;">${fmt(p.original)}</span>
+      <span style="background:var(--rust); color:#fff; padding:3px 10px; border-radius:20px; font-size:0.8rem; font-weight:700;">${p.discount}% OFF</span>
+    </div>
+    <div style="margin-bottom:1.5rem;">
+      <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#666; margin-bottom:0.7rem;">Select Size</div>
+      <div class="product-sizes" style="gap:0.6rem;">
+        ${p.sizes.map((s,i) => `<button class="size-btn${i===0?' active':''}" style="padding:6px 14px; font-size:0.85rem;" onclick="setSizeActive(this)">${s}</button>`).join('')}
+      </div>
+    </div>
+    <div style="margin-bottom:1.5rem;">
+      <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#666; margin-bottom:0.7rem;">Color</div>
+      <div class="color-options">
+        ${p.colors.map((c,i) => `<div class="color-dot${i===0?' active':''}" style="background:${c}" onclick="setColorActive(this)"></div>`).join('')}
+      </div>
+    </div>
+    <div style="background:rgba(122,140,110,0.1); border-radius:8px; padding:1rem; margin-bottom:1.5rem;">
+      <div style="font-size:0.85rem; color:#555; display:flex; gap:2rem; flex-wrap:wrap;">
+        <span>🚚 Free delivery above ₹999</span>
+        <span>🔄 30-day easy returns</span>
+        <span>✅ 100% Genuine Product</span>
+      </div>
+    </div>
+    <p style="color:#666; font-size:0.9rem; line-height:1.8; margin-bottom:1.5rem;">Premium quality ${p.name} from ${p.brand}. Engineered for maximum comfort and durability. Perfect for everyday wear, sports activities, and casual outings. Made with breathable materials that keep your feet cool all day.</p>
+    <div style="display:flex; gap:1rem;">
+      <button class="btn-add-cart" style="flex:1; padding:14px;" onclick="addToCart(${p.id})">Add to Cart 🛒</button>
+      <button class="btn-hero" style="flex:1;" onclick="addToCart(${p.id}); showPage('cart')">Buy Now →</button>
+    </div>
+  `;
+  showPage('product');
+}
+
+function setColorActive(el) {
+  el.closest('.color-options').querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function addToCart(id) {
+  const p = products.find(p => p.id === id);
+  const existing = cart.find(c => c.id === id);
+  if(existing) { existing.qty++; }
+  else { cart.push({...p, qty: 1}); }
+  updateCartBadge();
+  showToast(`${p.name} added to cart! 🛒`);
+}
+
+function updateCartBadge() {
+  const total = cart.reduce((sum, c) => sum + c.qty, 0);
+  document.getElementById('cartBadge').textContent = total;
+}
+
+function renderCart() {
+  const container = document.getElementById('cartItems');
+  const empty = document.getElementById('emptyCart');
+  if(cart.length === 0) {
+    empty.style.display = 'block';
+    document.getElementById('cartCountText').textContent = '0 items in your cart';
+    updateSummary(0);
+    return;
+  }
+  empty.style.display = 'none';
+  document.getElementById('cartCountText').textContent = `${cart.reduce((s,c)=>s+c.qty,0)} items in your cart`;
+  container.innerHTML = cart.map(item => `
+    <div class="cart-item" id="cartItem-${item.id}">
+      <div class="cart-item-img ${item.bg}" style="font-size:2.5rem;">${item.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-meta">${item.brand} · UK 8 · Black</div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="updateQty(${item.id}, -1)">−</button>
+          <span class="qty-display" id="qty-${item.id}">${item.qty}</span>
+          <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+        </div>
+      </div>
+      <div class="cart-item-price">${fmt(item.price * item.qty)}</div>
+      <span class="cart-remove" onclick="removeFromCart(${item.id})"><i class="fas fa-trash-alt"></i></span>
+    </div>
+  `).join('') + '<div id="emptyCart" style="display:none"></div>';
+  const subtotal = cart.reduce((s,c) => s + c.price * c.qty, 0);
+  updateSummary(subtotal);
+}
+
+function updateSummary(subtotal) {
+  const gst = Math.round(subtotal * 0.18);
+  const discount = Math.round(subtotal * 0.05);
+  const total = subtotal + gst - discount;
+  ['cart','checkout'].forEach(prefix => {
+    const s = document.getElementById(prefix+'Subtotal');
+    const g = document.getElementById(prefix+'GST');
+    const d = document.getElementById(prefix+'Discount');
+    const t = document.getElementById(prefix+'Total');
+    if(s) s.textContent = fmt(subtotal);
+    if(g) g.textContent = fmt(gst);
+    if(d) d.textContent = '-' + fmt(discount);
+    if(t) t.textContent = fmt(total);
+  });
+}
+
+function updateQty(id, delta) {
+  const item = cart.find(c => c.id === id);
+  if(!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  document.getElementById('qty-'+id).textContent = item.qty;
+  document.getElementById('cartItem-'+id).querySelector('.cart-item-price').textContent = fmt(item.price * item.qty);
+  updateCartBadge();
+  const subtotal = cart.reduce((s,c) => s + c.price * c.qty, 0);
+  updateSummary(subtotal);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(c => c.id !== id);
+  updateCartBadge();
+  renderCart();
+  showToast('Item removed from cart');
+}
+
+function renderCheckout() {
+  const subtotal = cart.reduce((s,c) => s + c.price * c.qty, 0);
+  updateSummary(subtotal);
+  const container = document.getElementById('checkoutItems');
+  if(container) {
+    container.innerHTML = cart.map(c => `
+      <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.5rem; color:rgba(255,255,255,0.8);">
+        <span>${c.name} × ${c.qty}</span>
+        <span>${fmt(c.price * c.qty)}</span>
+      </div>
+    `).join('') || '<p style="color:rgba(255,255,255,0.5); font-size:0.85rem;">No items</p>';
+  }
+}
+
+function selectPayment(el) {
+  document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function placeOrder() {
+  cart = [];
+  updateCartBadge();
+  const orderId = 'SI-2026-' + String(Math.floor(Math.random() * 99999)).padStart(5,'0');
+  document.getElementById('orderId').textContent = orderId;
+  showPage('success');
+}
+
+function showToast(msg) {
+  const toast = document.createElement('div');
+  toast.className = 'toast-msg';
+  toast.textContent = msg;
+  document.getElementById('toastContainer').appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+// Init
+renderHomeFeatured();
+</script>
+</body>
+</html>

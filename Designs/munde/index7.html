@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZepraKicks - Compare Smart. Cop Smarter.</title>
+    <style>
+        :root {
+            --bg-primary: #f8f9fb;
+            --bg-section: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --accent: #1f2937;
+            --shadow: rgba(0, 0, 0, 0.05);
+            --border: #e5e7eb;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        body.street-theme {
+            --bg-primary: #fdfaf6;
+            --bg-section: #ffffff;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --accent: #e85d04;
+            --shadow: rgba(232, 93, 4, 0.08);
+            --border: #f5dcc8;
+            background-image: 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><path d="M100,100 Q150,80 200,100" stroke="%23e85d04" stroke-width="2" fill="none" opacity="0.03"/><circle cx="300" cy="200" r="40" stroke="%23e85d04" stroke-width="2" fill="none" opacity="0.03"/><path d="M800,150 L850,180 L820,220" stroke="%23e85d04" stroke-width="2" fill="none" opacity="0.03"/><path d="M500,600 Q550,580 600,600" stroke="%23e85d04" stroke-width="2" fill="none" opacity="0.03"/><circle cx="900" cy="500" r="60" stroke="%23e85d04" stroke-width="2" fill="none" opacity="0.03"/></svg>');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-section);
+            box-shadow: 0 2px 10px var(--shadow);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: baseline;
+            gap: 0.2rem;
+            position: relative;
+        }
+
+        .logo-zepra {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-kicks {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 70%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 10px;
+            clip-path: path('M0,0 Q35,3 70,0');
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 26px;
+            background-color: var(--border);
+            border-radius: 13px;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        body.street-theme .toggle-switch {
+            background-color: var(--accent);
+        }
+
+        body.street-theme .toggle-switch::after {
+            transform: translateX(24px);
+        }
+
+        .toggle-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        section {
+            padding: 80px 5%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        #home {
+            padding-top: 120px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+
+        .hero-collage {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 200px 200px 120px;
+            gap: 1rem;
+        }
+
+        .brand-card {
+            background-color: var(--bg-section);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        .brand-card:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1 / 3;
+        }
+
+        .brand-card:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .brand-card:nth-child(3) {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .brand-card:nth-child(4) {
+            grid-column: 1 / 3;
+            grid-row: 3;
+        }
+
+        .brand-logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-card:nth-child(1) .brand-logo { font-size: 3rem; }
+
+        .brand-tagline {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background-color: var(--bg-section);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .product-brand {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 1rem 0;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-like {
+            background-color: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-like:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-like.active {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-cart {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-cart:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .likes-grid, .cart-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .like-item, .cart-item {
+            background-color: var(--bg-section);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px var(--shadow);
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .item-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .item-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .item-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .item-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .btn-remove {
+            padding: 0.6rem 1.2rem;
+            background-color: transparent;
+            color: var(--danger);
+            border: 2px solid var(--danger);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-remove:hover {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .compare-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-compare {
+            padding: 1rem 2.5rem;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-compare:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 600;
+            color: #92400e;
+        }
+
+        .comparison-container {
+            display: grid;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .comparison-card {
+            background-color: var(--bg-section);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .comparison-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .comparison-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th {
+            text-align: left;
+            padding: 1rem;
+            background-color: var(--bg-primary);
+            font-weight: 700;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table tr:hover {
+            background-color: var(--bg-primary);
+        }
+
+        .price-best {
+            background-color: #d1fae5 !important;
+            font-weight: 800;
+            color: var(--success);
+        }
+
+        .savings-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #d1fae5;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .policy-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--bg-section);
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .policy-container h3 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .policy-container ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .policy-container li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .policy-container li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px var(--shadow);
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 2000;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 968px) {
+            #home {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .like-item, .cart-item {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-zepra">Zepra</span>
+            <span class="logo-kicks">Kicks</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#shop">Shop</a></li>
+            <li>
+                <a href="#likes">
+                    Likes
+                    <span class="badge" id="likesBadge">0</span>
+                </a>
+            </li>
+            <li>
+                <a href="#cart">
+                    Cart
+                    <span class="badge" id="cartBadge">0</span>
+                </a>
+            </li>
+            <li><a href="#compare">Compare</a></li>
+            <li><a href="#returns">Returns</a></li>
+            <li>
+                <div class="theme-toggle" id="themeToggle">
+                    <div class="toggle-switch"></div>
+                    <span class="toggle-label">Street</span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <div class="hero-content">
+            <h1>Compare Smart.<br>Cop Smarter.</h1>
+            <p>Find the best deals across Amazon, Flipkart, Myntra, and Ajio. All in one place.</p>
+            <a href="#shop" class="hero-cta">Start Shopping</a>
+        </div>
+        <div class="hero-collage">
+            <div class="brand-card">
+                <div class="brand-logo">NIKE</div>
+                <p class="brand-tagline">Just Do It</p>
+            </div>
+            <div class="brand-card">
+                <div class="brand-logo">ADIDAS</div>
+                <p class="brand-tagline">Impossible is Nothing</p>
+            </div>
+            <div class="brand-card">
+                <div class="brand-logo">PUMA</div>
+                <p class="brand-tagline">Forever Faster</p>
+            </div>
+            <div class="brand-card">
+                <div class="brand-logo">NEW BALANCE</div>
+                <p class="brand-tagline">Fearlessly Independent</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop">
+        <h2 class="section-title">Shop Sneakers</h2>
+        <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <section id="likes">
+        <h2 class="section-title">Your Likes</h2>
+        <div id="likesContainer"></div>
+    </section>
+
+    <section id="cart">
+        <h2 class="section-title">Your Cart</h2>
+        <div id="cartContainer"></div>
+    </section>
+
+    <section id="compare">
+        <h2 class="section-title">Price Comparison</h2>
+        <div id="compareContainer"></div>
+    </section>
+
+    <section id="returns">
+        <h2 class="section-title">Return Policy</h2>
+        <div class="policy-container">
+            <p>At ZepraKicks, we want you to be completely satisfied with your purchase. Please review our return policy below:</p>
+            
+            <h3>Return Window</h3>
+            <ul>
+                <li>7-day return window from date of delivery</li>
+                <li>Product must be unused and in original condition</li>
+                <li>All original tags and packaging must be intact</li>
+            </ul>
+
+            <h3>Refund Process</h3>
+            <ul>
+                <li>Refund processed within 5-7 business days after inspection</li>
+                <li>Amount credited to original payment method</li>
+                <li>Shipping charges are non-refundable</li>
+            </ul>
+
+            <h3>Exchange Policy</h3>
+            <ul>
+                <li>Exchange allowed once per order</li>
+                <li>Size exchange available for same model</li>
+                <li>Exchange shipping is free</li>
+            </ul>
+
+            <h3>Exclusions</h3>
+            <ul>
+                <li>No returns on limited edition sneakers</li>
+                <li>Customized orders are final sale</li>
+                <li>Sale items marked "Final Sale" cannot be returned</li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        const products = [
+            { id: 1, name: 'Air Max 270', brand: 'Nike', basePrice: 5299, emoji: '👟' },
+            { id: 2, name: 'Ultra Boost', brand: 'Adidas', basePrice: 6499, emoji: '🏃' },
+            { id: 3, name: 'RS-X', brand: 'Puma', basePrice: 4299, emoji: '⚡' },
+            { id: 4, name: '574 Core', brand: 'New Balance', basePrice: 3999, emoji: '🔥' },
+            { id: 5, name: 'Jordan 1', brand: 'Nike', basePrice: 8999, emoji: '🏀' },
+            { id: 6, name: 'Yeezy Boost', brand: 'Adidas', basePrice: 12999, emoji: '💎' },
+            { id: 7, name: 'Suede Classic', brand: 'Puma', basePrice: 3499, emoji: '✨' },
+            { id: 8, name: '990v5', brand: 'New Balance', basePrice: 7999, emoji: '🎯' }
+        ];
+
+        let likes = JSON.parse(localStorage.getItem('likes')) || [];
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let selectedForCompare = [];
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'street') {
+                document.body.classList.add('street-theme');
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('street-theme');
+            const isStreet = document.body.classList.contains('street-theme');
+            localStorage.setItem('theme', isStreet ? 'street' : 'formal');
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        function updateBadges() {
+            document.getElementById('likesBadge').textContent = likes.length;
+            document.getElementById('cartBadge').textContent = cart.length;
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => {
+                const isLiked = likes.some(p => p.id === product.id);
+                const inCart = cart.some(p => p.id === product.id);
+                return `
+                    <div class="product-card">
+                        <div class="product-image">${product.emoji}</div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <p class="product-brand">${product.brand}</p>
+                            <div class="product-price">₹${product.basePrice.toLocaleString()}</div>
+                            <div class="product-actions">
+                                <button class="btn btn-like ${isLiked ? 'active' : ''}" data-id="${product.id}">
+                                    ${isLiked ? '❤️' : '🤍'}
+                                </button>
+                                <button class="btn btn-cart" data-id="${product.id}" ${inCart ? 'disabled' : ''}>
+                                    ${inCart ? 'In Cart' : '🛒 Add'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.querySelectorAll('.btn-like').forEach(btn => {
+                btn.addEventListener('click', () => handleLike(parseInt(btn.dataset.id)));
+            });
+
+            document.querySelectorAll('.btn-cart').forEach(btn => {
+                btn.addEventListener('click', () => handleCart(parseInt(btn.dataset.id)));
+            });
+        }
+
+        function handleLike(productId) {
+            const product = products.find(p => p.id === productId);
+            const index = likes.findIndex(p => p.id === productId);
+
+            if (index === -1) {
+                likes.push(product);
+                showNotification('Added to likes! ❤️');
+            } else {
+                likes.splice(index, 1);
+                selectedForCompare = selectedForCompare.filter(id => id !== productId);
+                showNotification('Removed from likes');
+            }
+
+            localStorage.setItem('likes', JSON.stringify(likes));
+            updateBadges();
+            renderProducts();
+            renderLikes();
+        }
+
+        function handleCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const exists = cart.some(p => p.id === productId);
+
+            if (!exists) {
+                cart.push(product);
+                showNotification('Added to cart! 🛒');
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateBadges();
+                renderProducts();
+                renderCart();
+            }
+        }
+
+        function renderLikes() {
+            const container = document.getElementById('likesContainer');
+            
+            if (likes.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">❤️</div>
+                        <p>No likes yet. Start adding your favorite sneakers!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<div class="likes-grid">';
+            html += likes.map(product => {
+                const isSelected = selectedForCompare.includes(product.id);
+                return `
+                    <div class="like-item">
+                        <input type="checkbox" class="item-checkbox" data-id="${product.id}" ${isSelected ? 'checked' : ''}>
+                        <div class="item-image">${product.emoji}</div>
+                        <div class="item-info">
+                            <h4>${product.name}</h4>
+                            <p>${product.brand}</p>
+                        </div>
+                        <div class="item-price">₹${product.basePrice.toLocaleString()}</div>
+                        <button class="btn-remove" data-id="${product.id}">Remove</button>
+                    </div>
+                `;
+            }).join('');
+            html += '</div>';
+
+            if (selectedForCompare.length > 6) {
+                html += '<div class="alert">⚠️ You can compare maximum 6 products at a time. Please deselect some items.</div>';
+            }
+
+            if (selectedForCompare.length > 0 && selectedForCompare.length <= 6) {
+                html += `
+                    <div class="compare-actions">
+                        <button class="btn-compare">Compare Selected (${selectedForCompare.length})</button>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+
+            document.querySelectorAll('.item-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const id = parseInt(e.target.dataset.id);
+                    if (e.target.checked) {
+                        if (!selectedForCompare.includes(id)) {
+                            selectedForCompare.push(id);
+                        }
+                    } else {
+                        selectedForCompare = selectedForCompare.filter(pid => pid !== id);
+                    }
+                    renderLikes();
+                });
+            });
+
+            document.querySelectorAll('.like-item .btn-remove').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = parseInt(btn.dataset.id);
+                    likes = likes.filter(p => p.id !== id);
+                    selectedForCompare = selectedForCompare.filter(pid => pid !== id);
+                    localStorage.setItem('likes', JSON.stringify(likes));
+                    updateBadges();
+                    renderProducts();
+                    renderLikes();
+                    showNotification('Removed from likes');
+                });
+            });
+
+            const compareBtn = container.querySelector('.btn-compare');
+            if (compareBtn) {
+                compareBtn.addEventListener('click', () => {
+                    generateComparison();
+                    window.location.hash = '#compare';
+                });
+            }
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartContainer');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🛒</div>
+                        <p>Your cart is empty. Add some sneakers!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const html = `
+                <div class="cart-grid">
+                    ${cart.map(product => `
+                        <div class="cart-item">
+                            <div class="item-image">${product.emoji}</div>
+                            <div class="item-info">
+                                <h4>${product.name}</h4>
+                                <p>${product.brand}</p>
+                            </div>
+                            <div class="item-price">₹${product.basePrice.toLocaleString()}</div>
+                            <button class="btn-remove" data-id="${product.id}">Remove</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            container.innerHTML = html;
+
+            document.querySelectorAll('.cart-item .btn-remove').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = parseInt(btn.dataset.id);
+                    cart = cart.filter(p => p.id !== id);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateBadges();
+                    renderProducts();
+                    renderCart();
+                    showNotification('Removed from cart');
+                });
+            });
+        }
+
+        function generateComparison() {
+            const container = document.getElementById('compareContainer');
+            
+            if (selectedForCompare.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📊</div>
+                        <p>Select products from your likes to compare prices across platforms.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const comparisons = selectedForCompare.map(id => {
+                const product = products.find(p => p.id === id);
+                const basePrice = product.basePrice;
+                
+                const platforms = [
+                    { name: 'Amazon', price: basePrice + Math.floor(Math.random() * 400 - 200) },
+                    { name: 'Flipkart', price: basePrice + Math.floor(Math.random() * 400 - 200) },
+                    { name: 'Myntra', price: basePrice + Math.floor(Math.random() * 400 - 200) },
+                    { name: 'Ajio', price: basePrice + Math.floor(Math.random() * 400 - 200) }
+                ];
+
+                const lowestPrice = Math.min(...platforms.map(p => p.price));
+                const highestPrice = Math.max(...platforms.map(p => p.price));
+                const savings = highestPrice - lowestPrice;
+
+                return { product, platforms, lowestPrice, savings };
+            });
+
+            const html = `
+                <div class="comparison-container">
+                    ${comparisons.map(comp => `
+                        <div class="comparison-card">
+                            <div class="comparison-header">
+                                <h3>${comp.product.name}</h3>
+                                <p style="color: var(--text-secondary);">${comp.product.brand}</p>
+                            </div>
+                            <table class="comparison-table">
+                                <thead>
+                                    <tr>
+                                        <th>Platform</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${comp.platforms.map(platform => `
+                                        <tr class="${platform.price === comp.lowestPrice ? 'price-best' : ''}">
+                                            <td>${platform.name}</td>
+                                            <td>₹${platform.price.toLocaleString()}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                            <div class="savings-info">
+                                💰 You save ₹${comp.savings.toLocaleString()} compared to highest price
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+        initTheme();
+        renderProducts();
+        renderLikes();
+        renderCart();
+        generateComparison();
+        updateBadges();
+    </script>
+</body>
+</html>

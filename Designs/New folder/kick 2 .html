@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KicKart | Original Brands. Unreal Prices.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --kk-purple: #8a2be2;
+            --kk-red: #ff3e3e;
+            --kk-dark: #000000;
+            --kk-light: #f4f4f4;
+            --kk-border: #e0e0e0;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body { font-family: 'Inter', sans-serif; background: #fff; color: var(--kk-dark); overflow-x: hidden; }
+        .cursor-pointer { cursor: pointer; }
+
+        /* --- NAVBAR --- */
+        .navbar { border-bottom: 1px solid var(--kk-border); background: #fff; padding: 15px 0; }
+        .navbar-brand { font-weight: 900; font-size: 1.6rem; letter-spacing: -1.5px; }
+        .nav-link { font-weight: 600; font-size: 0.95rem; color: var(--kk-dark) !important; }
+        .search-container { position: relative; width: 40px; transition: var(--transition); overflow: hidden; }
+        .search-container.active { width: 200px; }
+        .search-input { border: none; border-bottom: 2px solid var(--kk-dark); width: 100%; outline: none; padding-left: 30px; }
+
+        /* --- HERO: ASYMMETRICAL BRAND WALL --- */
+        #hero { padding: 80px 0; background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%); }
+        .hero-title { font-size: 5rem; font-weight: 900; line-height: 0.9; margin-bottom: 25px; }
+        .brand-wall { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(12, 1fr); height: 500px; gap: 15px; }
+        .brand-box { background: #fff; border: 1px solid var(--kk-border); display: flex; align-items: center; justify-content: center; filter: grayscale(1); transition: var(--transition); cursor: pointer; position: relative; }
+        .brand-box:hover { filter: grayscale(0); transform: scale(1.02); border-color: var(--kk-purple); z-index: 10; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .brand-box img { width: 40%; transition: var(--transition); }
+        
+        /* Asymmetry Logic */
+        .bb-1 { grid-area: 1 / 1 / 8 / 7; } /* Large Nike */
+        .bb-2 { grid-area: 1 / 7 / 6 / 13; margin-top: 30px; } /* Adidas Offset */
+        .bb-3 { grid-area: 8 / 1 / 13 / 5; } /* Puma Bottom */
+        .bb-4 { grid-area: 6 / 5 / 13 / 13; margin-left: 20px; } /* Converse Deep */
+
+        /* --- PRODUCT CARD (NIKE STYLE) --- */
+        .product-card { position: relative; transition: var(--transition); border: none; background: #fff; margin-bottom: 30px; cursor: pointer; }
+        .card-img-container { background: var(--kk-light); aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+        .card-img-main { width: 90%; transition: opacity 0.3s; }
+        .card-img-hover { position: absolute; width: 90%; opacity: 0; transition: opacity 0.3s; }
+        .product-card:hover .card-img-main { opacity: 0; }
+        .product-card:hover .card-img-hover { opacity: 1; }
+        
+        .tag-badge { position: absolute; top: 15px; left: 15px; background: #fff; padding: 4px 12px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; z-index: 2; }
+        .wishlist-heart { position: absolute; top: 15px; right: 15px; z-index: 2; font-size: 1.3rem; transition: var(--transition); }
+        .wishlist-heart.active { color: var(--kk-red); }
+
+        .mini-thumbs { display: flex; gap: 8px; margin: 12px 0; }
+        .mini-thumb { width: 40px; height: 40px; border: 1px solid var(--kk-border); background: var(--kk-light); padding: 2px; }
+        .mini-thumb.active { border-color: var(--kk-dark); border-width: 2px; }
+        .mini-thumb img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* --- PAGES --- */
+        .page-section { display: none; padding-top: 40px; padding-bottom: 100px; }
+        .page-section.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- KICKS PAGE STRIPS --- */
+        .strip-categories { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; }
+        .btn-cat { background: #fff; border: 1px solid var(--kk-border); border-radius: 30px; padding: 8px 25px; font-weight: 600; white-space: nowrap; transition: var(--transition); }
+        .btn-cat.active { background: var(--kk-dark); color: #fff; border-color: var(--kk-dark); }
+        
+        .strip-filters { border-top: 1px solid var(--kk-border); border-bottom: 1px solid var(--kk-border); padding: 15px 0; margin-bottom: 30px; }
+
+        /* --- PRICE COMPARISON TABLE --- */
+        .compare-row-kk { background: #f9f0ff; font-weight: 800; border-left: 4px solid var(--kk-purple); }
+        .compare-badge { font-size: 0.7rem; background: var(--kk-purple); color: #fff; padding: 2px 6px; border-radius: 4px; }
+
+        /* --- STICKY MOBILE CTA --- */
+        @media (max-width: 768px) {
+            .mobile-sticky-cta { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; border-top: 1px solid #eee; padding: 15px; z-index: 1000; display: flex; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home')">KIC<span style="color:var(--kk-purple)">KART</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('kicks')">Kicks</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Brands</a>
+                        <ul class="dropdown-menu border-0 shadow-sm">
+                            <li><a class="dropdown-item" href="#" onclick="filterByBrand('Nike')">Nike</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByBrand('Adidas')">Adidas</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByBrand('Puma')">Puma</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-4">
+                    <div class="search-container" id="searchCont">
+                        <i class="bi bi-search cursor-pointer" onclick="toggleSearch()"></i>
+                        <input type="text" class="search-input" placeholder="Search...">
+                    </div>
+                    <i class="bi bi-heart fs-5 cursor-pointer" onclick="showPage('wishlist')"></i>
+                    <div class="position-relative cursor-pointer" onclick="showPage('cart')">
+                        <i class="bi bi-bag fs-5"></i>
+                        <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-dark" style="font-size: 0.6rem;">0</span>
+                    </div>
+                    <div class="dropdown">
+                        <div class="nav-link dropdown-toggle cursor-pointer" data-bs-toggle="dropdown">Hi, Alex</div>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm">
+                            <li><a class="dropdown-item" href="#" onclick="showPage('account')">Account Settings</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="showPage('orders')">My Orders</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="#">Sign Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="home" class="page-section active">
+        <section id="hero" class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <h1 class="hero-title">STEP INTO<br><span style="color:var(--kk-purple)">UNREAL</span> DEALS.</h1>
+                    <p class="text-secondary mb-4 fs-5">Original brands. Direct source pricing. No fluff, just kicks.</p>
+                    <button class="btn btn-dark rounded-0 px-5 py-3 fw-bold" onclick="showPage('kicks')">EXPLORE KICKS</button>
+                </div>
+                <div class="col-lg-6 offset-lg-1 d-none d-lg-block">
+                    <div class="brand-wall">
+                        <div class="brand-box bb-1 shadow-sm" onclick="filterByBrand('Nike')"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg"></div>
+                        <div class="brand-box bb-2 shadow-sm" onclick="filterByBrand('Adidas')"><img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg"></div>
+                        <div class="brand-box bb-3 shadow-sm" onclick="filterByBrand('Puma')"><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Puma_complete_logo.svg"></div>
+                        <div class="brand-box bb-4 shadow-sm" onclick="filterByBrand('Converse')"><img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Converse_logo.svg"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="py-5 border-top border-bottom mb-5 overflow-hidden">
+            <div class="d-flex justify-content-between align-items-center gap-5 opacity-25">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" height="30">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" height="30">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Puma_complete_logo.svg" height="30">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Converse_logo.svg" height="30">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Reebok_logo19.svg" height="30">
+            </div>
+        </div>
+
+        <section class="container mt-5">
+            <h3 class="fw-900 mb-4">TRENDING DROPS</h3>
+            <div class="row" id="trending-grid"></div>
+        </section>
+    </div>
+
+    <div id="kicks" class="page-section container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="#" onclick="showPage('home')">Home</a></li>
+                <li class="breadcrumb-item active">Kicks</li>
+            </ol>
+        </nav>
+
+        <div class="strip-categories no-scrollbar">
+            <button class="btn-cat active">All</button>
+            <button class="btn-cat">Sneakers</button>
+            <button class="btn-cat">Casual</button>
+            <button class="btn-cat">Formal</button>
+            <button class="btn-cat">Sports</button>
+            <button class="btn-cat">Sliders</button>
+        </div>
+
+        <div class="strip-filters">
+            <div class="row align-items-center">
+                <div class="col-8 d-flex gap-4">
+                    <select class="form-select border-0 fw-bold" style="width:auto"><option>Brand</option></select>
+                    <select class="form-select border-0 fw-bold" style="width:auto"><option>Gender</option></select>
+                    <select class="form-select border-0 fw-bold" style="width:auto"><option>Price</option></select>
+                </div>
+                <div class="col-4 text-end">
+                    <select class="form-select border-0 fw-bold d-inline-block" style="width:auto"><option>Sort By</option></select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="kicks-grid"></div>
+    </div>
+
+    <div id="product-detail" class="page-section container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="row g-2">
+                    <div class="col-2 d-none d-md-block">
+                        <img id="dt-th-1" src="" class="img-fluid border mb-2 cursor-pointer" onclick="changeDetailMain(this.src)">
+                        <img id="dt-th-2" src="" class="img-fluid border cursor-pointer" onclick="changeDetailMain(this.src)">
+                    </div>
+                    <div class="col-md-10">
+                        <div class="p-4 bg-light text-center">
+                            <img id="detail-main-img" src="" class="img-fluid" style="max-height: 500px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 ps-lg-5">
+                <p class="text-uppercase fw-bold m-0" id="dt-brand"></p>
+                <h1 class="fw-900 mb-1" id="dt-name"></h1>
+                <p class="text-secondary" id="dt-cat"></p>
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="fw-bold">⭐ 4.5</span>
+                    <span class="text-secondary small">(218 Reviews)</span>
+                </div>
+                <h3 class="fw-900 mb-4" id="dt-price"></h3>
+
+                <p class="fw-bold small">Select Size (UK)</p>
+                <div class="row g-2 mb-4">
+                    <div class="col-3"><div class="border p-2 text-center cursor-pointer">7</div></div>
+                    <div class="col-3"><div class="border p-2 text-center cursor-pointer bg-dark text-white">8</div></div>
+                    <div class="col-3"><div class="border p-2 text-center cursor-pointer">9</div></div>
+                    <div class="col-3"><div class="border p-2 text-center cursor-pointer">10</div></div>
+                </div>
+
+                <div class="d-grid gap-2 mb-4">
+                    <button class="btn btn-dark rounded-0 py-3 fw-bold" onclick="addToCart()">ADD TO BAG</button>
+                    <button class="btn btn-outline-dark rounded-0 py-3 fw-bold" onclick="addToWishlist()">FAVOURITE <i class="bi bi-heart ms-2"></i></button>
+                </div>
+
+                <div class="bg-light p-4 mt-5">
+                    <h6 class="fw-900 mb-3">PRICE COMPARISON</h6>
+                    <table class="table table-borderless mb-0">
+                        <tr class="compare-row-kk">
+                            <td>KicKart <span class="compare-badge">🏆 Best</span></td>
+                            <td class="text-end" id="comp-kk"></td>
+                        </tr>
+                        <tr>
+                            <td>Amazon India</td>
+                            <td class="text-end">₹12,499</td>
+                        </tr>
+                        <tr>
+                            <td>Myntra</td>
+                            <td class="text-end">₹11,999</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart" class="page-section container">
+        <h2 class="fw-900 mb-4">BAG</h2>
+        <div class="row">
+            <div class="col-lg-8" id="cart-items"></div>
+            <div class="col-lg-4">
+                <div class="p-4 bg-light sticky-top" style="top:100px">
+                    <h5 class="fw-900 mb-4">Order Summary</h5>
+                    <div class="d-flex justify-content-between mb-2"><span>Subtotal</span><span id="cart-sub">₹0</span></div>
+                    <div class="d-flex justify-content-between mb-4"><span>Delivery</span><span class="text-success">FREE</span></div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4"><span class="fw-bold fs-5">Total</span><span class="fw-bold fs-5" id="cart-total">₹0</span></div>
+                    <button class="btn btn-dark w-100 py-3 rounded-0 fw-bold" onclick="showPage('checkout')">CHECKOUT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="success" class="page-section container text-center">
+        <div class="py-5">
+            <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+            <h1 class="fw-900 mt-4">THANK YOU FOR YOUR ORDER 🎉</h1>
+            <p class="text-secondary">A confirmation has been sent to your email.</p>
+            <div class="mt-5">
+                <button class="btn btn-dark px-5 py-3 rounded-0" onclick="showPage('home')">CONTINUE SHOPPING</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="fw-900 mb-4">KIC<span style="color:var(--kk-purple)">KART</span></h4>
+                    <p class="text-secondary">Original brands. Unreal prices. The culture, simplified.</p>
+                </div>
+                <div class="col-md-2 offset-md-2">
+                    <h6 class="fw-bold mb-3">Shop</h6>
+                    <ul class="list-unstyled text-secondary small">
+                        <li>Sneakers</li>
+                        <li>Sale</li>
+                        <li>New Drops</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold mb-3">Follow Us</h6>
+                    <div class="d-flex gap-3 fs-4"><i class="bi bi-instagram"></i><i class="bi bi-twitter-x"></i></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // DATA MODEL
+        const products = [
+            { id: 1, brand: 'NIKE', name: 'Air Max Pulse', cat: 'Men\'s Shoes', price: 8295, oldPrice: 11995, tag: 'TRENDING', img1: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600', img2: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600' },
+            { id: 2, brand: 'ADIDAS', name: 'Ultraboost Light', cat: 'Running Shoes', price: 12999, oldPrice: 18999, tag: '-40%', img1: 'https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?w=600', img2: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?w=600' },
+            { id: 3, brand: 'PUMA', name: 'RS-X Efekt', cat: 'Lifestyle', price: 5499, oldPrice: 8999, tag: 'NEW', img1: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=600', img2: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600' },
+            { id: 4, brand: 'CONVERSE', name: 'Chuck Taylor 70', cat: 'High Top', price: 4295, oldPrice: 6295, tag: 'CLASSIC', img1: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600', img2: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600' }
+        ];
+
+        let cart = [];
+        let wishlist = [];
+        let currentProduct = null;
+
+        // UI LOGIC
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function toggleSearch() {
+            document.getElementById('searchCont').classList.toggle('active');
+        }
+
+        // RENDER CARDS
+        function renderCards(gridId, list) {
+            const grid = document.getElementById(gridId);
+            grid.innerHTML = list.map(p => `
+                <div class="col-6 col-md-3">
+                    <div class="product-card" onclick="openProduct(${p.id})">
+                        <span class="tag-badge shadow-sm">${p.tag}</span>
+                        <i class="bi bi-heart wishlist-heart" onclick="event.stopPropagation(); toggleWL(${p.id})"></i>
+                        <div class="card-img-container">
+                            <img src="${p.img1}" class="card-img-main">
+                            <img src="${p.img2}" class="card-img-hover">
+                        </div>
+                        <div class="mini-thumbs">
+                            <div class="mini-thumb active"><img src="${p.img1}"></div>
+                            <div class="mini-thumb"><img src="${p.img2}"></div>
+                        </div>
+                        <div class="p-1">
+                            <p class="text-uppercase fw-bold m-0 small" style="letter-spacing:1px">${p.brand}</p>
+                            <h6 class="fw-bold m-0">${p.name}</h6>
+                            <p class="text-secondary small m-0">${p.cat}</p>
+                            <div class="mt-2">
+                                <span class="fw-bold">₹${p.price.toLocaleString()}</span>
+                                <span class="text-secondary text-decoration-line-through small ms-2">₹${p.oldPrice.toLocaleString()}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openProduct(id) {
+            currentProduct = products.find(p => p.id === id);
+            document.getElementById('dt-brand').innerText = currentProduct.brand;
+            document.getElementById('dt-name').innerText = currentProduct.name;
+            document.getElementById('dt-cat').innerText = currentProduct.cat;
+            document.getElementById('dt-price').innerText = '₹' + currentProduct.price.toLocaleString();
+            document.getElementById('comp-kk').innerText = '₹' + currentProduct.price.toLocaleString();
+            document.getElementById('detail-main-img').src = currentProduct.img1;
+            document.getElementById('dt-th-1').src = currentProduct.img1;
+            document.getElementById('dt-th-2').src = currentProduct.img2;
+            showPage('product-detail');
+        }
+
+        function changeDetailMain(src) {
+            document.getElementById('detail-main-img').src = src;
+        }
+
+        // CART / WISHLIST
+        function addToCart() {
+            cart.push(currentProduct);
+            updateCart();
+            alert("Added to bag!");
+        }
+
+        function updateCart() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-items');
+            if(cart.length === 0) {
+                container.innerHTML = "<h4>Your bag is empty.</h4>";
+                return;
+            }
+            container.innerHTML = cart.map((p, i) => `
+                <div class="d-flex gap-4 border-bottom pb-4 mb-4 align-items-center">
+                    <img src="${p.img1}" width="100" class="bg-light">
+                    <div class="flex-grow-1">
+                        <h6 class="fw-bold m-0">${p.name}</h6>
+                        <p class="small text-secondary m-0">${p.cat}</p>
+                        <p class="fw-bold mt-2">₹${p.price.toLocaleString()}</p>
+                    </div>
+                    <i class="bi bi-trash cursor-pointer fs-5" onclick="removeFromCart(${i})"></i>
+                </div>
+            `).join('');
+            
+            const sub = cart.reduce((sum, p) => sum + p.price, 0);
+            document.getElementById('cart-sub').innerText = '₹' + sub.toLocaleString();
+            document.getElementById('cart-total').innerText = '₹' + sub.toLocaleString();
+        }
+
+        function removeFromCart(i) {
+            cart.splice(i, 1);
+            updateCart();
+        }
+
+        function filterByBrand(b) {
+            const filtered = products.filter(p => p.brand.toLowerCase() === b.toLowerCase());
+            renderCards('kicks-grid', filtered);
+            showPage('kicks');
+        }
+
+        // INIT
+        window.onload = () => {
+            renderCards('trending-grid', products);
+            renderCards('kicks-grid', products.concat(products));
+        };
+    </script>
+</body>
+</html>
+
+
+
+

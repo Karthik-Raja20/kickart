@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadeja Footwear | compare & choose the best deals</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* COLOR SYSTEM & VARIABLES */
+        :root {
+            --bg-pure: #ffffff;
+            --nav-bg: #000000;
+            --text-main: #000000;
+            --accent: #ff8c42; /* Soft Orange */
+            --btn-bg: #000000;
+            --btn-text: #ffffff;
+            --gray-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-pure);
+            color: var(--text-main);
+            padding-top: 70px; /* Space for fixed navbar */
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: var(--nav-bg);
+            transition: top 0.3s;
+            height: 70px;
+        }
+        .navbar-brand, .nav-link, .nav-icon {
+            color: white !important;
+        }
+        .nav-link:hover { color: var(--accent) !important; }
+        .nav-icon { position: relative; font-size: 1.2rem; cursor: pointer; margin-left: 15px; }
+        .badge-count {
+            position: absolute; top: -5px; right: -10px;
+            background-color: var(--accent); color: white;
+            border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; font-weight: bold;
+        }
+
+        /* SVG LOGO */
+        .brand-logo svg { width: 40px; height: 40px; fill: white; margin-right: 10px; }
+
+        /* SEARCH DROPDOWN */
+        #search-dropdown {
+            position: fixed; top: 70px; left: 0; width: 100%;
+            background: white; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000; display: none;
+        }
+        #search-dropdown.active { display: block; }
+        .search-suggestion { cursor: pointer; padding: 5px 0; border-bottom: 1px solid #eee; }
+        .search-suggestion:hover { color: var(--accent); }
+
+        /* BUTTONS */
+        .btn-primary-custom {
+            background-color: var(--btn-bg); color: var(--btn-text);
+            border: none; padding: 10px 20px; border-radius: 4px; transition: 0.2s;
+        }
+        .btn-primary-custom:hover { background-color: var(--accent); color: white; }
+
+        /* HERO SECTION */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=2070&auto=format&fit=crop') center/cover;
+            height: 80vh; color: white; display: flex; align-items: center;
+        }
+        
+        /* SLIDING BRAND STRIP */
+        .brand-strip { overflow: hidden; white-space: nowrap; padding: 20px 0; border-bottom: 1px solid #eee; }
+        .brand-track { display: inline-block; animation: slide 20s linear infinite; }
+        .brand-track h3 { display: inline-block; margin: 0 40px; font-weight: 800; color: #ccc; text-transform: uppercase;}
+        @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* PRODUCT CARDS */
+        .product-card { border: 1px solid #eee; border-radius: 8px; overflow: hidden; position: relative; transition: 0.3s; cursor: pointer; height: 100%; display: flex; flex-direction: column; }
+        .product-card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .product-img-container { height: 250px; overflow: hidden; position: relative; background: #f4f4f4; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s ease; }
+        .product-img.hover-img { position: absolute; top: 0; left: 0; opacity: 0; }
+        .product-card:hover .product-img.main-img { opacity: 0; }
+        .product-card:hover .product-img.hover-img { opacity: 1; transform: scale(1.05); transition: transform 0.4s ease, opacity 0.4s ease; }
+        
+        /* PREMIUM CARD SPECIFIC */
+        .premium-card:hover .product-img.main-img { opacity: 1; transform: scale(1.1); transition: 0.4s; }
+        .premium-card:hover .product-img.hover-img { display: none; }
+
+        .discount-tag { position: absolute; top: 10px; left: 10px; background: white; color: black; padding: 2px 8px; font-size: 0.8rem; font-weight: bold; border-radius: 4px; z-index: 2; }
+        .wishlist-btn { position: absolute; top: 10px; right: 10px; background: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; border: 1px solid #eee; transition: 0.2s;}
+        .wishlist-btn.active i { color: red; animation: pop 0.3s ease; }
+        @keyframes pop { 50% { transform: scale(1.4); } 100% { transform: scale(1); } }
+
+        .card-body-custom { padding: 15px; flex-grow: 1; display: flex; flex-direction: column;}
+        .brand-logo-text { font-size: 0.8rem; color: #666; font-weight: 600; text-transform: uppercase; }
+        .price-strike { text-decoration: line-through; color: #999; font-size: 0.9rem; margin-right: 5px;}
+        .price-bold { font-weight: 800; font-size: 1.1rem; }
+        .color-dot { display: inline-block; width: 15px; height: 15px; border-radius: 50%; margin-right: 5px; cursor: pointer; border: 1px solid #ccc; }
+
+        /* PRODUCT PAGE */
+        .size-box { display: inline-block; border: 1px solid #ccc; padding: 8px 15px; margin: 5px; cursor: pointer; border-radius: 4px; }
+        .size-box.selected { background: black; color: white; border-color: black; }
+        .shake { animation: shakeError 0.5s; border-color: red !important; }
+        @keyframes shakeError { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-5px);} 50% {transform: translateX(5px);} 75% {transform: translateX(-5px);} }
+
+        /* COMPARISON TABLE */
+        .compare-table th { background: #f8f9fa; }
+        .best-deal { background-color: #e8f5e9 !important; font-weight: bold; color: #2e7d32; border: 2px solid #2e7d32;}
+
+        /* TOAST */
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 1050; }
+        .custom-toast { background: black; color: white; padding: 15px 20px; margin-top: 10px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; gap: 10px;}
+        .custom-toast.show { opacity: 1; }
+
+        /* FOOTER */
+        footer { background: var(--nav-bg); color: white; padding: 40px 0 20px 0; margin-top: 50px;}
+        footer a { color: #ccc; text-decoration: none; }
+        footer a:hover { color: var(--accent); }
+
+        /* MISC */
+        .low-stock { color: red; font-size: 0.8rem; font-weight: bold; }
+        .validation-error { border-color: red !important; }
+        .validation-success { border-color: green !important; }
+        .filter-sidebar { background: var(--gray-light); padding: 20px; border-radius: 8px; }
+        .breadcrumb a { color: #666; text-decoration: none; }
+        .breadcrumb a:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand brand-logo d-flex align-items-center" href="#home" onclick="navigate('home')">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="white" stroke-width="4"/>
+                    <path d="M20,40 Q50,10 80,40" fill="none" stroke="white" stroke-width="4"/>
+                    <path d="M30,30 Q50,0 70,30" fill="none" stroke="white" stroke-width="3"/>
+                    <path d="M35,60 Q50,50 65,60 Q50,65 35,60" fill="white"/>
+                    <path d="M30,70 Q50,95 70,70" fill="none" stroke="white" stroke-width="5"/>
+                </svg>
+                Jadeja Footwear
+            </a>
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#shop" onclick="navigate('shop')">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about" onclick="navigate('about')">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact" onclick="navigate('contact')">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center ms-lg-4">
+                    <i class="fas fa-search nav-icon" onclick="toggleSearch()"></i>
+                    <i class="fas fa-heart nav-icon" onclick="navigate('wishlist')">
+                        <span class="badge-count" id="wishlist-count">0</span>
+                    </i>
+                    <i class="fas fa-shopping-bag nav-icon" onclick="navigate('cart')">
+                        <span class="badge-count" id="cart-count">0</span>
+                    </i>
+                    <div class="dropdown ms-3">
+                        <i class="fas fa-user nav-icon" data-bs-toggle="dropdown" aria-expanded="false" id="profile-icon"></i>
+                        <ul class="dropdown-menu dropdown-menu-end" id="auth-dropdown">
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="search-dropdown">
+        <div class="container">
+            <div class="d-flex justify-content-between mb-2">
+                <h5>Search Products</h5>
+                <i class="fas fa-times" style="cursor:pointer;" onclick="toggleSearch()"></i>
+            </div>
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by brand or name..." onkeyup="handleSearch()">
+            <div id="searchResults" class="mt-3"></div>
+            <div id="recentSearches" class="mt-2 text-muted small"></div>
+        </div>
+    </div>
+
+    <div id="app"></div>
+
+    <div id="toast-container"></div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>Jadeja Footwear</h5>
+                    <p>Compare & choose the best deals on premium footwear.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#shop" onclick="navigate('shop')">Shop</a></li>
+                        <li><a href="#return-policy" onclick="navigate('return-policy')">Return Policy</a></li>
+                        <li><a href="#contact" onclick="navigate('contact')">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Why Choose Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i> Easy 7-day replacement</li>
+                        <li><i class="fas fa-check text-success me-2"></i> 24/7 support</li>
+                        <li><i class="fas fa-check text-success me-2"></i> Fast shipping</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="text-center text-secondary small">
+                &copy; 2026 Jadeja Footwear. Built via Vanilla JS.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // ==========================================
+        // 1. DATA (DUMMY DATABASE)
+        // ==========================================
+        const productsDB = [
+            { id: 'p1', brand: 'Nike', name: 'Air Max 270', type: 'Running Shoes', price: 12500, origPrice: 14000, rating: 4.5, colors: ['#000', '#fff', '#ff0000'], sizes: [7, 8, 9, 10], stock: 15, category: 'Running', gender: 'Men', img1: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1605340536736-c8641bc1c6cb?w=500&auto=format&fit=crop' },
+            { id: 'p2', brand: 'Adidas', name: 'Ultraboost 22', type: 'Running Shoes', price: 15000, origPrice: 17000, rating: 5, colors: ['#000', '#0000ff'], sizes: [6, 7, 8, 9], stock: 3, category: 'Running', gender: 'Women', img1: 'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=500&auto=format&fit=crop' },
+            { id: 'p3', brand: 'Puma', name: 'RS-X3', type: 'Sneakers', price: 8500, origPrice: 10000, rating: 4, colors: ['#fff', '#ff8c42'], sizes: [8, 9, 10, 11], stock: 20, category: 'Sneakers', gender: 'Men', img1: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop' },
+            { id: 'p4', brand: 'Reebok', name: 'Classic Leather', type: 'Casual Shoes', price: 6000, origPrice: 7500, rating: 4.5, colors: ['#fff', '#000'], sizes: [7, 8, 10], stock: 2, category: 'Casual', gender: 'Unisex', img1: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1584735174965-48c48d7cdfde?w=500&auto=format&fit=crop' },
+            { id: 'p5', brand: 'New Balance', name: '574 Core', type: 'Sneakers', price: 9000, origPrice: 11000, rating: 4.5, colors: ['#808080', '#000'], sizes: [8, 9, 10], stock: 12, category: 'Sneakers', gender: 'Men', img1: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1530821875964-91927b611bad?w=500&auto=format&fit=crop' },
+            { id: 'p6', brand: 'Vans', name: 'Old Skool', type: 'Skate Shoes', price: 5500, origPrice: 6000, rating: 4, colors: ['#000', '#fff'], sizes: [6, 7, 8, 9, 10], stock: 30, category: 'Casual', gender: 'Unisex', img1: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500&auto=format&fit=crop' },
+            { id: 'p7', brand: 'Converse', name: 'Chuck Taylor', type: 'High Tops', price: 4500, origPrice: 5000, rating: 4.5, colors: ['#fff', '#000', '#ff0000'], sizes: [7, 8, 9], stock: 5, category: 'Casual', gender: 'Unisex', img1: 'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1494496195158-c3becb4f2475?w=500&auto=format&fit=crop' },
+            { id: 'p8', brand: 'Nike', name: 'Air Force 1', type: 'Sneakers', price: 9500, origPrice: 10500, rating: 5, colors: ['#fff'], sizes: [8, 9, 10, 11], stock: 8, category: 'Sneakers', gender: 'Men', img1: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop' },
+            { id: 'p9', brand: 'Adidas', name: 'Stan Smith', type: 'Sneakers', price: 8000, origPrice: 9000, rating: 4.5, colors: ['#fff'], sizes: [6, 7, 8], stock: 1, category: 'Sneakers', gender: 'Women', img1: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=500&auto=format&fit=crop' },
+            { id: 'p10', brand: 'Puma', name: 'Suede Classic', type: 'Sneakers', price: 6500, origPrice: 7500, rating: 4, colors: ['#000', '#ff0000'], sizes: [8, 9, 10], stock: 15, category: 'Sneakers', gender: 'Men', img1: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500&auto=format&fit=crop' },
+            { id: 'p11', brand: 'Nike', name: 'Pegasus 39', type: 'Running Shoes', price: 11000, origPrice: 12500, rating: 4.5, colors: ['#000', '#0000ff'], sizes: [7, 8, 9, 10], stock: 22, category: 'Running', gender: 'Men', img1: 'https://images.unsplash.com/photo-1605340536736-c8641bc1c6cb?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop' },
+            { id: 'p12', brand: 'Asics', name: 'Gel-Kayano 29', type: 'Running Shoes', price: 13500, origPrice: 15000, rating: 5, colors: ['#000', '#808080'], sizes: [8, 9, 10], stock: 10, category: 'Running', gender: 'Men', img1: 'https://images.unsplash.com/photo-1530821875964-91927b611bad?w=500&auto=format&fit=crop', img2: 'https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&auto=format&fit=crop' }
+        ];
+
+        // ==========================================
+        // 2. STATE MANAGEMENT (LocalStorage)
+        // ==========================================
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let recentSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+
+        function saveState() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            updateBadges();
+        }
+        function updateBadges() {
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('wishlist-count').innerText = wishlist.length;
+        }
+
+        // ==========================================
+        // 3. ROUTER & CORE UI LOGIC
+        // ==========================================
+        const appDiv = document.getElementById('app');
+
+        function navigate(view, id = null) {
+            window.scrollTo(0, 0);
+            window.location.hash = id ? `${view}?id=${id}` : view;
+            renderView(view, id);
+            document.getElementById('search-dropdown').classList.remove('active');
+        }
+
+        window.addEventListener('hashchange', () => {
+            let hash = window.location.hash.substring(1);
+            if (!hash) hash = 'home';
+            const [view, paramStr] = hash.split('?');
+            let id = null;
+            if (paramStr) { id = paramStr.split('=')[1]; }
+            renderView(view, id);
+        });
+
+        function renderView(view, id) {
+            updateAuthMenu();
+            let html = '';
+            switch(view) {
+                case 'home': html = renderHome(); break;
+                case 'shop': html = renderShop(); setTimeout(initShopLogic, 100); break;
+                case 'product': html = renderProduct(id); setTimeout(()=> initProductLogic(id), 100); break;
+                case 'cart': html = renderCart(); break;
+                case 'wishlist': html = renderWishlist(); break;
+                case 'account': html = currentUser ? renderAccount() : renderLogin(); break;
+                case 'orders': html = currentUser ? renderOrders() : renderLogin(); break;
+                case 'login': html = renderLogin(); break;
+                case 'signup': html = renderSignup(); break;
+                case 'about': html = renderAbout(); break;
+                case 'contact': html = renderContact(); break;
+                case 'return-policy': html = renderReturnPolicy(); break;
+                default: html = render404(); break;
+            }
+            appDiv.innerHTML = html;
+        }
+
+        // ==========================================
+        // 4. PRICE COMPARISON ALGORITHM
+        // ==========================================
+        function getCompetitorPrices(basePrice) {
+            // Seeded random based on price to keep it consistent per item during session
+            let seed = basePrice * 0.001; 
+            return {
+                amazon: Math.round(basePrice * (0.95 + (seed % 0.1))),
+                flipkart: Math.round(basePrice * (0.92 + (seed % 0.15))),
+                myntra: Math.round(basePrice * (0.98 + (seed % 0.12))),
+                official: Math.round(basePrice * 1.1)
+            };
+        }
+
+        function renderComparisonTable(productObj) {
+            const comp = getCompetitorPrices(productObj.price);
+            const prices = [
+                { name: 'Our Price', price: productObj.price, key: 'our' },
+                { name: 'Amazon', price: comp.amazon, key: 'amazon' },
+                { name: 'Flipkart', price: comp.flipkart, key: 'flipkart' },
+                { name: 'Myntra', price: comp.myntra, key: 'myntra' },
+                { name: 'Official Brand', price: comp.official, key: 'official' }
+            ];
+            
+            const minPrice = Math.min(...prices.map(p => p.price));
+            
+            let tableRows = prices.map(p => {
+                let isBest = p.price === minPrice;
+                return `
+                    <tr class="${isBest ? 'best-deal' : ''}">
+                        <td>${p.name} ${isBest ? '<span class="badge bg-success ms-2">Best Deal</span>' : ''}</td>
+                        <td class="text-end">₹${p.price.toLocaleString()}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            return `
+                <div class="table-responsive mt-4 border rounded p-3 bg-white">
+                    <h5 class="mb-3"><i class="fas fa-balance-scale"></i> Price Comparison</h5>
+                    <table class="table table-hover compare-table mb-0">
+                        <tbody>${tableRows}</tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // 5. VIEW RENDERERS (HTML Generators)
+        // ==========================================
+
+        function createProductCardHTML(p, type = 'detailed') {
+            const inWishlist = wishlist.some(item => item.id === p.id);
+            const discount = Math.round(((p.origPrice - p.price) / p.origPrice) * 100);
+            const colorsHTML = p.colors.map(c => `<span class="color-dot" style="background-color:${c}" onclick="event.stopPropagation(); changeCardColor(this, '${p.img1}', '${p.img2}')"></span>`).join('');
+            const stockHTML = p.stock < 5 ? `<div class="low-stock mt-1">Only ${p.stock} left in stock!</div>` : '';
+            
+            if (type === 'premium') {
+                return `
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="product-card premium-card" onclick="navigate('product', '${p.id}')">
+                        <span class="discount-tag">-${discount}%</span>
+                        <div class="wishlist-btn ${inWishlist ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishlist('${p.id}')">
+                            <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
+                        </div>
+                        <div class="product-img-container">
+                            <img src="${p.img1}" class="product-img main-img" alt="${p.name}">
+                            <img src="${p.img2}" class="product-img hover-img" alt="${p.name}">
+                        </div>
+                        <div class="card-body-custom text-center">
+                            <div class="brand-logo-text">${p.brand}</div>
+                            <h5 class="mb-1">${p.name}</h5>
+                            <div class="mb-2">
+                                <span class="price-strike">₹${p.origPrice}</span>
+                                <span class="price-bold">₹${p.price}</span>
+                            </div>
+                            <div>${colorsHTML}</div>
+                        </div>
+                    </div>
+                </div>`;
+            } else {
+                // Detailed Card
+                return `
+                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 product-item" data-brand="${p.brand}" data-cat="${p.category}" data-gender="${p.gender}" data-price="${p.price}" data-date="${Math.random()}">
+                    <div class="product-card" onclick="navigate('product', '${p.id}')">
+                        <span class="discount-tag">-${discount}%</span>
+                        <div class="wishlist-btn ${inWishlist ? 'active' : ''}" onclick="event.stopPropagation(); toggleWishlist('${p.id}', this)">
+                            <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
+                        </div>
+                        <div class="product-img-container">
+                            <img src="${p.img1}" class="product-img main-img" alt="${p.name}">
+                            <img src="${p.img2}" class="product-img hover-img" alt="${p.name}">
+                        </div>
+                        <div class="card-body-custom">
+                            <div class="brand-logo-text">${p.brand}</div>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <h6 class="mb-0 text-truncate">${p.name}</h6>
+                                <span class="small text-warning"><i class="fas fa-star"></i> ${p.rating}</span>
+                            </div>
+                            <div class="small text-muted mb-2">${p.type}</div>
+                            <div class="mt-auto">
+                                <span class="price-strike">₹${p.origPrice}</span>
+                                <span class="price-bold">₹${p.price}</span>
+                                ${stockHTML}
+                            </div>
+                            <div class="mt-2">${colorsHTML}</div>
+                        </div>
+                    </div>
+                </div>`;
+            }
+        }
+
+        function renderHome() {
+            const featured = productsDB.slice(0, 3).map(p => createProductCardHTML(p, 'premium')).join('');
+            const brands = ['NIKE', 'ADIDAS', 'PUMA', 'REEBOK', 'NEW BALANCE', 'VANS', 'CONVERSE', 'ASICS', 'NIKE', 'ADIDAS'];
+            const strip = brands.map(b => `<h3>${b}</h3>`).join('');
+
+            return `
+                <section class="hero-section">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h1 class="display-3 fw-bold mb-4">Step Into Greatness</h1>
+                                <p class="lead mb-4">Discover the latest drops and compare prices across top platforms instantly.</p>
+                                <button class="btn-primary-custom btn-lg" onclick="navigate('shop')">Shop Now</button>
+                            </div>
+                            <div class="col-md-6 d-none d-md-block">
+                                <div class="row">
+                                    <div class="col-6 mb-3"><div class="bg-white p-4 text-center rounded shadow cursor-pointer" onclick="navigate('shop'); setTimeout(()=>applyBrandFilter('Nike'), 200)"><h4 class="text-black fw-bold mb-0">NIKE</h4></div></div>
+                                    <div class="col-6 mb-3"><div class="bg-white p-4 text-center rounded shadow cursor-pointer" onclick="navigate('shop'); setTimeout(()=>applyBrandFilter('Adidas'), 200)"><h4 class="text-black fw-bold mb-0">ADIDAS</h4></div></div>
+                                    <div class="col-6"><div class="bg-white p-4 text-center rounded shadow cursor-pointer" onclick="navigate('shop'); setTimeout(()=>applyBrandFilter('Puma'), 200)"><h4 class="text-black fw-bold mb-0">PUMA</h4></div></div>
+                                    <div class="col-6"><div class="bg-white p-4 text-center rounded shadow cursor-pointer" onclick="navigate('shop'); setTimeout(()=>applyBrandFilter('Vans'), 200)"><h4 class="text-black fw-bold mb-0">VANS</h4></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="brand-strip">
+                    <div class="brand-track">${strip}${strip}</div>
+                </div>
+
+                <div class="container mt-5">
+                    <h2 class="fw-bold mb-4 text-center">Featured Drops</h2>
+                    <div class="row">${featured}</div>
+                </div>
+
+                <div class="container mt-5 mb-5 bg-light p-5 rounded">
+                    <h2 class="fw-bold text-center mb-5">Why Choose Us</h2>
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-3">
+                            <i class="fas fa-sync-alt fa-3x mb-3 text-black"></i>
+                            <h5 class="fw-bold">Easy 7-Day Replacement</h5>
+                            <p class="text-muted">No questions asked replacement for wrong size or color.</p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <i class="fas fa-headset fa-3x mb-3 text-black"></i>
+                            <h5 class="fw-bold">24/7 Support</h5>
+                            <p class="text-muted">We are here to help you anytime, anywhere.</p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <i class="fas fa-shipping-fast fa-3x mb-3 text-black"></i>
+                            <h5 class="fw-bold">Fast Shipping</h5>
+                            <p class="text-muted">Get your kicks delivered securely and swiftly.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderShop() {
+            const productsHTML = productsDB.map(p => createProductCardHTML(p, 'detailed')).join('');
+            return `
+                <div class="container mt-4">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#home" onclick="navigate('home')">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Shop</li>
+                        </ol>
+                    </nav>
+                    <div class="row">
+                        <div class="col-lg-3 mb-4">
+                            <div class="filter-sidebar">
+                                <h5 class="fw-bold mb-3">Filters</h5>
+                                
+                                <h6 class="mt-3">Sort By</h6>
+                                <select class="form-select mb-3" id="sortSelect">
+                                    <option value="popular">Popular</option>
+                                    <option value="low-high">Price: Low to High</option>
+                                    <option value="high-low">Price: High to Low</option>
+                                    <option value="newest">Newest</option>
+                                </select>
+
+                                <h6>Brand</h6>
+                                <div class="form-check"><input class="form-check-input filter-check brand-filter" type="checkbox" value="Nike" id="b1"><label class="form-check-label" for="b1">Nike</label></div>
+                                <div class="form-check"><input class="form-check-input filter-check brand-filter" type="checkbox" value="Adidas" id="b2"><label class="form-check-label" for="b2">Adidas</label></div>
+                                <div class="form-check"><input class="form-check-input filter-check brand-filter" type="checkbox" value="Puma" id="b3"><label class="form-check-label" for="b3">Puma</label></div>
+                                <div class="form-check"><input class="form-check-input filter-check brand-filter" type="checkbox" value="Vans" id="b4"><label class="form-check-label" for="b4">Vans</label></div>
+
+                                <h6 class="mt-3">Gender</h6>
+                                <div class="form-check"><input class="form-check-input filter-check gender-filter" type="checkbox" value="Men" id="g1"><label class="form-check-label" for="g1">Men</label></div>
+                                <div class="form-check"><input class="form-check-input filter-check gender-filter" type="checkbox" value="Women" id="g2"><label class="form-check-label" for="g2">Women</label></div>
+                                <div class="form-check"><input class="form-check-input filter-check gender-filter" type="checkbox" value="Unisex" id="g3"><label class="form-check-label" for="g3">Unisex</label></div>
+
+                                <h6 class="mt-3">Price Range</h6>
+                                <input type="range" class="form-range" id="priceRange" min="0" max="20000" value="20000">
+                                <div class="d-flex justify-content-between small"><span>₹0</span><span id="priceVal">₹20000</span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-9">
+                            <div class="row" id="shop-product-grid">
+                                ${productsHTML}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProduct(id) {
+            const p = productsDB.find(x => x.id === id);
+            if (!p) return render404();
+            
+            // Calculate delivery date (+5 days)
+            let delDate = new Date();
+            delDate.setDate(delDate.getDate() + 5);
+            let dateStr = delDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+            const sizesHTML = p.sizes.map(s => `<div class="size-box" onclick="selectSize(this, ${s})">UK ${s}</div>`).join('');
+            const colorsHTML = p.colors.map(c => `<span class="color-dot" style="width:25px;height:25px;background-color:${c}" onclick="document.getElementById('main-prod-img').src='${p.img2}'"></span>`).join('');
+            const ratingStars = '<i class="fas fa-star text-warning"></i>'.repeat(Math.floor(p.rating)) + (p.rating % 1 !== 0 ? '<i class="fas fa-star-half-alt text-warning"></i>' : '');
+
+            const moreFromBrand = productsDB.filter(x => x.brand === p.brand && x.id !== p.id).slice(0, 3).map(x => createProductCardHTML(x, 'premium')).join('');
+
+            return `
+                <div class="container mt-4">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#home" onclick="navigate('home')">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#shop" onclick="navigate('shop')">Shop</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">${p.name}</li>
+                        </ol>
+                    </nav>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-4">
+                            <div class="sticky-top" style="top: 90px;">
+                                <img src="${p.img1}" id="main-prod-img" class="img-fluid rounded border w-100" alt="${p.name}">
+                                <div class="d-flex mt-2 gap-2">
+                                    <img src="${p.img1}" class="img-thumbnail border" style="width: 80px; cursor:pointer;" onclick="document.getElementById('main-prod-img').src=this.src">
+                                    <img src="${p.img2}" class="img-thumbnail border" style="width: 80px; cursor:pointer;" onclick="document.getElementById('main-prod-img').src=this.src">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="fw-bold">${p.name}</h2>
+                            <h6 class="text-muted text-uppercase">${p.brand} | ${p.type}</h6>
+                            <div class="mb-3">${ratingStars} <span class="ms-2 text-muted">(${p.rating} / 5)</span></div>
+                            
+                            <h3 class="fw-bold mb-1">₹${p.price.toLocaleString()} <span class="price-strike fs-5 ms-2">₹${p.origPrice.toLocaleString()}</span></h3>
+                            <p class="text-success small fw-bold mb-4">Inclusive of all taxes</p>
+
+                            <div class="mb-4">
+                                <h6 class="fw-bold">Select Color</h6>
+                                ${colorsHTML}
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-end mb-2">
+                                    <h6 class="fw-bold mb-0">Select Size (UK)</h6>
+                                </div>
+                                <div id="size-container">${sizesHTML}</div>
+                                <div class="text-danger small mt-1 d-none" id="size-error">Please select a size first.</div>
+                            </div>
+
+                            <button class="btn-primary-custom w-100 py-3 mb-4 fs-5" onclick="addToCart('${p.id}')">
+                                Add to Cart
+                            </button>
+                            <button class="btn btn-outline-dark w-100 py-2 mb-4" onclick="toggleWishlist('${p.id}')">
+                                <i class="fas fa-heart"></i> Add to Wishlist
+                            </button>
+
+                            <div class="border p-3 rounded bg-light mb-4 text-sm">
+                                <div class="mb-2"><i class="fas fa-box-open me-2"></i> <strong>Stock:</strong> ${p.stock > 0 ? `<span class="text-success">In Stock (${p.stock} left)</span>` : '<span class="text-danger">Out of Stock</span>'}</div>
+                                <div class="mb-2"><i class="fas fa-truck me-2"></i> <strong>Delivery:</strong> Est. by ${dateStr}</div>
+                                <div><i class="fas fa-undo me-2"></i> <strong>Returns:</strong> 7-day replacement for size/color issues.</div>
+                            </div>
+
+                            ${renderComparisonTable(p)}
+
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+                    <h4 class="fw-bold mb-4">More from ${p.brand}</h4>
+                    <div class="row">${moreFromBrand || '<p class="text-muted">No more products from this brand.</p>'}</div>
+                </div>
+            `;
+        }
+
+        function renderCart() {
+            if (cart.length === 0) {
+                return `
+                <div class="container mt-5 text-center">
+                    <i class="fas fa-shopping-cart fa-5x text-muted mb-4"></i>
+                    <h2>Your Cart is Empty</h2>
+                    <p class="text-muted">Looks like you haven't added anything yet.</p>
+                    <button class="btn-primary-custom mt-3" onclick="navigate('shop')">Continue Shopping</button>
+                </div>`;
+            }
+
+            let subtotal = 0;
+            let itemsHTML = cart.map((item, index) => {
+                const p = productsDB.find(x => x.id === item.id);
+                subtotal += p.price * item.qty;
+                return `
+                <div class="d-flex border-bottom py-3 align-items-center">
+                    <img src="${p.img1}" style="width: 80px; height: 80px; object-fit: cover;" class="rounded me-3">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 fw-bold">${p.name}</h6>
+                        <small class="text-muted">Size: ${item.size} | Color: Default</small><br>
+                        <span class="fw-bold">₹${p.price.toLocaleString()}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="updateQty(${index}, -1)">-</button>
+                        <span class="mx-2">${item.qty}</span>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="updateQty(${index}, 1)">+</button>
+                    </div>
+                    <button class="btn btn-sm text-danger ms-3" onclick="removeFromCart(${index})"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="mt-2 mb-3 px-3 py-2 bg-light rounded small">
+                    <span class="fw-bold">Best Deal Check: </span>
+                    You are saving ₹${getCompetitorPrices(p.price).official - p.price} compared to the official store!
+                </div>
+                `;
+            }).join('');
+
+            const shipping = subtotal > 10000 ? 0 : 500;
+            const total = subtotal + shipping;
+
+            return `
+                <div class="container mt-4">
+                    <h2 class="fw-bold mb-4">Shopping Cart</h2>
+                    <div class="row">
+                        <div class="col-md-8 mb-4">
+                            <div class="bg-white p-4 rounded border">${itemsHTML}</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="bg-light p-4 rounded border sticky-top" style="top: 90px;">
+                                <h5 class="fw-bold mb-4">Order Summary</h5>
+                                <div class="d-flex justify-content-between mb-2"><span>Subtotal</span><span>₹${subtotal.toLocaleString()}</span></div>
+                                <div class="d-flex justify-content-between mb-3"><span>Shipping</span><span>${shipping === 0 ? 'Free' : '₹'+shipping}</span></div>
+                                <hr>
+                                <div class="d-flex justify-content-between mb-4"><span class="fw-bold fs-5">Total</span><span class="fw-bold fs-5">₹${total.toLocaleString()}</span></div>
+                                
+                                <form id="checkoutForm" onsubmit="handleCheckout(event)">
+                                    <h6 class="fw-bold mb-3">Shipping Details</h6>
+                                    <input type="text" class="form-control mb-2" id="cName" placeholder="Full Name" value="${currentUser ? currentUser.name : ''}" required>
+                                    <input type="text" class="form-control mb-2" id="cPhone" placeholder="Phone Number" required pattern="[0-9]{10}">
+                                    <textarea class="form-control mb-3" id="cAddress" placeholder="Full Address" required></textarea>
+                                    
+                                    <h6 class="fw-bold mb-3">Payment Method</h6>
+                                    <select class="form-select mb-4" id="cPayment">
+                                        <option value="UPI">UPI</option>
+                                        <option value="Card">Credit/Debit Card</option>
+                                        <option value="COD">Cash on Delivery</option>
+                                    </select>
+                                    
+                                    <button type="submit" class="btn-primary-custom w-100 py-3" id="placeOrderBtn">Place Order</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderWishlist() {
+            if (wishlist.length === 0) {
+                return `
+                <div class="container mt-5 text-center">
+                    <i class="far fa-heart fa-5x text-muted mb-4"></i>
+                    <h2>Your Wishlist is Empty</h2>
+                    <p class="text-muted">Save shoes you like and compare prices easily.</p>
+                    <button class="btn-primary-custom mt-3" onclick="navigate('shop')">Explore Shop</button>
+                </div>`;
+            }
+
+            let itemsHTML = wishlist.map(item => {
+                const p = productsDB.find(x => x.id === item.id);
+                return `
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="product-card">
+                        <div class="wishlist-btn active" onclick="toggleWishlist('${p.id}')"><i class="fas fa-heart"></i></div>
+                        <div class="product-img-container" onclick="navigate('product', '${p.id}')">
+                            <img src="${p.img1}" class="product-img main-img">
+                        </div>
+                        <div class="card-body-custom">
+                            <h6 class="fw-bold mb-1">${p.name}</h6>
+                            <div class="mb-2"><span class="price-bold">₹${p.price.toLocaleString()}</span></div>
+                            <button class="btn btn-sm btn-dark w-100 mb-2" onclick="navigate('product', '${p.id}')">View Details to Buy</button>
+                            ${renderComparisonTable(p)}
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            return `
+                <div class="container mt-4">
+                    <h2 class="fw-bold mb-4">My Wishlist</h2>
+                    <div class="row">${itemsHTML}</div>
+                </div>
+            `;
+        }
+
+        // ==========================================
+        // 6. LOGIC & INTERACTIVITY
+        // ==========================================
+        
+        // Shop Filters & Sort Logic
+        function initShopLogic() {
+            const filters = document.querySelectorAll('.filter-check');
+            const sortSel = document.getElementById('sortSelect');
+            const priceRange = document.getElementById('priceRange');
+            
+            filters.forEach(f => f.addEventListener('change', runShopFilters));
+            sortSel.addEventListener('change', runShopFilters);
+            priceRange.addEventListener('input', (e) => {
+                document.getElementById('priceVal').innerText = `₹${e.target.value}`;
+                runShopFilters();
+            });
+        }
+
+        function applyBrandFilter(brand) {
+            // Triggered from Homepage brand click
+            setTimeout(() => {
+                const checkboxes = document.querySelectorAll('.brand-filter');
+                if(checkboxes.length > 0) {
+                    checkboxes.forEach(cb => {
+                        cb.checked = (cb.value === brand);
+                    });
+                    runShopFilters();
+                }
+            }, 100);
+        }
+
+        function runShopFilters() {
+            const checkedBrands = Array.from(document.querySelectorAll('.brand-filter:checked')).map(cb => cb.value);
+            const checkedGenders = Array.from(document.querySelectorAll('.gender-filter:checked')).map(cb => cb.value);
+            const maxPrice = parseInt(document.getElementById('priceRange').value);
+            const sortVal = document.getElementById('sortSelect').value;
+
+            const grid = document.getElementById('shop-product-grid');
+            const items = Array.from(grid.getElementsByClassName('product-item'));
+
+            items.forEach(item => {
+                let pBrand = item.getAttribute('data-brand');
+                let pGender = item.getAttribute('data-gender');
+                let pPrice = parseInt(item.getAttribute('data-price'));
+
+                let showBrand = checkedBrands.length === 0 || checkedBrands.includes(pBrand);
+                let showGender = checkedGenders.length === 0 || checkedGenders.includes(pGender) || pGender === 'Unisex';
+                let showPrice = pPrice <= maxPrice;
+
+                if (showBrand && showGender && showPrice) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Sorting
+            let visibleItems = items.filter(i => i.style.display !== 'none');
+            visibleItems.sort((a, b) => {
+                let pA = parseInt(a.getAttribute('data-price'));
+                let pB = parseInt(b.getAttribute('data-price'));
+                let dA = parseFloat(a.getAttribute('data-date'));
+                let dB = parseFloat(b.getAttribute('data-date'));
+
+                if (sortVal === 'low-high') return pA - pB;
+                if (sortVal === 'high-low') return pB - pA;
+                if (sortVal === 'newest') return dB - dA;
+                return 0; // popular
+            });
+
+            visibleItems.forEach(item => grid.appendChild(item)); // reorder DOM
+        }
+
+        // Product Logic
+        let selectedSize = null;
+        function initProductLogic(id) { selectedSize = null; }
+
+        function selectSize(el, size) {
+            document.querySelectorAll('.size-box').forEach(b => b.classList.remove('selected', 'shake'));
+            el.classList.add('selected');
+            selectedSize = size;
+            document.getElementById('size-error').classList.add('d-none');
+        }
+
+        function addToCart(id) {
+            if (!selectedSize) {
+                const boxes = document.querySelectorAll('.size-box');
+                boxes.forEach(b => {
+                    b.classList.remove('shake');
+                    void b.offsetWidth; // trigger reflow
+                    b.classList.add('shake');
+                });
+                document.getElementById('size-error').classList.remove('d-none');
+                return;
+            }
+
+            const existing = cart.find(item => item.id === id && item.size === selectedSize);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({ id, size: selectedSize, qty: 1 });
+            }
+            saveState();
+            showToast('Added to Cart! Compare prices in cart for the best deal.');
+        }
+
+        // Cart Logic
+        function updateQty(index, delta) {
+            if (cart[index].qty + delta > 0) {
+                cart[index].qty += delta;
+                saveState();
+                renderView('cart');
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveState();
+            renderView('cart');
+        }
+
+        // Wishlist Logic
+        function toggleWishlist(id, btnElement = null) {
+            const index = wishlist.findIndex(x => x.id === id);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showToast('Removed from Wishlist');
+            } else {
+                wishlist.push({ id });
+                showToast('Added to Wishlist! Compare for best deal.');
+            }
+            saveState();
+            
+            // Re-render only if necessary to keep UI smooth
+            if (window.location.hash.includes('wishlist')) renderView('wishlist');
+            else if (btnElement) {
+                btnElement.classList.toggle('active');
+                btnElement.innerHTML = btnElement.classList.contains('active') ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+            } else {
+                renderView(window.location.hash.substring(1).split('?')[0], window.location.hash.split('=')[1]);
+            }
+        }
+
+        // Search Logic
+        function toggleSearch() {
+            const box = document.getElementById('search-dropdown');
+            box.classList.toggle('active');
+            if(box.classList.contains('active')) {
+                document.getElementById('searchInput').focus();
+                showRecentSearches();
+            }
+        }
+
+        function handleSearch() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const resBox = document.getElementById('searchResults');
+            if (q.length < 2) { resBox.innerHTML = ''; return; }
+
+            const matches = productsDB.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q));
+            resBox.innerHTML = matches.map(p => `
+                <div class="search-suggestion d-flex align-items-center" onclick="saveSearch('${q}'); navigate('product', '${p.id}')">
+                    <img src="${p.img1}" style="width:40px;height:40px;object-fit:cover;" class="me-2 rounded">
+                    <div><div class="fw-bold" style="font-size:0.9rem">${p.name}</div><div class="text-muted" style="font-size:0.7rem">${p.brand}</div></div>
+                </div>
+            `).join('');
+        }
+
+        function saveSearch(q) {
+            if(!recentSearches.includes(q)) {
+                recentSearches.unshift(q);
+                if(recentSearches.length > 5) recentSearches.pop();
+                localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
+            }
+        }
+
+        function showRecentSearches() {
+            if(recentSearches.length === 0) return;
+            document.getElementById('recentSearches').innerHTML = 'Recent: ' + recentSearches.map(s => `<span class="me-2 text-decoration-underline cursor-pointer" onclick="document.getElementById('searchInput').value='${s}'; handleSearch()">${s}</span>`).join('');
+        }
+
+        // UI Helpers
+        function changeCardColor(el, img1, img2) {
+            const card = el.closest('.product-card');
+            card.querySelector('.main-img').src = img2; // simulate color change via img swap
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            toast.innerHTML = `<i class="fas fa-check-circle text-success"></i> <span>${msg}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Scroll Logic for Navbar
+        let lastScrollTop = 0;
+        window.addEventListener("scroll", function() {
+            let st = window.pageYOffset || document.documentElement.scrollTop;
+            if (st > lastScrollTop && st > 100){
+                document.getElementById("mainNavbar").style.top = "-70px"; // scroll down
+            } else {
+                document.getElementById("mainNavbar").style.top = "0"; // scroll up
+            }
+            lastScrollTop = st <= 0 ? 0 : st;
+        }, false);
+
+        // Checkout Logic
+        function handleCheckout(e) {
+            e.preventDefault();
+            const btn = document.getElementById('placeOrderBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const orderId = 'OD' + Math.floor(Math.random() * 1000000);
+                const order = {
+                    id: orderId, date: new Date().toLocaleDateString(), items: [...cart], status: 'Placed', address: document.getElementById('cAddress').value
+                };
+                orders.push(order);
+                localStorage.setItem('orders', JSON.stringify(orders));
+                cart = [];
+                saveState();
+                
+                appDiv.innerHTML = `
+                    <div class="container mt-5 text-center">
+                        <i class="fas fa-check-circle text-success fa-5x mb-4"></i>
+                        <h2 class="fw-bold">Order Placed Successfully!</h2>
+                        <p class="text-muted">Order ID: <strong>${orderId}</strong></p>
+                        <p>Delivery Address: ${order.address}</p>
+                        <p class="mb-4">Estimated Delivery: ${new Date(Date.now() + 5*24*60*60*1000).toLocaleDateString()}</p>
+                        <button class="btn-primary-custom" onclick="navigate('shop')">Continue Shopping</button>
+                        <button class="btn btn-outline-dark ms-2" onclick="window.print()">Download Invoice</button>
+                    </div>
+                `;
+            }, 1500);
+        }
+
+        // ==========================================
+        // 7. AUTH & ACCOUNT PAGES (Static/Dummy)
+        // ==========================================
+        
+        function updateAuthMenu() {
+            const menu = document.getElementById('auth-dropdown');
+            if (currentUser) {
+                menu.innerHTML = `
+                    <li><h6 class="dropdown-header">Hi, ${currentUser.name}</h6></li>
+                    <li><a class="dropdown-item" href="#account" onclick="navigate('account')">Account</a></li>
+                    <li><a class="dropdown-item" href="#orders" onclick="navigate('orders')">Orders</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" onclick="logout()">Sign Out</a></li>
+                `;
+            } else {
+                menu.innerHTML = `
+                    <li><a class="dropdown-item" href="#login" onclick="navigate('login')">Login</a></li>
+                    <li><a class="dropdown-item" href="#signup" onclick="navigate('signup')">Sign Up</a></li>
+                `;
+            }
+        }
+
+        function renderLogin() {
+            return `
+            <div class="container mt-5" style="max-width: 400px;">
+                <h2 class="fw-bold mb-4 text-center">Login</h2>
+                <form onsubmit="handleAuth(event, 'login')">
+                    <input type="email" id="lEmail" class="form-control mb-3" placeholder="Email" required>
+                    <input type="password" id="lPass" class="form-control mb-3" placeholder="Password" required>
+                    <button type="submit" class="btn-primary-custom w-100 mb-3">Login</button>
+                    <div class="text-center small">Don't have an account? <a href="#signup" onclick="navigate('signup')">Sign up</a></div>
+                </form>
+            </div>`;
+        }
+
+        function renderSignup() {
+            return `
+            <div class="container mt-5" style="max-width: 400px;">
+                <h2 class="fw-bold mb-4 text-center">Sign Up</h2>
+                <form onsubmit="handleAuth(event, 'signup')">
+                    <input type="text" id="sName" class="form-control mb-3" placeholder="Full Name" required>
+                    <input type="email" id="sEmail" class="form-control mb-3" placeholder="Email" required>
+                    <input type="password" id="sPass" class="form-control mb-3" placeholder="Password" required minlength="6">
+                    <button type="submit" class="btn-primary-custom w-100 mb-3">Create Account</button>
+                </form>
+            </div>`;
+        }
+
+        function handleAuth(e, type) {
+            e.preventDefault();
+            if(type === 'login') {
+                currentUser = { name: document.getElementById('lEmail').value.split('@')[0], email: document.getElementById('lEmail').value };
+            } else {
+                currentUser = { name: document.getElementById('sName').value, email: document.getElementById('sEmail').value };
+            }
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            showToast('Authentication Successful');
+            navigate('account');
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            navigate('home');
+        }
+
+        function renderAccount() {
+            return `
+            <div class="container mt-4">
+                <h2 class="fw-bold mb-4">My Account</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="list-group">
+                            <a href="#account" class="list-group-item list-group-item-action active bg-dark border-dark">Profile</a>
+                            <a href="#orders" class="list-group-item list-group-item-action" onclick="navigate('orders')">Orders</a>
+                            <a href="#" class="list-group-item list-group-item-action text-danger" onclick="logout()">Logout</a>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="border rounded p-4">
+                            <h5 class="mb-4">Edit Profile</h5>
+                            <form onsubmit="event.preventDefault(); showToast('Profile Updated');">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3"><label class="form-label">Name</label><input type="text" class="form-control" value="${currentUser.name}"></div>
+                                    <div class="col-md-6 mb-3"><label class="form-label">Email</label><input type="email" class="form-control" value="${currentUser.email}"></div>
+                                    <div class="col-md-6 mb-3"><label class="form-label">Phone</label><input type="text" class="form-control"></div>
+                                    <div class="col-md-6 mb-3"><label class="form-label">Password</label><input type="password" class="form-control" placeholder="••••••••"></div>
+                                </div>
+                                <hr>
+                                <h6>Saved Addresses</h6>
+                                <textarea class="form-control mb-3">Home: 123 Main St, Mumbai, MH</textarea>
+                                <textarea class="form-control mb-3">Work: 456 Tech Park, Pune, MH</textarea>
+                                <button type="submit" class="btn-primary-custom">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        function renderOrders() {
+            let ordersHTML = orders.length === 0 ? '<p>No past orders found.</p>' : orders.map(o => `
+                <div class="border rounded p-3 mb-3">
+                    <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                        <span class="fw-bold">Order #${o.id}</span>
+                        <span class="text-muted">${o.date}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div><i class="fas fa-circle text-success small"></i> ${o.status}</div>
+                        <button class="btn btn-sm btn-outline-danger" onclick="showToast('Cancel request sent.')">Cancel Order</button>
+                    </div>
+                    <div class="d-flex justify-content-between text-center small text-muted px-4 py-2 bg-light rounded">
+                        <div class="text-success fw-bold"><i class="fas fa-check-circle"></i><br>Placed</div>
+                        <div><i class="fas fa-box"></i><br>Packed</div>
+                        <div><i class="fas fa-truck"></i><br>Shipped</div>
+                        <div><i class="fas fa-home"></i><br>Delivered</div>
+                    </div>
+                </div>
+            `).join('');
+
+            return `
+            <div class="container mt-4">
+                <h2 class="fw-bold mb-4">My Orders</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="list-group">
+                            <a href="#account" class="list-group-item list-group-item-action" onclick="navigate('account')">Profile</a>
+                            <a href="#orders" class="list-group-item list-group-item-action active bg-dark border-dark">Orders</a>
+                        </div>
+                    </div>
+                    <div class="col-md-8">${ordersHTML}</div>
+                </div>
+            </div>`;
+        }
+
+        // Static Pages
+        function renderAbout() {
+            return `
+            <div class="container mt-5 text-center" style="max-width: 800px;">
+                <h1 class="fw-bold mb-4">About Jadeja Footwear</h1>
+                <p class="lead">We believe that finding the perfect pair of shoes shouldn't require opening 10 different tabs. That's why we built Jadeja Footwear with an integrated price comparison engine.</p>
+                <img src="https://images.unsplash.com/photo-1556906781-9a412961c28c?w=800&auto=format&fit=crop" class="img-fluid rounded mt-4 mb-4">
+                <p>Founded in 2026, we source premium authentic drops from Nike, Adidas, Puma, and more, while instantly comparing our prices with Amazon, Flipkart, and Myntra to guarantee you the best deal.</p>
+            </div>`;
+        }
+
+        function renderContact() {
+            return `
+            <div class="container mt-5" style="max-width: 600px;">
+                <h2 class="fw-bold mb-4 text-center">Contact Us</h2>
+                <form onsubmit="event.preventDefault(); showToast('Message Sent Successfully!'); this.reset();">
+                    <div class="mb-3"><label>Name</label><input type="text" class="form-control" required></div>
+                    <div class="mb-3"><label>Email</label><input type="email" class="form-control" required></div>
+                    <div class="mb-3"><label>Message</label><textarea class="form-control" rows="5" required></textarea></div>
+                    <button class="btn-primary-custom w-100">Send Message</button>
+                </form>
+            </div>`;
+        }
+
+        function renderReturnPolicy() {
+            return `
+            <div class="container mt-5" style="max-width: 800px;">
+                <h2 class="fw-bold mb-4">Return & Replacement Policy</h2>
+                <div class="border p-4 rounded bg-light">
+                    <h5>7-Day Replacement Guarantee</h5>
+                    <p>We offer a strict 7-day replacement policy. We <strong>do not</strong> offer monetary refunds.</p>
+                    <hr>
+                    <h6 class="fw-bold">Conditions for Replacement:</h6>
+                    <ul>
+                        <li>Wrong size delivered.</li>
+                        <li>Wrong color delivered.</li>
+                        <li>Defective product upon arrival.</li>
+                    </ul>
+                    <div class="alert alert-warning mt-3"><i class="fas fa-exclamation-triangle"></i> The brand seal must not be broken or tampered with. Shoes must be unworn.</div>
+                </div>
+            </div>`;
+        }
+
+        function render404() {
+            return `
+            <div class="container mt-5 text-center py-5">
+                <h1 class="display-1 fw-bold">404</h1>
+                <h2>Shoe Not Found</h2>
+                <p class="text-muted">The page you are looking for doesn't exist or has been moved.</p>
+                <button class="btn-primary-custom mt-3" onclick="navigate('home')">Go Home</button>
+            </div>`;
+        }
+
+        // ==========================================
+        // 8. INITIALIZATION
+        // ==========================================
+        window.onload = () => {
+            updateBadges();
+            updateAuthMenu();
+            let initialHash = window.location.hash.substring(1) || 'home';
+            const [view, param] = initialHash.split('?');
+            let id = param ? param.split('=')[1] : null;
+            renderView(view, id);
+        };
+
+    </script>
+</body>
+</html>

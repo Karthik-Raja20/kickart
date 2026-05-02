@@ -1,0 +1,2381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanKicks - Premium Streetwear Footwear</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow-x: hidden;
+            transition: background-color 600ms ease, color 600ms ease;
+        }
+
+        body.street-theme {
+            background: linear-gradient(135deg, #0E0E0E 0%, #1a0a2e 100%);
+            color: #ffffff;
+        }
+
+        body.casual-theme {
+            background: linear-gradient(135deg, #F5F1E8 0%, #E8E0D5 100%);
+            color: #2d2d2d;
+        }
+
+        .page-section {
+            display: none;
+            min-height: 100vh;
+            padding-top: 80px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .navbar {
+            transition: background-color 600ms ease, box-shadow 600ms ease;
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+        }
+
+        body.street-theme .navbar {
+            background: rgba(14, 14, 14, 0.95);
+            box-shadow: 0 4px 30px rgba(255, 46, 147, 0.3);
+        }
+
+        body.casual-theme .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar-brand {
+            font-weight: 900;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 600ms ease;
+        }
+
+        body.street-theme .navbar-brand {
+            color: #FF2E93;
+            text-shadow: 0 0 20px rgba(255, 46, 147, 0.5);
+        }
+
+        body.casual-theme .navbar-brand {
+            color: #8B7355;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            margin: 0 10px;
+            transition: all 400ms ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        body.street-theme .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        body.casual-theme .nav-link {
+            color: #5a5a5a;
+        }
+
+        body.street-theme .nav-link:hover {
+            color: #FF2E93;
+            text-shadow: 0 0 10px rgba(255, 46, 147, 0.6);
+        }
+
+        body.casual-theme .nav-link:hover {
+            color: #8B7355;
+        }
+
+        .nav-icon {
+            position: relative;
+            font-size: 1.3rem;
+            margin: 0 8px;
+            cursor: pointer;
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .nav-icon {
+            color: #39FF14;
+        }
+
+        body.casual-theme .nav-icon {
+            color: #8B7355;
+        }
+
+        body.street-theme .nav-icon:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px #39FF14);
+        }
+
+        body.casual-theme .nav-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme .badge-count {
+            background: #FF5E00;
+            color: #000;
+        }
+
+        body.casual-theme .badge-count {
+            background: #D4A574;
+            color: #fff;
+        }
+
+        .hero-section {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme .hero-section {
+            background: linear-gradient(135deg, rgba(255, 46, 147, 0.1) 0%, rgba(57, 255, 20, 0.1) 100%);
+        }
+
+        body.casual-theme .hero-section {
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1) 0%, rgba(245, 241, 232, 0.1) 100%);
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            transition: all 600ms ease;
+            animation: glowPulse 2s infinite alternate;
+        }
+
+        body.street-theme .hero-title {
+            color: #FF2E93;
+            text-shadow: 0 0 30px rgba(255, 46, 147, 0.7), 0 0 60px rgba(57, 255, 20, 0.4);
+        }
+
+        body.casual-theme .hero-title {
+            color: #8B7355;
+            text-shadow: none;
+            animation: none;
+        }
+
+        @keyframes glowPulse {
+            from { text-shadow: 0 0 20px rgba(255, 46, 147, 0.5), 0 0 40px rgba(57, 255, 20, 0.3); }
+            to { text-shadow: 0 0 40px rgba(255, 46, 147, 0.8), 0 0 80px rgba(57, 255, 20, 0.5); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            transition: color 600ms ease;
+        }
+
+        body.street-theme .hero-subtitle {
+            color: #39FF14;
+        }
+
+        body.casual-theme .hero-subtitle {
+            color: #6a6a6a;
+        }
+
+        .btn-primary-custom {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 400ms ease;
+            cursor: pointer;
+        }
+
+        body.street-theme .btn-primary-custom {
+            background: linear-gradient(135deg, #FF2E93 0%, #FF5E00 100%);
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 46, 147, 0.5);
+        }
+
+        body.street-theme .btn-primary-custom:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 40px rgba(255, 46, 147, 0.7), 0 0 40px rgba(255, 94, 0, 0.5);
+        }
+
+        body.casual-theme .btn-primary-custom {
+            background: #8B7355;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
+        }
+
+        body.casual-theme .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 115, 85, 0.4);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            padding-bottom: 20px;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme .section-title {
+            color: #FF2E93;
+        }
+
+        body.casual-theme .section-title {
+            color: #8B7355;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme .section-title::after {
+            background: linear-gradient(90deg, #FF2E93, #39FF14);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+
+        body.casual-theme .section-title::after {
+            background: #D4A574;
+        }
+
+        .category-card {
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            cursor: pointer;
+            position: relative;
+            height: 350px;
+            transition: all 400ms ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        body.street-theme .category-card {
+            box-shadow: 0 10px 40px rgba(255, 46, 147, 0.3);
+        }
+
+        body.street-theme .category-card:hover {
+            box-shadow: 0 20px 60px rgba(255, 46, 147, 0.5), 0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        body.casual-theme .category-card {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        body.casual-theme .category-card:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 600ms ease;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .category-overlay {
+            background: rgba(14, 14, 14, 0.6);
+            color: #FF2E93;
+            text-shadow: 0 0 20px rgba(255, 46, 147, 0.8);
+        }
+
+        body.street-theme .category-card:hover .category-overlay {
+            background: rgba(255, 46, 147, 0.8);
+            color: #000;
+            text-shadow: 0 0 30px rgba(57, 255, 20, 0.8);
+        }
+
+        body.casual-theme .category-overlay {
+            background: rgba(255, 255, 255, 0.7);
+            color: #8B7355;
+        }
+
+        body.casual-theme .category-card:hover .category-overlay {
+            background: rgba(139, 115, 85, 0.85);
+            color: #fff;
+        }
+
+        .brand-slider {
+            overflow: hidden;
+            padding: 60px 0;
+            transition: background-color 600ms ease;
+        }
+
+        body.street-theme .brand-slider {
+            background: rgba(255, 46, 147, 0.05);
+        }
+
+        body.casual-theme .brand-slider {
+            background: rgba(212, 165, 116, 0.05);
+        }
+
+        .brand-track {
+            display: flex;
+            animation: brandScroll 30s linear infinite;
+        }
+
+        .brand-item {
+            min-width: 200px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 30px;
+            border-radius: 15px;
+            font-size: 2rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .brand-item {
+            background: rgba(255, 46, 147, 0.1);
+            color: #39FF14;
+            box-shadow: 0 5px 20px rgba(57, 255, 20, 0.2);
+        }
+
+        body.street-theme .brand-item:hover {
+            background: rgba(255, 46, 147, 0.3);
+            box-shadow: 0 10px 40px rgba(255, 46, 147, 0.5);
+            transform: scale(1.1);
+        }
+
+        body.casual-theme .brand-item {
+            background: #fff;
+            color: #8B7355;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body.casual-theme .brand-item:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            transform: scale(1.05);
+        }
+
+        @keyframes brandScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .product-card {
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 400ms ease;
+            position: relative;
+        }
+
+        body.street-theme .product-card {
+            background: rgba(26, 10, 46, 0.6);
+            box-shadow: 0 8px 30px rgba(255, 46, 147, 0.2);
+        }
+
+        body.street-theme .product-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(255, 46, 147, 0.4), 0 0 30px rgba(57, 255, 20, 0.3);
+        }
+
+        body.casual-theme .product-card {
+            background: #fff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        body.casual-theme .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 280px;
+        }
+
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 500ms ease;
+        }
+
+        .product-image-container .secondary-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .product-card:hover .secondary-image {
+            opacity: 1;
+        }
+
+        .product-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .action-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 400ms ease;
+            font-size: 1.2rem;
+        }
+
+        body.street-theme .action-btn {
+            background: rgba(255, 46, 147, 0.9);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(255, 46, 147, 0.4);
+        }
+
+        body.street-theme .action-btn:hover {
+            background: #39FF14;
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 6px 25px rgba(57, 255, 20, 0.6);
+        }
+
+        body.casual-theme .action-btn {
+            background: #fff;
+            color: #8B7355;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        body.casual-theme .action-btn:hover {
+            background: #8B7355;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-brand {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            transition: color 600ms ease;
+        }
+
+        body.street-theme .product-brand {
+            color: #39FF14;
+        }
+
+        body.casual-theme .product-brand {
+            color: #999;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 8px 0;
+            transition: color 600ms ease;
+        }
+
+        body.street-theme .product-name {
+            color: #fff;
+        }
+
+        body.casual-theme .product-name {
+            color: #2d2d2d;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            font-style: italic;
+            margin: 5px 0;
+            transition: color 600ms ease;
+        }
+
+        body.street-theme .product-category {
+            color: #FF5E00;
+        }
+
+        body.casual-theme .product-category {
+            color: #888;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 10px 0;
+            transition: color 600ms ease;
+        }
+
+        body.street-theme .product-price {
+            color: #FF2E93;
+            text-shadow: 0 0 10px rgba(255, 46, 147, 0.5);
+        }
+
+        body.casual-theme .product-price {
+            color: #8B7355;
+        }
+
+        .product-price-old {
+            text-decoration: line-through;
+            margin-left: 10px;
+            font-size: 1rem;
+            transition: color 600ms ease;
+        }
+
+        body.street-theme .product-price-old {
+            color: #666;
+        }
+
+        body.casual-theme .product-price-old {
+            color: #999;
+        }
+
+        .rating {
+            margin: 8px 0;
+            transition: color 600ms ease;
+        }
+
+        body.street-theme .rating {
+            color: #FF5E00;
+        }
+
+        body.casual-theme .rating {
+            color: #D4A574;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            z-index: 10;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme .discount-badge {
+            background: linear-gradient(135deg, #FF2E93, #FF5E00);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(255, 46, 147, 0.5);
+        }
+
+        body.casual-theme .discount-badge {
+            background: #D4A574;
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(212, 165, 116, 0.3);
+        }
+
+        .filter-sidebar {
+            border-radius: 20px;
+            padding: 30px;
+            position: sticky;
+            top: 100px;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme .filter-sidebar {
+            background: rgba(26, 10, 46, 0.8);
+            box-shadow: 0 10px 40px rgba(255, 46, 147, 0.2);
+            border: 2px solid rgba(255, 46, 147, 0.3);
+        }
+
+        body.casual-theme .filter-sidebar {
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .filter-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            transition: color 600ms ease;
+        }
+
+        body.street-theme .filter-title {
+            color: #FF2E93;
+        }
+
+        body.casual-theme .filter-title {
+            color: #8B7355;
+        }
+
+        .filter-option label {
+            transition: color 600ms ease;
+            cursor: pointer;
+        }
+
+        body.street-theme .filter-option label {
+            color: #fff;
+        }
+
+        body.casual-theme .filter-option label {
+            color: #5a5a5a;
+        }
+
+        body.street-theme .filter-option input[type="checkbox"] {
+            accent-color: #FF2E93;
+        }
+
+        body.casual-theme .filter-option input[type="checkbox"] {
+            accent-color: #8B7355;
+        }
+
+        .form-select, .form-control {
+            transition: all 600ms ease;
+            border-radius: 10px;
+        }
+
+        body.street-theme .form-select,
+        body.street-theme .form-control {
+            background: rgba(26, 10, 46, 0.6);
+            border: 2px solid rgba(255, 46, 147, 0.3);
+            color: #fff;
+        }
+
+        body.street-theme .form-select:focus,
+        body.street-theme .form-control:focus {
+            background: rgba(26, 10, 46, 0.8);
+            border-color: #FF2E93;
+            box-shadow: 0 0 15px rgba(255, 46, 147, 0.5);
+            color: #fff;
+        }
+
+        body.casual-theme .form-select,
+        body.casual-theme .form-control {
+            background: #fff;
+            border: 2px solid #ddd;
+            color: #2d2d2d;
+        }
+
+        body.casual-theme .form-select:focus,
+        body.casual-theme .form-control:focus {
+            border-color: #8B7355;
+            box-shadow: 0 0 10px rgba(139, 115, 85, 0.2);
+        }
+
+        .cart-item, .wishlist-item, .order-item {
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme .cart-item,
+        body.street-theme .wishlist-item,
+        body.street-theme .order-item {
+            background: rgba(26, 10, 46, 0.6);
+            box-shadow: 0 5px 20px rgba(255, 46, 147, 0.2);
+        }
+
+        body.casual-theme .cart-item,
+        body.casual-theme .wishlist-item,
+        body.casual-theme .order-item {
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .auth-container {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .auth-box {
+            padding: 50px;
+            border-radius: 25px;
+            max-width: 500px;
+            width: 100%;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme .auth-box {
+            background: rgba(26, 10, 46, 0.9);
+            box-shadow: 0 15px 60px rgba(255, 46, 147, 0.3);
+            border: 2px solid rgba(255, 46, 147, 0.3);
+        }
+
+        body.casual-theme .auth-box {
+            background: #fff;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-align: center;
+            transition: color 600ms ease;
+        }
+
+        body.street-theme .auth-title {
+            color: #FF2E93;
+            text-shadow: 0 0 20px rgba(255, 46, 147, 0.5);
+        }
+
+        body.casual-theme .auth-title {
+            color: #8B7355;
+        }
+
+        footer {
+            padding: 50px 0 20px;
+            margin-top: 80px;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme footer {
+            background: rgba(14, 14, 14, 0.95);
+            color: #fff;
+            border-top: 2px solid rgba(255, 46, 147, 0.3);
+        }
+
+        body.casual-theme footer {
+            background: #f5f1e8;
+            color: #5a5a5a;
+            border-top: 2px solid rgba(139, 115, 85, 0.2);
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        body.street-theme .footer-links a:hover {
+            color: #FF2E93;
+            padding-left: 5px;
+            text-shadow: 0 0 10px rgba(255, 46, 147, 0.5);
+        }
+
+        body.casual-theme .footer-links a {
+            color: #8B7355;
+        }
+
+        body.casual-theme .footer-links a:hover {
+            padding-left: 5px;
+            opacity: 0.7;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 1.8rem;
+        }
+
+        .social-icons i {
+            cursor: pointer;
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .social-icons i {
+            color: #39FF14;
+        }
+
+        body.street-theme .social-icons i:hover {
+            color: #FF2E93;
+            transform: translateY(-5px) scale(1.2);
+            filter: drop-shadow(0 0 15px rgba(255, 46, 147, 0.8));
+        }
+
+        body.casual-theme .social-icons i {
+            color: #8B7355;
+        }
+
+        body.casual-theme .social-icons i:hover {
+            transform: translateY(-3px);
+            opacity: 0.7;
+        }
+
+        .size-btn, .qty-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 400ms ease;
+            margin: 5px;
+        }
+
+        body.street-theme .size-btn,
+        body.street-theme .qty-btn {
+            background: rgba(26, 10, 46, 0.6);
+            border: 2px solid rgba(255, 46, 147, 0.3);
+            color: #fff;
+        }
+
+        body.street-theme .size-btn:hover,
+        body.street-theme .qty-btn:hover,
+        body.street-theme .size-btn.active,
+        body.street-theme .qty-btn.active {
+            background: #FF2E93;
+            border-color: #FF2E93;
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 46, 147, 0.7);
+        }
+
+        body.casual-theme .size-btn,
+        body.casual-theme .qty-btn {
+            background: #fff;
+            border: 2px solid #ddd;
+            color: #2d2d2d;
+        }
+
+        body.casual-theme .size-btn:hover,
+        body.casual-theme .qty-btn:hover,
+        body.casual-theme .size-btn.active,
+        body.casual-theme .qty-btn.active {
+            background: #8B7355;
+            border-color: #8B7355;
+            color: #fff;
+        }
+
+        .product-detail-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .product-detail-image {
+            box-shadow: 0 10px 40px rgba(255, 46, 147, 0.3);
+        }
+
+        body.casual-theme .product-detail-image {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 400ms ease;
+            margin-right: 10px;
+        }
+
+        body.street-theme .thumbnail {
+            border: 3px solid transparent;
+        }
+
+        body.street-theme .thumbnail:hover,
+        body.street-theme .thumbnail.active {
+            border-color: #FF2E93;
+            box-shadow: 0 0 20px rgba(255, 46, 147, 0.7);
+        }
+
+        body.casual-theme .thumbnail {
+            border: 2px solid #ddd;
+        }
+
+        body.casual-theme .thumbnail:hover,
+        body.casual-theme .thumbnail.active {
+            border-color: #8B7355;
+        }
+
+        .price-comparison-table table {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme .price-comparison-table th {
+            background: rgba(255, 46, 147, 0.8);
+            color: #000;
+            padding: 15px;
+        }
+
+        body.street-theme .price-comparison-table td {
+            background: rgba(26, 10, 46, 0.4);
+            color: #fff;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 46, 147, 0.2);
+        }
+
+        body.casual-theme .price-comparison-table th {
+            background: #8B7355;
+            color: #fff;
+            padding: 15px;
+        }
+
+        body.casual-theme .price-comparison-table td {
+            background: #fff;
+            color: #2d2d2d;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .best-price {
+            font-weight: bold;
+            transition: background-color 600ms ease;
+        }
+
+        body.street-theme .best-price {
+            background: rgba(57, 255, 20, 0.2) !important;
+        }
+
+        body.casual-theme .best-price {
+            background: rgba(212, 165, 116, 0.2) !important;
+        }
+
+        .btn-outline-secondary, .btn-outline-primary, .btn-outline-danger {
+            transition: all 400ms ease;
+        }
+
+        body.street-theme .btn-outline-secondary {
+            border-color: #39FF14;
+            color: #39FF14;
+        }
+
+        body.street-theme .btn-outline-secondary:hover {
+            background: #39FF14;
+            color: #000;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.6);
+        }
+
+        body.casual-theme .btn-outline-secondary {
+            border-color: #8B7355;
+            color: #8B7355;
+        }
+
+        body.casual-theme .btn-outline-secondary:hover {
+            background: #8B7355;
+            color: #fff;
+        }
+
+        body.street-theme .btn-outline-danger,
+        body.street-theme .btn-danger {
+            background: #FF5E00;
+            border-color: #FF5E00;
+            color: #000;
+        }
+
+        body.street-theme .btn-outline-danger:hover,
+        body.street-theme .btn-danger:hover {
+            box-shadow: 0 0 20px rgba(255, 94, 0, 0.7);
+        }
+
+        .modal-content {
+            border-radius: 20px;
+            transition: all 600ms ease;
+        }
+
+        body.street-theme .modal-content {
+            background: rgba(26, 10, 46, 0.98);
+            border: 2px solid rgba(255, 46, 147, 0.3);
+            color: #fff;
+        }
+
+        body.casual-theme .modal-content {
+            background: #fff;
+            color: #2d2d2d;
+        }
+
+        body.street-theme .modal-header {
+            border-bottom: 2px solid rgba(255, 46, 147, 0.3);
+        }
+
+        body.casual-theme .modal-header {
+            border-bottom: 2px solid #eee;
+        }
+
+        body.street-theme .btn-close {
+            filter: invert(1);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .filter-sidebar {
+                position: static;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body class="street-theme">
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home')">URBANKICKS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('shop')">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('about')">About</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('contact')">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('login')">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('signup')">Signup</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-icon" onclick="showPage('wishlist')">
+                            <i class="bi bi-heart-fill"></i>
+                            <span class="badge-count" id="wishlistCount">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-icon" onclick="showPage('cart')">
+                            <i class="bi bi-cart3"></i>
+                            <span class="badge-count" id="cartCount">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-icon" onclick="showPage('profile')">
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="home" class="page-section active">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">URBAN KICKS</h1>
+                <p class="hero-subtitle">Street Style Meets Supreme Comfort</p>
+                <button class="btn-primary-custom" onclick="showPage('shop')">SHOP NOW</button>
+            </div>
+        </div>
+
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title">SHOP BY CATEGORY</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="category-card" onclick="filterByGender('men')">
+                            <img src="https://images.unsplash.com/photo-1603787081207-362bcef7f812?w=600" alt="Men">
+                            <div class="category-overlay">MEN</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" onclick="filterByGender('women')">
+                            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600" alt="Women">
+                            <div class="category-overlay">WOMEN</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card" onclick="switchToCasualTheme()">
+                            <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600" alt="Casuals">
+                            <div class="category-overlay">CASUALS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="brand-slider">
+            <div class="container">
+                <h2 class="section-title">FEATURED BRANDS</h2>
+            </div>
+            <div class="brand-track">
+                <div class="brand-item" onclick="filterByBrand('Nike')">NIKE</div>
+                <div class="brand-item" onclick="filterByBrand('Adidas')">ADIDAS</div>
+                <div class="brand-item" onclick="filterByBrand('Puma')">PUMA</div>
+                <div class="brand-item" onclick="filterByBrand('Reebok')">REEBOK</div>
+                <div class="brand-item" onclick="filterByBrand('Vans')">VANS</div>
+                <div class="brand-item" onclick="filterByBrand('Converse')">CONVERSE</div>
+                <div class="brand-item" onclick="filterByBrand('Nike')">NIKE</div>
+                <div class="brand-item" onclick="filterByBrand('Adidas')">ADIDAS</div>
+                <div class="brand-item" onclick="filterByBrand('Puma')">PUMA</div>
+                <div class="brand-item" onclick="filterByBrand('Reebok')">REEBOK</div>
+                <div class="brand-item" onclick="filterByBrand('Vans')">VANS</div>
+                <div class="brand-item" onclick="filterByBrand('Converse')">CONVERSE</div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title">TRENDING NOW</h2>
+                <div class="row" id="trendingProducts"></div>
+            </div>
+        </section>
+    </div>
+
+    <div id="shop" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">ALL PRODUCTS</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="filter-sidebar">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5>FILTERS</h5>
+                            <button class="btn btn-sm btn-outline-danger" onclick="clearFilters()">Clear</button>
+                        </div>
+
+                        <div class="filter-group mb-4">
+                            <div class="filter-title">Gender</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterMen" value="men" onchange="applyFilters()">
+                                <label for="filterMen">Men</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterWomen" value="women" onchange="applyFilters()">
+                                <label for="filterWomen">Women</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="filterKids" value="kids" onchange="applyFilters()">
+                                <label for="filterKids">Kids</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group mb-4">
+                            <div class="filter-title">Brand</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandNike" value="Nike" onchange="applyFilters()">
+                                <label for="brandNike">Nike</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandAdidas" value="Adidas" onchange="applyFilters()">
+                                <label for="brandAdidas">Adidas</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandPuma" value="Puma" onchange="applyFilters()">
+                                <label for="brandPuma">Puma</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brandReebok" value="Reebok" onchange="applyFilters()">
+                                <label for="brandReebok">Reebok</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group mb-4">
+                            <div class="filter-title">Shoe Type</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="typeSneakers" value="sneakers" onchange="applyFilters()">
+                                <label for="typeSneakers">Sneakers</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="typeRunning" value="running" onchange="applyFilters()">
+                                <label for="typeRunning">Running</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="typeCasual" value="casual" onchange="applyFilters()">
+                                <label for="typeCasual">Casual</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="typeFormal" value="formal" onchange="applyFilters()">
+                                <label for="typeFormal">Formal</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group mb-4">
+                            <div class="filter-title">Occasion</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="occasionSports" value="sports" onchange="applyFilters()">
+                                <label for="occasionSports">Sports</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="occasionOffice" value="office" onchange="applyFilters()">
+                                <label for="occasionOffice">Office</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="occasionParty" value="party" onchange="applyFilters()">
+                                <label for="occasionParty">Party</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="occasionCasual" value="casual" onchange="applyFilters()">
+                                <label for="occasionCasual">Casual</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group mb-4">
+                            <div class="filter-title">Price</div>
+                            <select class="form-select" id="priceRange" onchange="applyFilters()">
+                                <option value="">All Prices</option>
+                                <option value="0-1000">Under ₹1000</option>
+                                <option value="1000-2000">₹1000 - ₹2000</option>
+                                <option value="2000-3000">₹2000 - ₹3000</option>
+                                <option value="3000-5000">₹3000 - ₹5000</option>
+                                <option value="5000-99999">Above ₹5000</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group mb-4">
+                            <div class="filter-title">Size</div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size6" value="6" onchange="applyFilters()">
+                                <label for="size6">6</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size7" value="7" onchange="applyFilters()">
+                                <label for="size7">7</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size8" value="8" onchange="applyFilters()">
+                                <label for="size8">8</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size9" value="9" onchange="applyFilters()">
+                                <label for="size9">9</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size10" value="10" onchange="applyFilters()">
+                                <label for="size10">10</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="size11" value="11" onchange="applyFilters()">
+                                <label for="size11">11</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div><span id="productCount">0</span> Products</div>
+                        <select class="form-select w-auto" id="sortBy" onchange="applySorting()">
+                            <option value="">Sort By</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name">Name: A to Z</option>
+                        </select>
+                    </div>
+                    <div class="row" id="shopProducts"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="productDetail" class="page-section">
+        <div class="container py-5">
+            <button class="btn btn-outline-secondary mb-4" onclick="showPage('shop')">
+                <i class="bi bi-arrow-left"></i> Back
+            </button>
+            <div class="row" id="productDetailContent"></div>
+        </div>
+    </div>
+
+    <div id="cart" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">SHOPPING CART</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="cartItems"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Order Summary</h4>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Subtotal:</span>
+                            <span id="cartSubtotal">₹0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Shipping:</span>
+                            <span id="shippingCost">₹0</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <strong>Total:</strong>
+                            <strong id="cartTotal">₹0</strong>
+                        </div>
+                        <button class="btn btn-primary-custom w-100" onclick="showPage('checkout')">
+                            CHECKOUT
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkout" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">CHECKOUT</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Billing Details</h4>
+                        <form id="checkoutForm">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Pincode</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <h4 class="mb-3 mt-4">Payment Method</h4>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment" id="cod" checked>
+                                <label class="form-check-label" for="cod">Cash on Delivery</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment" id="card">
+                                <label class="form-check-label" for="card">Credit/Debit Card</label>
+                            </div>
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="radio" name="payment" id="upi">
+                                <label class="form-check-label" for="upi">UPI</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">PLACE ORDER</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Order Summary</h4>
+                        <div id="checkoutSummary"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="login" class="page-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2 class="auth-title">LOGIN</h2>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="loginPassword" required>
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('loginPassword')">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">LOGIN</button>
+                    <div class="text-center">
+                        Don't have an account? <a href="#" onclick="showPage('signup')" style="color: inherit; font-weight: bold;">Sign Up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="signup" class="page-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2 class="auth-title">SIGN UP</h2>
+                <form id="signupForm">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="signupName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="signupEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="signupPassword" required minlength="6">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('signupPassword')">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="signupConfirmPassword" required>
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('signupConfirmPassword')">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">SIGN UP</button>
+                    <div class="text-center">
+                        Already have an account? <a href="#" onclick="showPage('login')" style="color: inherit; font-weight: bold;">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="wishlist" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">MY WISHLIST</h2>
+            <div class="row" id="wishlistItems"></div>
+        </div>
+    </div>
+
+    <div id="profile" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">MY PROFILE</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="cart-item">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-person-circle" style="font-size: 5rem;"></i>
+                            <h4 class="mt-3">John Doe</h4>
+                            <p>john.doe@example.com</p>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-secondary" onclick="showPage('profile')">My Orders</button>
+                            <button class="btn btn-outline-secondary" onclick="showPage('wishlist')">Wishlist</button>
+                            <button class="btn btn-outline-secondary" onclick="showPage('refund')">Replace/Refund</button>
+                            <button class="btn btn-outline-danger">Logout</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Order History</h4>
+                        <div class="order-item mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <strong>Order #12345</strong>
+                                    <p class="mb-0">Placed on: 15 Jan 2024</p>
+                                </div>
+                                <span class="badge bg-success">Delivered</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex align-items-center">
+                                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                <div class="ms-3">
+                                    <strong>Nike Air Max 270</strong>
+                                    <p class="mb-0">Quantity: 1</p>
+                                    <strong>₹4999</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="refund" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">REPLACE / REFUND</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="cart-item">
+                        <form id="refundForm">
+                            <div class="mb-3">
+                                <label class="form-label">Order ID</label>
+                                <input type="text" class="form-control" placeholder="Enter order ID" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Request Type</label>
+                                <select class="form-select" required>
+                                    <option value="">Select</option>
+                                    <option value="replace">Replace</option>
+                                    <option value="refund">Refund</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Reason</label>
+                                <select class="form-select" required>
+                                    <option value="">Select Reason</option>
+                                    <option value="defective">Defective</option>
+                                    <option value="wrong">Wrong Product</option>
+                                    <option value="size">Size Issue</option>
+                                    <option value="quality">Quality Issue</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Details</label>
+                                <textarea class="form-control" rows="4" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Upload Image</label>
+                                <input type="file" class="form-control" accept="image/*">
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">SUBMIT</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">ABOUT US</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="cart-item">
+                        <h3 class="mb-4">Our Story</h3>
+                        <p class="mb-4">UrbanKicks is your ultimate destination for streetwear footwear. Founded in 2020, we bring you the freshest kicks from the world's top brands.</p>
+                        
+                        <h3 class="mb-4">Our Mission</h3>
+                        <p class="mb-4">To provide authentic, high-quality footwear that defines urban culture and street fashion.</p>
+                        
+                        <h3 class="mb-4">Why Choose Us?</h3>
+                        <ul>
+                            <li class="mb-2">100% Authentic Products</li>
+                            <li class="mb-2">Fast & Free Shipping</li>
+                            <li class="mb-2">Easy Returns</li>
+                            <li class="mb-2">Exclusive Drops</li>
+                            <li class="mb-2">24/7 Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">CONTACT US</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Get In Touch</h4>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Subject</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">SEND</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="cart-item">
+                        <h4 class="mb-4">Contact Info</h4>
+                        <div class="mb-4">
+                            <i class="bi bi-geo-alt-fill me-2"></i>
+                            <strong>Address:</strong>
+                            <p class="ms-4">123 Street Lane, Fashion District, Mumbai 400001</p>
+                        </div>
+                        <div class="mb-4">
+                            <i class="bi bi-telephone-fill me-2"></i>
+                            <strong>Phone:</strong>
+                            <p class="ms-4">+91 98765 43210</p>
+                        </div>
+                        <div class="mb-4">
+                            <i class="bi bi-envelope-fill me-2"></i>
+                            <strong>Email:</strong>
+                            <p class="ms-4">support@urbankicks.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">URBANKICKS</h5>
+                    <p>Your destination for street-style footwear.</p>
+                    <div class="social-icons mt-3">
+                        <i class="bi bi-facebook"></i>
+                        <i class="bi bi-instagram"></i>
+                        <i class="bi bi-twitter"></i>
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="#" onclick="showPage('about')">About</a>
+                        <a href="#" onclick="showPage('contact')">Contact</a>
+                        <a href="#" onclick="showPage('shop')">Shop</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Support</h5>
+                    <div class="footer-links">
+                        <a href="#">Track Order</a>
+                        <a href="#" onclick="showPage('refund')">Returns</a>
+                        <a href="#">Shipping</a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Legal</h5>
+                    <div class="footer-links">
+                        <a href="#">Privacy</a>
+                        <a href="#">Terms</a>
+                        <a href="#">Cookies</a>
+                    </div>
+                </div>
+            </div>
+            <hr style="opacity: 0.2;">
+            <div class="text-center py-3">
+                <p>&copy; 2024 UrbanKicks. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="quickViewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Quick View</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="quickViewContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const products = [
+            { id: 1, name: 'Air Max 270', brand: 'Nike', gender: 'men', type: 'sneakers', occasion: 'sports', price: 4999, oldPrice: 6999, rating: 4.5, image1: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400', image2: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400', desc: 'Premium cushioning for all-day comfort.', sizes: [6,7,8,9,10,11] },
+            { id: 2, name: 'Ultraboost', brand: 'Adidas', gender: 'men', type: 'running', occasion: 'sports', price: 5499, oldPrice: 7999, rating: 4.7, image1: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400', image2: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400', desc: 'Energy-returning cushioning technology.', sizes: [6,7,8,9,10,11] },
+            { id: 3, name: 'RS-X', brand: 'Puma', gender: 'women', type: 'sneakers', occasion: 'casual', price: 3999, oldPrice: 5499, rating: 4.3, image1: 'https://images.unsplash.com/photo-1608667508764-33cf0726b13a?w=400', image2: 'https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=400', desc: 'Bold street-style design.', sizes: [6,7,8,9,10,11] },
+            { id: 4, name: 'Classic Leather', brand: 'Reebok', gender: 'men', type: 'casual', occasion: 'casual', price: 2799, oldPrice: 3999, rating: 4.4, image1: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400', image2: 'https://images.unsplash.com/photo-1612902376152-8a3e7db5b40d?w=400', desc: 'Timeless style meets comfort.', sizes: [6,7,8,9,10,11] },
+            { id: 5, name: 'Pegasus', brand: 'Nike', gender: 'women', type: 'running', occasion: 'sports', price: 4599, oldPrice: 6499, rating: 4.6, image1: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400', image2: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400', desc: 'Responsive for daily runs.', sizes: [6,7,8,9,10,11] },
+            { id: 6, name: 'Stan Smith', brand: 'Adidas', gender: 'men', type: 'casual', occasion: 'casual', price: 3299, oldPrice: 4999, rating: 4.5, image1: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?w=400', image2: 'https://images.unsplash.com/photo-1606932836120-66d63bb42815?w=400', desc: 'Tennis-inspired sneaker.', sizes: [6,7,8,9,10,11] },
+            { id: 7, name: 'Smash', brand: 'Puma', gender: 'kids', type: 'casual', occasion: 'casual', price: 1999, oldPrice: 2999, rating: 4.2, image1: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400', image2: 'https://images.unsplash.com/photo-1603808033587-4a40fcb7c777?w=400', desc: 'Perfect for active kids.', sizes: [6,7,8,9] },
+            { id: 8, name: 'Court Vision', brand: 'Nike', gender: 'women', type: 'casual', occasion: 'casual', price: 3499, oldPrice: 4999, rating: 4.4, image1: 'https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=400', image2: 'https://images.unsplash.com/photo-1603808033587-4a40fcb7c777?w=400', desc: 'Basketball-inspired style.', sizes: [6,7,8,9,10,11] },
+            { id: 9, name: 'Forum', brand: 'Adidas', gender: 'men', type: 'sneakers', occasion: 'party', price: 6999, oldPrice: 9999, rating: 4.8, image1: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400', image2: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400', desc: 'Premium street-ready kicks.', sizes: [6,7,8,9,10,11] },
+            { id: 10, name: 'Nano', brand: 'Reebok', gender: 'women', type: 'running', occasion: 'sports', price: 4299, oldPrice: 5999, rating: 4.5, image1: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400', image2: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400', desc: 'High-intensity training.', sizes: [6,7,8,9,10,11] },
+            { id: 11, name: 'Future Rider', brand: 'Puma', gender: 'men', type: 'sneakers', occasion: 'casual', price: 3799, oldPrice: 5299, rating: 4.3, image1: 'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400', image2: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400', desc: 'Retro-modern design.', sizes: [6,7,8,9,10,11] },
+            { id: 12, name: 'Air Force 1', brand: 'Nike', gender: 'kids', type: 'casual', occasion: 'casual', price: 2499, oldPrice: 3499, rating: 4.6, image1: 'https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400', image2: 'https://images.unsplash.com/photo-1603808033587-4a40fcb7c777?w=400', desc: 'Iconic style for kids.', sizes: [6,7,8,9] }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        let filteredProducts = [...products];
+        let currentProduct = null;
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(pageName).classList.add('active');
+            window.scrollTo(0, 0);
+
+            if (pageName === 'home') renderTrendingProducts();
+            else if (pageName === 'shop') renderShopProducts();
+            else if (pageName === 'cart') renderCart();
+            else if (pageName === 'checkout') renderCheckoutSummary();
+            else if (pageName === 'wishlist') renderWishlist();
+        }
+
+        function switchToCasualTheme() {
+            document.body.classList.remove('street-theme');
+            document.body.classList.add('casual-theme');
+            filterByGender('casual');
+        }
+
+        function switchToStreetTheme() {
+            document.body.classList.remove('casual-theme');
+            document.body.classList.add('street-theme');
+        }
+
+        function renderTrendingProducts() {
+            const container = document.getElementById('trendingProducts');
+            const trending = products.slice(0, 8);
+            container.innerHTML = trending.map(product => `
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card">
+                        ${product.oldPrice ? `<div class="discount-badge">-${Math.round((1 - product.price/product.oldPrice) * 100)}%</div>` : ''}
+                        <div class="product-image-container">
+                            <img src="${product.image1}" class="primary-image" alt="${product.name}">
+                            <img src="${product.image2}" class="secondary-image" alt="${product.name}">
+                            <div class="product-actions">
+                                <button class="action-btn" onclick="addToWishlist(${product.id})">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                                <button class="action-btn" onclick="quickView(${product.id})" data-bs-toggle="modal" data-bs-target="#quickViewModal">
+                                    <i class="bi bi-eye-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">${product.brand}</div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-category">${product.type} • ${product.occasion}</div>
+                            <div class="rating">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</div>
+                            <div class="product-price">₹${product.price}${product.oldPrice ? `<span class="product-price-old">₹${product.oldPrice}</span>` : ''}</div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-primary-custom flex-fill" onclick="viewProduct(${product.id})">VIEW</button>
+                                <button class="btn btn-outline-secondary" onclick="addToCart(${product.id})">
+                                    <i class="bi bi-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderShopProducts() {
+            const container = document.getElementById('shopProducts');
+            const count = document.getElementById('productCount');
+            count.textContent = filteredProducts.length;
+
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        ${product.oldPrice ? `<div class="discount-badge">-${Math.round((1 - product.price/product.oldPrice) * 100)}%</div>` : ''}
+                        <div class="product-image-container">
+                            <img src="${product.image1}" class="primary-image" alt="${product.name}">
+                            <img src="${product.image2}" class="secondary-image" alt="${product.name}">
+                            <div class="product-actions">
+                                <button class="action-btn" onclick="addToWishlist(${product.id})">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                                <button class="action-btn" onclick="quickView(${product.id})" data-bs-toggle="modal" data-bs-target="#quickViewModal">
+                                    <i class="bi bi-eye-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">${product.brand}</div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-category">${product.type} • ${product.occasion}</div>
+                            <div class="rating">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</div>
+                            <div class="product-price">₹${product.price}${product.oldPrice ? `<span class="product-price-old">₹${product.oldPrice}</span>` : ''}</div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-primary-custom flex-fill" onclick="viewProduct(${product.id})">VIEW</button>
+                                <button class="btn btn-outline-secondary" onclick="addToCart(${product.id})">
+                                    <i class="bi bi-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function applyFilters() {
+            const genders = [];
+            if (document.getElementById('filterMen')?.checked) genders.push('men');
+            if (document.getElementById('filterWomen')?.checked) genders.push('women');
+            if (document.getElementById('filterKids')?.checked) genders.push('kids');
+
+            const brands = [];
+            if (document.getElementById('brandNike')?.checked) brands.push('Nike');
+            if (document.getElementById('brandAdidas')?.checked) brands.push('Adidas');
+            if (document.getElementById('brandPuma')?.checked) brands.push('Puma');
+            if (document.getElementById('brandReebok')?.checked) brands.push('Reebok');
+
+            const types = [];
+            if (document.getElementById('typeSneakers')?.checked) types.push('sneakers');
+            if (document.getElementById('typeRunning')?.checked) types.push('running');
+            if (document.getElementById('typeCasual')?.checked) types.push('casual');
+            if (document.getElementById('typeFormal')?.checked) types.push('formal');
+
+            const occasions = [];
+            if (document.getElementById('occasionSports')?.checked) occasions.push('sports');
+            if (document.getElementById('occasionOffice')?.checked) occasions.push('office');
+            if (document.getElementById('occasionParty')?.checked) occasions.push('party');
+            if (document.getElementById('occasionCasual')?.checked) occasions.push('casual');
+
+            const sizes = [];
+            for (let i = 6; i <= 11; i++) {
+                if (document.getElementById(`size${i}`)?.checked) sizes.push(i);
+            }
+
+            const priceRange = document.getElementById('priceRange')?.value;
+
+            filteredProducts = products.filter(product => {
+                let match = true;
+                if (genders.length > 0 && !genders.includes(product.gender)) match = false;
+                if (brands.length > 0 && !brands.includes(product.brand)) match = false;
+                if (types.length > 0 && !types.includes(product.type)) match = false;
+                if (occasions.length > 0 && !occasions.includes(product.occasion)) match = false;
+                if (sizes.length > 0 && !product.sizes.some(s => sizes.includes(s))) match = false;
+
+                if (priceRange) {
+                    const [min, max] = priceRange.split('-').map(Number);
+                    if (product.price < min || product.price > max) match = false;
+                }
+
+                return match;
+            });
+
+            applySorting();
+        }
+
+        function applySorting() {
+            const sortBy = document.getElementById('sortBy')?.value;
+            if (sortBy === 'price-low') filteredProducts.sort((a, b) => a.price - b.price);
+            else if (sortBy === 'price-high') filteredProducts.sort((a, b) => b.price - a.price);
+            else if (sortBy === 'name') filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+            renderShopProducts();
+        }
+
+        function clearFilters() {
+            document.querySelectorAll('.filter-sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.getElementById('priceRange').value = '';
+            document.getElementById('sortBy').value = '';
+            filteredProducts = [...products];
+            renderShopProducts();
+        }
+
+        function filterByGender(gender) {
+            clearFilters();
+            if (gender === 'casual') {
+                document.getElementById('typeCasual').checked = true;
+            } else {
+                document.getElementById('filter' + gender.charAt(0).toUpperCase() + gender.slice(1)).checked = true;
+            }
+            showPage('shop');
+            applyFilters();
+        }
+
+        function filterByBrand(brand) {
+            clearFilters();
+            switchToStreetTheme();
+            document.getElementById('brand' + brand).checked = true;
+            showPage('shop');
+            applyFilters();
+        }
+
+        function viewProduct(id) {
+            currentProduct = products.find(p => p.id === id);
+            const container = document.getElementById('productDetailContent');
+
+            container.innerHTML = `
+                <div class="col-md-6">
+                    <img src="${currentProduct.image1}" class="product-detail-image" id="mainImage" alt="${currentProduct.name}">
+                    <div class="d-flex">
+                        <img src="${currentProduct.image1}" class="thumbnail active" onclick="changeMainImage('${currentProduct.image1}', this)">
+                        <img src="${currentProduct.image2}" class="thumbnail" onclick="changeMainImage('${currentProduct.image2}', this)">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-brand mb-2">${currentProduct.brand}</div>
+                    <h2 class="mb-3">${currentProduct.name}</h2>
+                    <div class="rating mb-3">${'★'.repeat(Math.floor(currentProduct.rating))}${'☆'.repeat(5 - Math.floor(currentProduct.rating))} <span>(${currentProduct.rating}/5)</span></div>
+                    <div class="product-price mb-4">₹${currentProduct.price}${currentProduct.oldPrice ? `<span class="product-price-old">₹${currentProduct.oldPrice}</span>` : ''}</div>
+                    <p class="mb-4">${currentProduct.desc}</p>
+
+                    <h5 class="mb-3">SIZE</h5>
+                    <div class="d-flex flex-wrap mb-4">
+                        ${currentProduct.sizes.map(size => `<button class="size-btn" onclick="selectSize(this)">${size}</button>`).join('')}
+                    </div>
+
+                    <h5 class="mb-3">QUANTITY</h5>
+                    <div class="d-flex align-items-center mb-4">
+                        <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                        <span id="productQty" style="margin: 0 20px; font-size: 1.5rem; font-weight: 700;">1</span>
+                        <button class="qty-btn" onclick="changeQty(1)">+</button>
+                    </div>
+
+                    <div class="d-flex gap-3 mb-4">
+                        <button class="btn btn-primary-custom flex-fill" onclick="addToCartFromDetail()">ADD TO CART</button>
+                        <button class="btn btn-outline-danger" onclick="addToWishlist(${currentProduct.id})">
+                            <i class="bi bi-heart-fill"></i>
+                        </button>
+                    </div>
+
+                    <div class="price-comparison-table mt-5">
+                        <h5 class="mb-3">PRICE COMPARISON</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Platform</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Amazon</td>
+                                    <td>₹${currentProduct.price + 200}</td>
+                                </tr>
+                                <tr>
+                                    <td>Flipkart</td>
+                                    <td>₹${currentProduct.price + 100}</td>
+                                </tr>
+                                <tr class="best-price">
+                                    <td><strong>UrbanKicks</strong></td>
+                                    <td><strong>₹${currentProduct.price}</strong> 🎉</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-12 mt-5">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#description">Description</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reviews">Reviews</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content cart-item mt-3">
+                        <div class="tab-pane fade show active" id="description">
+                            <p>${currentProduct.desc}</p>
+                            <p>Premium quality ${currentProduct.type} perfect for ${currentProduct.occasion}.</p>
+                        </div>
+                        <div class="tab-pane fade" id="reviews">
+                            <div class="mb-3">
+                                <h6>John Doe</h6>
+                                <div class="rating">★★★★★</div>
+                                <p>Amazing quality! Highly recommended.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            showPage('productDetail');
+        }
+
+        function quickView(id) {
+            const product = products.find(p => p.id === id);
+            const container = document.getElementById('quickViewContent');
+
+            container.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="${product.image1}" class="w-100 rounded" alt="${product.name}">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product-brand">${product.brand}</div>
+                        <h4>${product.name}</h4>
+                        <div class="rating">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</div>
+                        <div class="product-price my-3">₹${product.price}${product.oldPrice ? `<span class="product-price-old">₹${product.oldPrice}</span>` : ''}</div>
+                        <p>${product.desc}</p>
+                        <button class="btn btn-primary-custom w-100 mt-3" onclick="viewProduct(${product.id})" data-bs-dismiss="modal">VIEW FULL DETAILS</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function changeMainImage(src, element) {
+            document.getElementById('mainImage').src = src;
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        let selectedSize = null;
+        let productQty = 1;
+
+        function selectSize(element) {
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            selectedSize = element.textContent;
+        }
+
+        function changeQty(delta) {
+            productQty = Math.max(1, productQty + delta);
+            document.getElementById('productQty').textContent = productQty;
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existingItem = cart.find(item => item.id === id);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    brand: product.brand,
+                    price: product.price,
+                    image: product.image1,
+                    size: 9,
+                    quantity: 1
+                });
+            }
+
+            updateCartCount();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('Added to cart!');
+        }
+
+        function addToCartFromDetail() {
+            if (!selectedSize) {
+                alert('Please select a size');
+                return;
+            }
+
+            const existingItem = cart.find(item => item.id === currentProduct.id && item.size == selectedSize);
+
+            if (existingItem) {
+                existingItem.quantity += productQty;
+            } else {
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    brand: currentProduct.brand,
+                    price: currentProduct.price,
+                    image: currentProduct.image1,
+                    size: selectedSize,
+                    quantity: productQty
+                });
+            }
+
+            updateCartCount();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('Added to cart!');
+            productQty = 1;
+            selectedSize = null;
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-center py-5"><h4>Your cart is empty</h4></div>';
+                document.getElementById('cartSubtotal').textContent = '₹0';
+                document.getElementById('shippingCost').textContent = '₹0';
+                document.getElementById('cartTotal').textContent = '₹0';
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img src="${item.image}" style="width: 100%; border-radius: 10px;" alt="${item.name}">
+                        </div>
+                        <div class="col-md-4">
+                            <h6>${item.name}</h6>
+                            <p class="mb-0">${item.brand} | Size: ${item.size}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <strong>₹${item.price}</strong>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="d-flex align-items-center">
+                                <button class="qty-btn" onclick="updateCartQty(${index}, -1)">-</button>
+                                <span style="margin: 0 10px; font-weight: 700;">${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateCartQty(${index}, 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            updateCartTotals();
+        }
+
+        function updateCartQty(index, delta) {
+            cart[index].quantity = Math.max(1, cart[index].quantity + delta);
+            renderCart();
+            updateCartCount();
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+            updateCartCount();
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function updateCartTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 999 ? 0 : 100;
+            const total = subtotal + shipping;
+
+            document.getElementById('cartSubtotal').textContent = '₹' + subtotal;
+            document.getElementById('shippingCost').textContent = shipping === 0 ? 'FREE' : '₹' + shipping;
+            document.getElementById('cartTotal').textContent = '₹' + total;
+        }
+
+        function renderCheckoutSummary() {
+            const container = document.getElementById('checkoutSummary');
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 999 ? 0 : 100;
+            const total = subtotal + shipping;
+
+            container.innerHTML = `
+                ${cart.map(item => `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>${item.name} (${item.quantity}x)</span>
+                        <span>₹${item.price * item.quantity}</span>
+                    </div>
+                `).join('')}
+                <hr>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span>₹${subtotal}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Shipping:</span>
+                    <span>${shipping === 0 ? 'FREE' : '₹' + shipping}</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total:</strong>
+                    <strong>₹${total}</strong>
+                </div>
+            `;
+        }
+
+        function addToWishlist(id) {
+            const product = products.find(p => p.id === id);
+            const existing = wishlist.find(item => item.id === id);
+
+            if (existing) {
+                alert('Already in wishlist!');
+                return;
+            }
+
+            wishlist.push({
+                id: product.id,
+                name: product.name,
+                brand: product.brand,
+                price: product.price,
+                image: product.image1
+            });
+
+            updateWishlistCount();
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            alert('Added to wishlist!');
+        }
+
+        function updateWishlistCount() {
+            document.getElementById('wishlistCount').textContent = wishlist.length;
+        }
+
+        function renderWishlist() {
+            const container = document.getElementById('wishlistItems');
+
+            if (wishlist.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center py-5"><h4>Your wishlist is empty</h4></div>';
+                return;
+            }
+
+            container.innerHTML = wishlist.map((item, index) => `
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card">
+                        <div class="product-image-container">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">${item.brand}</div>
+                            <div class="product-name">${item.name}</div>
+                            <div class="product-price">₹${item.price}</div>
+                            <div class="d-flex gap-2 mt-3">
+                                <button class="btn btn-primary-custom flex-fill" onclick="moveToCart(${index})">MOVE TO CART</button>
+                                <button class="btn btn-outline-danger" onclick="removeFromWishlist(${index})">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function moveToCart(index) {
+            const item = wishlist[index];
+            addToCart(item.id);
+            wishlist.splice(index, 1);
+            updateWishlistCount();
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            renderWishlist();
+        }
+
+        function removeFromWishlist(index) {
+            wishlist.splice(index, 1);
+            updateWishlistCount();
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            renderWishlist();
+        }
+
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email');
+                return;
+            }
+            
+            alert('Login successful!');
+            showPage('home');
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            alert('Account created!');
+            showPage('login');
+        });
+
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (cart.length === 0) {
+                alert('Cart is empty!');
+                return;
+            }
+            alert('Order placed successfully!');
+            cart = [];
+            updateCartCount();
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showPage('home');
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Message sent!');
+            this.reset();
+        });
+
+        document.getElementById('refundForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Request submitted!');
+            this.reset();
+        });
+
+        updateCartCount();
+        updateWishlistCount();
+        renderTrendingProducts();
+    </script>
+</body>
+</html>

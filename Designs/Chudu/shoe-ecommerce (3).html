@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOLE VAULT — Compare Smart. Shop Smarter.</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --black: #0a0a0a;
+  --white: #f5f2ee;
+  --accent: #ff3b00;
+  --accent2: #ffd600;
+  --gray: #1a1a1a;
+  --mid: #2e2e2e;
+  --text-muted: #888;
+  --card-bg: #111;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--accent); }
+
+/* ===== MARQUEE ===== */
+.top-marquee {
+  background: var(--accent);
+  color: var(--white);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 8px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee-inner {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  background: rgba(10,10,10,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid #1f1f1f;
+  padding: 14px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.navbar-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--white) !important;
+  letter-spacing: 3px;
+}
+.navbar-brand span { color: var(--accent); }
+
+.nav-link {
+  color: #aaa !important;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+  padding: 6px 12px !important;
+}
+.nav-link:hover, .nav-link.active { color: var(--white) !important; }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 12px; right: 12px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+.nav-link:hover::after { transform: scaleX(1); }
+
+.nav-icons { display: flex; gap: 8px; align-items: center; }
+.nav-icon-btn {
+  background: none;
+  border: 1px solid #2a2a2a;
+  color: var(--white);
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.nav-icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+.nav-badge {
+  position: absolute;
+  top: -4px; right: -4px;
+  background: var(--accent);
+  color: white;
+  font-size: 9px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Mono', monospace;
+}
+
+.search-bar-nav {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 20px;
+  padding: 7px 16px;
+  color: var(--white);
+  font-size: 13px;
+  width: 200px;
+  outline: none;
+  transition: all 0.2s;
+}
+.search-bar-nav:focus { border-color: var(--accent); width: 240px; }
+.search-bar-nav::placeholder { color: #555; }
+
+/* Profile dropdown */
+.profile-dropdown {
+  position: relative;
+}
+.profile-menu {
+  display: none;
+  position: absolute;
+  top: 48px; right: 0;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  min-width: 160px;
+  z-index: 999;
+  overflow: hidden;
+}
+.profile-menu.show { display: block; }
+.profile-menu-header {
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--accent);
+  border-bottom: 1px solid #2a2a2a;
+  font-family: 'Space Mono', monospace;
+}
+.profile-menu a {
+  display: block;
+  padding: 10px 16px;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+.profile-menu a:hover { background: #252525; }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 92vh;
+  background: var(--black);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-text {
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(100px, 18vw, 260px);
+  color: transparent;
+  -webkit-text-stroke: 1px #1a1a1a;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 10px;
+  transition: transform 0.1s ease-out;
+}
+.hero-content { position: relative; z-index: 2; }
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(54px, 8vw, 110px);
+  line-height: 0.9;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+.hero-title span { color: var(--accent); }
+.hero-subtitle {
+  color: #888;
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 400px;
+  margin-bottom: 36px;
+}
+.btn-primary-custom {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 14px 36px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-primary-custom:hover {
+  background: var(--white);
+  color: var(--black);
+  transform: translateY(-2px);
+}
+.btn-outline-custom {
+  background: transparent;
+  color: var(--white);
+  border: 1px solid #333;
+  padding: 13px 36px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-outline-custom:hover { border-color: var(--white); color: var(--white); }
+
+/* Hero brand cards */
+.hero-brands { position: relative; z-index: 2; }
+.brand-card {
+  background: #111;
+  border: 1px solid #1f1f1f;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.brand-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.brand-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(255,59,0,0.15);
+}
+.brand-card:hover::before { opacity: 0.05; }
+.brand-shoe-img {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+  transition: transform 0.3s;
+}
+.brand-card:hover .brand-shoe-img { transform: scale(1.08) rotate(-3deg); }
+.brand-name-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.brand-card-label {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* ===== BRAND SLIDER ===== */
+.brand-slider-section {
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+  padding: 20px 0;
+  overflow: hidden;
+  background: #0d0d0d;
+}
+.brand-slider-track {
+  display: flex;
+  gap: 60px;
+  animation: slidebrands 25s linear infinite;
+  white-space: nowrap;
+  align-items: center;
+}
+@keyframes slidebrands {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.brand-slide-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 3px;
+  color: #2a2a2a;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.brand-slide-item i { color: #222; font-size: 16px; }
+.brand-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+
+/* ===== SECTION TITLES ===== */
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 5vw, 64px);
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+/* ===== PRODUCT CARDS ===== */
+.products-section { padding: 80px 0; background: var(--black); }
+
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+
+.product-card {
+  background: var(--card-bg);
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+.product-card:hover {
+  border-color: #333;
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+}
+
+.card-img-wrap {
+  position: relative;
+  height: 200px;
+  background: #161616;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-img-wrap img {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
+}
+.product-card:hover .card-img-wrap img { transform: scale(1.08) rotate(-4deg); }
+
+/* Color swatches overlay */
+.color-swatches {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 5px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: all 0.25s;
+}
+.product-card:hover .color-swatches { opacity: 1; transform: translateY(0); }
+.swatch {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid #333;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.swatch:hover { transform: scale(1.3); }
+
+/* Card tags */
+.card-tags {
+  position: absolute;
+  top: 10px; left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.card-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.tag-new { background: var(--accent2); color: var(--black); }
+.tag-sale { background: var(--accent); color: white; }
+.tag-hot { background: #7c3aed; color: white; }
+
+/* Wishlist btn */
+.wishlist-btn {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: #666;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.wishlist-btn:hover, .wishlist-btn.active { color: #ff4d6d; background: rgba(255,77,109,0.15); }
+
+.card-body-custom { padding: 16px; }
+.card-brand {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.card-name {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--white);
+  line-height: 1.3;
+}
+.card-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.rating-val {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--white);
+  font-weight: 700;
+}
+.rating-star { color: var(--accent2); font-size: 12px; }
+.rating-count { color: #555; font-size: 11px; }
+
+.card-footer-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-price {
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+}
+.card-price-old {
+  font-size: 11px;
+  color: #555;
+  text-decoration: line-through;
+  margin-right: 4px;
+}
+.add-cart-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.add-cart-btn:hover { background: var(--white); color: var(--black); }
+
+/* ===== FILTER BAR ===== */
+.filter-bar {
+  background: #0d0d0d;
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+  padding: 16px 0;
+  position: sticky;
+  top: 64px;
+  z-index: 900;
+}
+.filter-btn {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  color: #aaa;
+  padding: 7px 16px;
+  font-size: 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.cat-btn {
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: #888;
+  padding: 6px 18px;
+  font-size: 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.5px;
+}
+.cat-btn:hover, .cat-btn.active {
+  border-color: var(--white);
+  color: var(--white);
+}
+
+/* ===== PRODUCT MODAL ===== */
+.modal-dark .modal-content {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 16px;
+  color: var(--white);
+}
+.modal-dark .modal-header {
+  border-bottom: 1px solid #1f1f1f;
+  padding: 20px 24px;
+}
+.modal-dark .modal-body { padding: 24px; }
+.modal-dark .btn-close { filter: invert(1); }
+
+.modal-shoe-img {
+  width: 100%;
+  height: 280px;
+  object-fit: contain;
+  background: #0d0d0d;
+  border-radius: 12px;
+  padding: 20px;
+}
+.modal-brand-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.modal-title-shoe {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 1px;
+  margin: 4px 0 8px;
+}
+.modal-price {
+  font-family: 'Space Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.size-btn {
+  border: 1px solid #2a2a2a;
+  background: transparent;
+  color: var(--white);
+  width: 44px; height: 40px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.size-btn:hover, .size-btn.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: white;
+}
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 4px;
+  width: fit-content;
+}
+.qty-btn {
+  background: none;
+  border: none;
+  color: var(--white);
+  width: 32px; height: 32px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+.qty-btn:hover { background: #2a2a2a; }
+.qty-val { font-family: 'Space Mono', monospace; font-size: 14px; width: 24px; text-align: center; }
+
+/* Comparison table */
+.compare-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.compare-table th {
+  background: #1a1a1a;
+  padding: 8px 12px;
+  text-align: left;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+.compare-table td { padding: 10px 12px; border-bottom: 1px solid #1a1a1a; }
+.compare-table tr:hover td { background: #161616; }
+.price-best { color: var(--accent2); font-weight: 700; font-family: 'Space Mono', monospace; }
+.price-normal { font-family: 'Space Mono', monospace; }
+
+/* Policy section */
+.policy-badge {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #aaa;
+}
+.policy-badge i { color: var(--accent); }
+
+/* ===== WHY CHOOSE US ===== */
+.why-section {
+  padding: 80px 0;
+  background: #0a0a0a;
+  border-top: 1px solid #1a1a1a;
+}
+.why-card {
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: all 0.3s;
+  height: 100%;
+}
+.why-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(255,59,0,0.1);
+}
+.why-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: block;
+}
+.why-title { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.why-desc { font-size: 13px; color: #666; line-height: 1.6; }
+
+/* ===== REVIEWS ===== */
+.reviews-section {
+  padding: 80px 0;
+  background: var(--black);
+  border-top: 1px solid #1a1a1a;
+}
+.review-card {
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  padding: 24px;
+  height: 100%;
+}
+.review-stars { color: var(--accent2); font-size: 12px; margin-bottom: 12px; }
+.review-text { font-size: 14px; line-height: 1.6; color: #ccc; margin-bottom: 16px; font-style: italic; }
+.reviewer-name { font-size: 12px; font-weight: 600; }
+.reviewer-info { font-size: 11px; color: #555; font-family: 'Space Mono', monospace; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: #080808;
+  border-top: 1px solid #1a1a1a;
+  padding: 60px 0 30px;
+}
+.footer-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+.footer-brand span { color: var(--accent); }
+.footer-tagline { font-size: 13px; color: #555; margin-bottom: 20px; }
+.social-links { display: flex; gap: 10px; }
+.social-link {
+  width: 36px; height: 36px;
+  border: 1px solid #2a2a2a;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #666;
+  text-decoration: none;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+.social-link:hover { border-color: var(--accent); color: var(--accent); }
+.footer-heading {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 8px; }
+.footer-links a {
+  color: #666;
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--white); }
+.footer-divider { border-color: #1a1a1a; margin: 40px 0 24px; }
+.footer-bottom { font-size: 12px; color: #444; }
+
+/* ===== CART OFFCANVAS ===== */
+.offcanvas-dark {
+  background: #111;
+  color: var(--white);
+  border-left: 1px solid #1f1f1f;
+}
+.offcanvas-dark .offcanvas-header { border-bottom: 1px solid #1f1f1f; }
+.offcanvas-dark .btn-close { filter: invert(1); }
+.cart-item {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #1a1a1a;
+  align-items: center;
+}
+.cart-item-img {
+  width: 60px; height: 60px;
+  object-fit: contain;
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 6px;
+  flex-shrink: 0;
+}
+.cart-item-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+.cart-item-brand { font-size: 10px; color: #666; font-family: 'Space Mono', monospace; letter-spacing: 1px; }
+.cart-item-price { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--accent); margin-top: 4px; }
+.remove-btn { background: none; border: none; color: #444; cursor: pointer; font-size: 12px; transition: color 0.2s; }
+.remove-btn:hover { color: var(--accent); }
+.cart-total { font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; }
+
+/* ===== WISHLIST OFFCANVAS ===== */
+.wishlist-item-img {
+  width: 60px; height: 60px;
+  object-fit: contain;
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 6px;
+  flex-shrink: 0;
+}
+
+/* ===== WEARABLES PAGE ===== */
+#wearables-page {
+  display: none;
+  padding: 40px 0 80px;
+}
+#wearables-page.visible { display: block; }
+#home-page.hidden { display: none !important; }
+
+/* ===== CONTACT PAGE ===== */
+#contact-page {
+  display: none;
+  padding: 80px 0;
+  min-height: 80vh;
+}
+#contact-page.visible { display: block; }
+.contact-form {
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 16px;
+  padding: 40px;
+}
+.form-control-dark {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  color: var(--white);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.form-control-dark:focus { border-color: var(--accent); }
+.form-control-dark::placeholder { color: #444; }
+.form-label-dark { font-size: 12px; color: #888; margin-bottom: 6px; font-family: 'Space Mono', monospace; letter-spacing: 1px; display: block; }
+.contact-info-card {
+  background: #111;
+  border: 1px solid #1a1a1a;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.contact-info-card i { color: var(--accent); margin-right: 10px; }
+
+/* ===== ABOUT PAGE ===== */
+#about-page {
+  display: none;
+  padding: 80px 0;
+  min-height: 80vh;
+}
+#about-page.visible { display: block; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-title { font-size: 54px; }
+  .hero-brands { margin-top: 40px; }
+  .search-bar-nav { width: 140px; }
+  .search-bar-nav:focus { width: 160px; }
+}
+
+/* Toast */
+.toast-container {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toast-msg {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-left: 3px solid var(--accent);
+  color: var(--white);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  animation: toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards;
+  font-family: 'DM Sans', sans-serif;
+}
+@keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes toastOut { to { opacity: 0; transform: translateY(10px); } }
+
+/* Scroll animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- TOP MARQUEE -->
+<div class="top-marquee">
+  <div class="marquee-inner">
+    &nbsp;&nbsp;&nbsp; FREE DELIVERY ON ORDERS ABOVE ₹999 &nbsp;•&nbsp; COMPARE PRICES ACROSS AMAZON, FLIPKART, MYNTRA & AJIO &nbsp;•&nbsp; EASY 30-DAY RETURNS &nbsp;•&nbsp; 100% AUTHENTIC PRODUCTS &nbsp;•&nbsp; FREE DELIVERY ON ORDERS ABOVE ₹999 &nbsp;•&nbsp; COMPARE PRICES ACROSS AMAZON, FLIPKART, MYNTRA & AJIO &nbsp;•&nbsp; EASY 30-DAY RETURNS &nbsp;•&nbsp; 100% AUTHENTIC PRODUCTS &nbsp;•&nbsp;
+    &nbsp;&nbsp;&nbsp; FREE DELIVERY ON ORDERS ABOVE ₹999 &nbsp;•&nbsp; COMPARE PRICES ACROSS AMAZON, FLIPKART, MYNTRA & AJIO &nbsp;•&nbsp; EASY 30-DAY RETURNS &nbsp;•&nbsp; 100% AUTHENTIC PRODUCTS &nbsp;•&nbsp; FREE DELIVERY ON ORDERS ABOVE ₹999 &nbsp;•&nbsp; COMPARE PRICES ACROSS AMAZON, FLIPKART, MYNTRA & AJIO &nbsp;•&nbsp; EASY 30-DAY RETURNS &nbsp;•&nbsp; 100% AUTHENTIC PRODUCTS &nbsp;•&nbsp;
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#" onclick="showPage('home')">SOLE<span>VAULT</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" style="border-color:#333; color:#fff;">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mx-auto gap-1">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="showPage('home')">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('wearables')">Wearables</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('about')">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showPage('contact')">Contact Us</a></li>
+      </ul>
+      <div class="nav-icons mt-3 mt-lg-0">
+        <input type="text" class="search-bar-nav" placeholder="Search shoes..." id="searchInput" oninput="filterProducts()" onkeydown="handleSearch(event)">
+        <button class="nav-icon-btn" onclick="toggleWishlist()" title="Wishlist">
+          <i class="fas fa-heart"></i>
+          <span class="nav-badge" id="wishlist-count">0</span>
+        </button>
+        <button class="nav-icon-btn" onclick="openCart()" title="Cart">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="nav-badge" id="cart-count">0</span>
+        </button>
+        <div class="profile-dropdown">
+          <button class="nav-icon-btn" onclick="toggleProfileMenu()" title="Profile">
+            <i class="fas fa-user"></i>
+          </button>
+          <div class="profile-menu" id="profileMenu">
+            <div class="profile-menu-header">Hi, Vishal 👋</div>
+            <a href="#"><i class="fas fa-user-circle me-2"></i> Account</a>
+            <a href="#"><i class="fas fa-box me-2"></i> Orders</a>
+            <a href="#" style="color: var(--accent);"><i class="fas fa-sign-out-alt me-2"></i> Sign Out</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="home-page">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-text" id="heroBgText">SOLE</div>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 hero-content">
+          <div class="hero-eyebrow">⚡ India's #1 Shoe Price Comparator</div>
+          <h1 class="hero-title">
+            Compare<br>Smart.<br><span>Shop</span><br>Smarter.
+          </h1>
+          <p class="hero-subtitle">Find the best deals across Amazon, Flipkart, Myntra, and Ajio. All in one place. Never overpay for your next pair again.</p>
+          <div class="d-flex gap-3 flex-wrap">
+            <a href="#" class="btn-primary-custom" onclick="showPage('wearables')">Shop Now</a>
+            <a href="#" class="btn-outline-custom" onclick="document.getElementById('featured').scrollIntoView({behavior:'smooth'})">View Featured</a>
+          </div>
+        </div>
+        <div class="col-lg-6 hero-brands mt-5 mt-lg-0">
+          <div class="row g-3">
+            <div class="col-6" onclick="filterByBrand('Nike')">
+              <div class="brand-card">
+                <img src="https://static.nike.com/a/images/f_auto/dpr_2.0,cs_srgb/h_300,c_limit/5c4b09a2-b9e5-45a6-8de7-fc4d0a13fc74/air-max-270-shoes.png" class="brand-shoe-img" alt="Nike" onerror="this.src='https://via.placeholder.com/200x100/161616/444?text=NIKE'">
+                <div class="brand-name-tag">Brand</div>
+                <div class="brand-card-label">Nike</div>
+              </div>
+            </div>
+            <div class="col-6" onclick="filterByBrand('Adidas')">
+              <div class="brand-card">
+                <img src="https://assets.adidas.com/images/w_600,f_auto,q_auto/6e15ef0d53a44bb58c09af32015b6d76_9366/Ultraboost_5_Shoes_Black_ID8851_01_standard.jpg" class="brand-shoe-img" alt="Adidas" onerror="this.src='https://via.placeholder.com/200x100/161616/444?text=ADIDAS'">
+                <div class="brand-name-tag">Brand</div>
+                <div class="brand-card-label">Adidas</div>
+              </div>
+            </div>
+            <div class="col-6" onclick="filterByBrand('Puma')">
+              <div class="brand-card">
+                <img src="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_750,h_750/global/195069/01/sv01/fnd/IND/fmt/png/RS-X-Efekt-PRM-Unisex-Sneakers" class="brand-shoe-img" alt="Puma" onerror="this.src='https://via.placeholder.com/200x100/161616/444?text=PUMA'">
+                <div class="brand-name-tag">Brand</div>
+                <div class="brand-card-label">Puma</div>
+              </div>
+            </div>
+            <div class="col-6" onclick="filterByBrand('Converse')">
+              <div class="brand-card">
+                <img src="https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dw3cdc6f62/images/a_107/M9697_A_107X1.jpg?sw=680&sh=680" class="brand-shoe-img" alt="Converse" onerror="this.src='https://via.placeholder.com/200x100/161616/444?text=CONVERSE'">
+                <div class="brand-name-tag">Brand</div>
+                <div class="brand-card-label">Converse</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRAND SLIDER -->
+  <div class="brand-slider-section">
+    <div class="brand-slider-track" id="brandSlider">
+      <span class="brand-slide-item"><span class="brand-dot"></span> NIKE</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> ADIDAS</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> PUMA</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> CONVERSE</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> REEBOK</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> NEW BALANCE</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> VANS</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> SKECHERS</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> BATA</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> WOODLAND</span>
+      <!-- duplicate -->
+      <span class="brand-slide-item"><span class="brand-dot"></span> NIKE</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> ADIDAS</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> PUMA</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> CONVERSE</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> REEBOK</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> NEW BALANCE</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> VANS</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> SKECHERS</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> BATA</span>
+      <span class="brand-slide-item"><span class="brand-dot"></span> WOODLAND</span>
+    </div>
+  </div>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="products-section" id="featured">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <div class="section-label">🔥 Trending Now</div>
+        <h2 class="section-title">Featured Products</h2>
+      </div>
+      <div class="product-grid" id="featuredGrid"></div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-section">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <div class="section-label">Our Edge</div>
+        <h2 class="section-title">Why Choose Us</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4 col-lg-2 reveal">
+          <div class="why-card text-center">
+            <span class="why-icon">⚡</span>
+            <div class="why-title">Live Comparison</div>
+            <div class="why-desc">Real-time prices from Amazon, Flipkart, Myntra & Ajio</div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2 reveal">
+          <div class="why-card text-center">
+            <span class="why-icon">💰</span>
+            <div class="why-title">Best Prices</div>
+            <div class="why-desc">Prices you won't find anywhere else guaranteed</div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2 reveal">
+          <div class="why-card text-center">
+            <span class="why-icon">✅</span>
+            <div class="why-title">Trusted Brands</div>
+            <div class="why-desc">Only 100% authentic products from verified brands</div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2 reveal">
+          <div class="why-card text-center">
+            <span class="why-icon">🔒</span>
+            <div class="why-title">Secure Payment</div>
+            <div class="why-desc">256-bit encrypted payments. Your data is safe</div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2 reveal">
+          <div class="why-card text-center">
+            <span class="why-icon">🎧</span>
+            <div class="why-title">24/7 Support</div>
+            <div class="why-desc">Round the clock customer support via chat & call</div>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-2 reveal">
+          <div class="why-card text-center">
+            <span class="why-icon">🔄</span>
+            <div class="why-title">Easy Return</div>
+            <div class="why-desc">Hassle-free 30-day returns and exchange policy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section">
+    <div class="container">
+      <div class="text-center mb-5 reveal">
+        <div class="section-label">Testimonials</div>
+        <h2 class="section-title">Customer Reviews</h2>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4 reveal">
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">"Saved ₹800 on my Nike Air Max by comparing prices here. Never going back to searching manually!"</p>
+            <div class="reviewer-name">Rahul M.</div>
+            <div class="reviewer-info">VERIFIED BUYER</div>
+          </div>
+        </div>
+        <div class="col-md-4 reveal">
+          <div class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">"The wishlist price comparison is a game changer. Got notified when my Adidas dropped ₹600 in price!"</p>
+            <div class="reviewer-name">Priya S.</div>
+            <div class="reviewer-info">VERIFIED BUYER</div>
+          </div>
+        </div>
+        <div class="col-md-4 reveal">
+          <div class="review-card">
+            <div class="review-stars">★★★★☆</div>
+            <p class="review-text">"Authentic products, great customer service. The hover effect on shoes is super cool - you can see all angles!"</p>
+            <div class="reviewer-name">Arjun K.</div>
+            <div class="reviewer-info">VERIFIED BUYER</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end home-page -->
+
+<!-- WEARABLES PAGE -->
+<div id="wearables-page">
+  <div class="container">
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <h1 class="section-title" style="font-size:48px;">Wearables</h1>
+      <span style="background:var(--accent);padding:4px 12px;font-family:'Space Mono',monospace;font-size:11px;border-radius:4px;" id="totalCount">48 SHOES</span>
+    </div>
+    
+    <!-- Categories -->
+    <div class="d-flex gap-2 flex-wrap mb-3">
+      <button class="cat-btn active" onclick="setCat('all', this)">All</button>
+      <button class="cat-btn" onclick="setCat('sneakers', this)">Sneakers</button>
+      <button class="cat-btn" onclick="setCat('sports', this)">Sports</button>
+      <button class="cat-btn" onclick="setCat('casual', this)">Casuals</button>
+      <button class="cat-btn" onclick="setCat('formal', this)">Formals</button>
+      <button class="cat-btn" onclick="setCat('sliders', this)">Sliders</button>
+    </div>
+
+    <!-- Filter dropdowns -->
+    <div class="d-flex gap-2 flex-wrap mb-4 align-items-center">
+      <span style="font-size:12px;color:#555;font-family:'Space Mono',monospace;">FILTER:</span>
+      <select class="filter-btn" onchange="applyFilters()" id="brandFilter" style="border-radius:6px;padding:7px 12px;">
+        <option value="">Brand</option>
+        <option>Nike</option>
+        <option>Adidas</option>
+        <option>Puma</option>
+        <option>Converse</option>
+        <option>Reebok</option>
+        <option>New Balance</option>
+        <option>Vans</option>
+        <option>Skechers</option>
+        <option>Bata</option>
+      </select>
+      <select class="filter-btn" onchange="applyFilters()" id="genderFilter" style="border-radius:6px;padding:7px 12px;">
+        <option value="">Gender</option>
+        <option>Men</option>
+        <option>Women</option>
+        <option>Unisex</option>
+      </select>
+      <select class="filter-btn" onchange="applyFilters()" id="priceFilter" style="border-radius:6px;padding:7px 12px;">
+        <option value="">Price</option>
+        <option value="0-2000">Under ₹2,000</option>
+        <option value="2000-5000">₹2,000 – ₹5,000</option>
+        <option value="5000-10000">₹5,000 – ₹10,000</option>
+        <option value="10000-999999">Above ₹10,000</option>
+      </select>
+      <select class="filter-btn" onchange="applyFilters()" id="sortFilter" style="border-radius:6px;padding:7px 12px;">
+        <option value="">Sort</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="rating">Best Rated</option>
+        <option value="name">Name A-Z</option>
+      </select>
+      <button class="filter-btn" onclick="resetFilters()" style="border-radius:6px;">
+        <i class="fas fa-times me-1"></i> Reset
+      </button>
+    </div>
+
+    <div class="product-grid" id="wearablesGrid"></div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="about-page">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-6">
+        <div class="section-label mb-2">Our Story</div>
+        <h1 class="section-title mb-4">About SOLE<span style="color:var(--accent)">VAULT</span></h1>
+        <p style="color:#888;line-height:1.8;font-size:15px;margin-bottom:20px;">
+          SoleVault was born out of frustration — the frustration of spending hours across multiple apps comparing prices just to find the best deal on a pair of shoes. We built a smarter solution.
+        </p>
+        <p style="color:#888;line-height:1.8;font-size:15px;margin-bottom:20px;">
+          We aggregate live prices from Amazon, Flipkart, Myntra, Ajio and more so you never have to. Our platform is built for the smart shopper who wants quality footwear without the premium price tag.
+        </p>
+        <p style="color:#888;line-height:1.8;font-size:15px;">
+          We partner only with authentic, verified brands including Nike, Adidas, Puma, Converse, Reebok and more — ensuring every pair you receive is 100% genuine.
+        </p>
+      </div>
+      <div class="col-lg-6">
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="why-card text-center">
+              <div style="font-family:'Bebas Neue';font-size:48px;color:var(--accent);">48+</div>
+              <div style="font-size:13px;color:#888;">Shoe Brands</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="why-card text-center">
+              <div style="font-family:'Bebas Neue';font-size:48px;color:var(--accent);">1200+</div>
+              <div style="font-size:13px;color:#888;">Products Listed</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="why-card text-center">
+              <div style="font-family:'Bebas Neue';font-size:48px;color:var(--accent);">50K+</div>
+              <div style="font-size:13px;color:#888;">Happy Customers</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="why-card text-center">
+              <div style="font-family:'Bebas Neue';font-size:48px;color:var(--accent);">₹2Cr+</div>
+              <div style="font-size:13px;color:#888;">Savings Generated</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="contact-page">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-label">Get In Touch</div>
+      <h1 class="section-title">Contact Us</h1>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="contact-info-card">
+          <i class="fas fa-envelope"></i>
+          <strong>Email</strong>
+          <div style="color:#888;font-size:13px;margin-top:4px;">support@solevault.in</div>
+        </div>
+        <div class="contact-info-card">
+          <i class="fas fa-phone"></i>
+          <strong>Phone</strong>
+          <div style="color:#888;font-size:13px;margin-top:4px;">+91 98765 43210 (Mon–Sat, 10AM–7PM)</div>
+        </div>
+        <div class="contact-info-card">
+          <i class="fab fa-whatsapp"></i>
+          <strong>WhatsApp Support</strong>
+          <div style="color:#888;font-size:13px;margin-top:4px;">Chat with us anytime</div>
+          <a href="#" style="color:var(--accent);font-size:12px;text-decoration:none;">Open WhatsApp →</a>
+        </div>
+        <div class="contact-info-card">
+          <div style="margin-bottom:12px;"><i class="fas fa-share-alt me-2"></i><strong>Follow Us</strong></div>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="contact-form">
+          <h3 style="font-family:'Bebas Neue';font-size:28px;letter-spacing:2px;margin-bottom:24px;">Send Us a Message</h3>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label-dark">YOUR NAME</label>
+              <input type="text" class="form-control-dark" placeholder="Rahul Sharma">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label-dark">EMAIL</label>
+              <input type="email" class="form-control-dark" placeholder="rahul@email.com">
+            </div>
+            <div class="col-12">
+              <label class="form-label-dark">SUBJECT</label>
+              <input type="text" class="form-control-dark" placeholder="Regarding my order...">
+            </div>
+            <div class="col-12">
+              <label class="form-label-dark">MESSAGE</label>
+              <textarea class="form-control-dark" rows="5" placeholder="Describe your issue or query..."></textarea>
+            </div>
+            <div class="col-12">
+              <button class="btn-primary-custom w-100" onclick="submitForm()">Send Message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- FAQ -->
+    <div class="mt-5">
+      <h2 class="section-title mb-4" style="font-size:36px;">FAQ</h2>
+      <div class="accordion" id="faqAccordion">
+        <div style="border:1px solid #1a1a1a;border-radius:8px;margin-bottom:8px;overflow:hidden;">
+          <button style="background:#111;color:var(--white);border:none;width:100%;text-align:left;padding:16px 20px;font-size:14px;font-weight:500;" onclick="toggleFaq(this)">
+            How does price comparison work? <i class="fas fa-chevron-down float-end"></i>
+          </button>
+          <div style="display:none;padding:16px 20px;background:#0d0d0d;color:#888;font-size:13px;line-height:1.7;">
+            We integrate with major e-commerce platforms via APIs to fetch real-time pricing. When you view a product, our system automatically pulls current prices from Amazon, Flipkart, Myntra, and Ajio to show you the best available deal.
+          </div>
+        </div>
+        <div style="border:1px solid #1a1a1a;border-radius:8px;margin-bottom:8px;overflow:hidden;">
+          <button style="background:#111;color:var(--white);border:none;width:100%;text-align:left;padding:16px 20px;font-size:14px;font-weight:500;" onclick="toggleFaq(this)">
+            Are all products authentic? <i class="fas fa-chevron-down float-end"></i>
+          </button>
+          <div style="display:none;padding:16px 20px;background:#0d0d0d;color:#888;font-size:13px;line-height:1.7;">
+            Absolutely. We only partner with verified brand stores and authorized resellers. Every product comes with brand warranty and authenticity guarantee.
+          </div>
+        </div>
+        <div style="border:1px solid #1a1a1a;border-radius:8px;margin-bottom:8px;overflow:hidden;">
+          <button style="background:#111;color:var(--white);border:none;width:100%;text-align:left;padding:16px 20px;font-size:14px;font-weight:500;" onclick="toggleFaq(this)">
+            What is the return policy? <i class="fas fa-chevron-down float-end"></i>
+          </button>
+          <div style="display:none;padding:16px 20px;background:#0d0d0d;color:#888;font-size:13px;line-height:1.7;">
+            We offer a 30-day hassle-free return and exchange policy. Simply raise a request through your orders page and we'll arrange a free pickup within 24 hours.
+          </div>
+        </div>
+        <div style="border:1px solid #1a1a1a;border-radius:8px;overflow:hidden;">
+          <button style="background:#111;color:var(--white);border:none;width:100%;text-align:left;padding:16px 20px;font-size:14px;font-weight:500;" onclick="toggleFaq(this)">
+            How long does delivery take? <i class="fas fa-chevron-down float-end"></i>
+          </button>
+          <div style="display:none;padding:16px 20px;background:#0d0d0d;color:#888;font-size:13px;line-height:1.7;">
+            Standard delivery takes 3-5 business days. Express delivery (1-2 days) is available for select pin codes at an additional charge.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="footer-brand">SOLE<span>VAULT</span></div>
+        <p class="footer-tagline">Compare Smart. Shop Smarter.<br>India's #1 Shoe Price Comparator</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">Collections</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="setCatAndShow('sneakers')">Sneakers</a></li>
+          <li><a href="#" onclick="setCatAndShow('sports')">Sports</a></li>
+          <li><a href="#" onclick="setCatAndShow('casual')">Casuals</a></li>
+          <li><a href="#" onclick="setCatAndShow('formal')">Formals</a></li>
+          <li><a href="#" onclick="setCatAndShow('sliders')">Sliders</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">Company</div>
+        <ul class="footer-links">
+          <li><a href="#" onclick="showPage('about')">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">Support</div>
+        <ul class="footer-links">
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Size Guide</a></li>
+          <li><a href="#" onclick="showPage('contact')">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <div class="footer-heading">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Refund Policy</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 footer-bottom">
+      <div>© 2026 SoleVault. All rights reserved.</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/800px-Mastercard-logo.svg.png" height="20" alt="Mastercard" style="filter:grayscale(1);opacity:0.4;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/800px-Visa_Inc._logo.svg.png" height="16" alt="Visa" style="filter:grayscale(1);opacity:0.4;">
+        <span style="font-size:11px;color:#333;">UPI</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- CART OFFCANVAS -->
+<div class="offcanvas offcanvas-end offcanvas-dark" tabindex="-1" id="cartOffcanvas">
+  <div class="offcanvas-header">
+    <h5 style="font-family:'Bebas Neue';font-size:24px;letter-spacing:2px;">Shopping Bag</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div id="cartItems"></div>
+    <div id="cartEmpty" style="text-align:center;padding:40px 0;color:#555;">
+      <i class="fas fa-shopping-bag" style="font-size:40px;margin-bottom:16px;display:block;"></i>
+      <div>Your cart is empty</div>
+    </div>
+    <div id="cartTotalSection" style="display:none;border-top:1px solid #1f1f1f;padding-top:20px;margin-top:auto;">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <span style="color:#888;font-size:13px;">TOTAL</span>
+        <span class="cart-total" id="cartTotal">₹0</span>
+      </div>
+      <!-- Price comparison in cart -->
+      <div style="background:#1a1a1a;border-radius:8px;padding:12px;margin-bottom:16px;">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:8px;">PRICE COMPARISON</div>
+        <div style="font-size:12px;color:#888;">SoleVault: <span id="cartSVPrice" style="color:var(--accent2);font-weight:700;"></span></div>
+        <div style="font-size:12px;color:#888;">Amazon: <span id="cartAmazonPrice" style="color:#666;"></span></div>
+        <div style="font-size:12px;color:#888;">Flipkart: <span id="cartFlipkartPrice" style="color:#666;"></span></div>
+        <div style="font-size:11px;color:var(--accent);margin-top:6px;" id="cartSavings"></div>
+      </div>
+      <button class="btn-primary-custom w-100 text-center">Proceed to Checkout</button>
+    </div>
+  </div>
+</div>
+
+<!-- WISHLIST OFFCANVAS -->
+<div class="offcanvas offcanvas-end offcanvas-dark" tabindex="-1" id="wishlistOffcanvas">
+  <div class="offcanvas-header">
+    <h5 style="font-family:'Bebas Neue';font-size:24px;letter-spacing:2px;">Wishlist</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div id="wishlistItems"></div>
+    <div id="wishlistEmpty" style="text-align:center;padding:40px 0;color:#555;">
+      <i class="fas fa-heart" style="font-size:40px;margin-bottom:16px;display:block;"></i>
+      <div>Your wishlist is empty</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal fade" id="productModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dark">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:2px;color:#888;">PRODUCT DETAILS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-4" id="modalContent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+
+// ===== PRODUCT DATA =====
+const products = [
+  {id:1, name:'Air Max 270', brand:'Nike', price:9999, oldPrice:12999, category:'sneakers', gender:'Men', rating:4.8, ratingCount:2341, colors:['#000','#fff','#ff3b00'], tags:['new','hot'],
+   img:'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/c4a4c75e-72ac-4b7b-a67b-9e7f5b9e9d4e/air-max-270-shoes-V4RF5G.png',
+   desc:'The Nike Air Max 270 delivers a big, bold look and soft cushioning for all-day wear. The large Max Air unit provides incomparable comfort.',
+   sizes:['UK 6','UK 7','UK 8','UK 9','UK 10','UK 11'],
+   amazonPrice: 11499, flipkartPrice: 10799, myntraPrice: 10999
+  },
+  {id:2, name:'Ultraboost 22', brand:'Adidas', price:14999, oldPrice:17999, category:'sports', gender:'Unisex', rating:4.9, ratingCount:1856, colors:['#000','#fff','#1a56db'], tags:['hot'],
+   img:'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/fbaf991a78bc4896a3e9ad7800abcec6_9366/Ultraboost_22_Shoes_Black_GZ0127_01_standard.jpg',
+   desc:'Ultraboost 22 delivers incredible energy return with Boost cushioning. Designed for runners who want maximum performance.',
+   sizes:['UK 6','UK 7','UK 8','UK 9','UK 10'],
+   amazonPrice: 16499, flipkartPrice: 15799, myntraPrice: 16299
+  },
+  {id:3, name:'RS-X Efekt', brand:'Puma', price:7499, oldPrice:9999, category:'sneakers', gender:'Unisex', rating:4.6, ratingCount:987, colors:['#fff','#ff6b6b','#000'], tags:['sale'],
+   img:'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_750,h_750/global/390773/02/sv01/fnd/IND/fmt/png/RS-X-Efekt-Unisex-Sneakers',
+   desc:'The RS-X Efekt takes the iconic RS design to the next level with bold color blocking and a chunky silhouette.',
+   sizes:['UK 6','UK 7','UK 8','UK 9','UK 10','UK 11'],
+   amazonPrice: 8999, flipkartPrice: 8499, myntraPrice: 8799
+  },
+  {id:4, name:'Chuck Taylor All Star', brand:'Converse', price:4999, oldPrice:5999, category:'casual', gender:'Unisex', rating:4.7, ratingCount:3421, colors:['#000','#fff','#ff3b00','#1a56db'], tags:['new'],
+   img:'https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dwa27d14a7/images/a_107/M9697_A_107X1.jpg?sw=680&sh=680',
+   desc:'The definitive shoe of the 20th century. Classic canvas upper with iconic rubber sole. Never goes out of style.',
+   sizes:['UK 5','UK 6','UK 7','UK 8','UK 9','UK 10'],
+   amazonPrice: 5499, flipkartPrice: 5299, myntraPrice: 5499
+  },
+  {id:5, name:'Classic Leather', brand:'Reebok', price:5499, oldPrice:6999, category:'casual', gender:'Men', rating:4.5, ratingCount:1203, colors:['#fff','#ccc','#000'], tags:['sale'],
+   img:'https://assets.reebok.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/f59c84de4c294b8eb36bada200e28af2_9366/Classic_Leather_Shoes_White_49798_01_standard.jpg',
+   desc:'A timeless design that transcends eras. The Classic Leather features a premium leather upper for a refined look.',
+   sizes:['UK 6','UK 7','UK 8','UK 9','UK 10'],
+   amazonPrice: 6299, flipkartPrice: 5999, myntraPrice: 6199
+  },
+  {id:6, name:'Fresh Foam 1080v12', brand:'New Balance', price:13999, oldPrice:16999, category:'sports', gender:'Unisex', rating:4.8, ratingCount:654, colors:['#000','#fff','#22c55e'], tags:['hot'],
+   img:'https://nb.scene7.com/is/image/NB/m1080w12_nb_02_i?$deskPDP2x$',
+   desc:'Premium daily trainer with the plushest Fresh Foam cushioning ever engineered. For those who demand the best.',
+   sizes:['UK 7','UK 8','UK 9','UK 10','UK 11'],
+   amazonPrice: 15499, flipkartPrice: 14999, myntraPrice: 15299
+  },
+  {id:7, name:'Old Skool', brand:'Vans', price:4299, oldPrice:4999, category:'casual', gender:'Unisex', rating:4.6, ratingCount:2109, colors:['#000','#fff','#ef4444'], tags:['new'],
+   img:'https://images.vans.com/is/image/Vans/VN000D3HY28-HERO?$vansCoreHeroDesktop$',
+   desc:'The iconic Old Skool with the signature side stripe. Classic skate shoe that defined street culture.',
+   sizes:['UK 5','UK 6','UK 7','UK 8','UK 9','UK 10'],
+   amazonPrice: 4799, flipkartPrice: 4599, myntraPrice: 4699
+  },
+  {id:8, name:'Air Force 1 Low', brand:'Nike', price:7999, oldPrice:9499, category:'sneakers', gender:'Unisex', rating:4.9, ratingCount:4892, colors:['#fff','#000','#ff3b00'], tags:['hot'],
+   img:'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/b7d9211d-1769-4f4f-a0d7-bae905adc4f9/air-force-1-07-shoes-WBF2p2.png',
+   desc:'The icon. The Air Force 1 Low changed the game when it debuted in 1982 and continues to dominate.',
+   sizes:['UK 6','UK 7','UK 8','UK 9','UK 10','UK 11'],
+   amazonPrice: 9499, flipkartPrice: 8999, myntraPrice: 9299
+  },
+  {id:9, name:'Stan Smith', brand:'Adidas', price:6499, oldPrice:7999, category:'casual', gender:'Men', rating:4.7, ratingCount:3102, colors:['#fff','#22c55e','#000'], tags:['sale'],
+   img:'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/e20e2b0a9bfd44e5be12ad380096c89e_9366/Stan_Smith_Shoes_White_FX5502_01_standard.jpg',
+   desc:'Minimalist design. Maximum style. The Stan Smith needs no introduction.',
+   sizes:['UK 6','UK 7','UK 8','UK 9','UK 10'],
+   amazonPrice: 7299, flipkartPrice: 7099, myntraPrice: 7299
+  },
+  {id:10, name:'NITRO Running Shoe', brand:'Puma', price:8999, oldPrice:10999, category:'sports', gender:'Women', rating:4.7, ratingCount:876, colors:['#ff6b6b','#000','#7c3aed'], tags:['new'],
+   img:'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_750,h_750/global/376018/01/sv01/fnd/IND/fmt/png/Deviate-NITRO-2-Women%27s-Running-Shoes',
+   desc:'NITRO technology provides the perfect balance of cushioning and propulsion for your fastest runs yet.',
+   sizes:['UK 4','UK 5','UK 6','UK 7','UK 8'],
+   amazonPrice: 10299, flipkartPrice: 9799, myntraPrice: 10099
+  },
+  {id:11, name:'574 Core', brand:'New Balance', price:4999, oldPrice:5999, category:'casual', gender:'Unisex', rating:4.5, ratingCount:1543, colors:['#888','#000','#navy'], tags:['sale'],
+   img:'https://nb.scene7.com/is/image/NB/ml574evn_nb_02_i?$deskPDP2x$',
+   desc:'The 574 is a New Balance icon. Premium suede upper with ENCAP midsole technology.',
+   sizes:['UK 6','UK 7','UK 8','UK 9','UK 10'],
+   amazonPrice: 5799, flipkartPrice: 5499, myntraPrice: 5699
+  },
+  {id:12, name:'Authentic', brand:'Vans', price:3299, oldPrice:3999, category:'casual', gender:'Unisex', rating:4.4, ratingCount:2876, colors:['#000','#fff','#ff3b00','#1a56db'], tags:['sale'],
+   img:'https://images.vans.com/is/image/Vans/VN000EE3BLK-HERO?$vansCoreHeroDesktop$',
+   desc:'As raw and simple as it gets. The Authentic is a straight-up skate shoe that started it all.',
+   sizes:['UK 5','UK 6','UK 7','UK 8','UK 9'],
+   amazonPrice: 3799, flipkartPrice: 3599, myntraPrice: 3699
+  },
+];
+
+// ===== STATE =====
+let cart = [];
+let wishlist = [];
+let currentCategory = 'all';
+let activePage = 'home';
+
+// ===== RENDER CARDS =====
+function renderCard(p) {
+  const isWished = wishlist.find(w => w.id === p.id);
+  const swatches = p.colors.map(c => `<div class="swatch" style="background:${c}" onclick="event.stopPropagation()"></div>`).join('');
+  const tags = p.tags.map(t => {
+    if(t==='new') return '<span class="card-tag tag-new">NEW</span>';
+    if(t==='sale') return '<span class="card-tag tag-sale">SALE</span>';
+    if(t==='hot') return '<span class="card-tag tag-hot">HOT</span>';
+    return '';
+  }).join('');
+  const discount = p.oldPrice ? Math.round((1 - p.price/p.oldPrice)*100) : 0;
+
+  return `
+    <div class="product-card" onclick="openModal(${p.id})">
+      <div class="card-img-wrap">
+        <div class="card-tags">${tags}</div>
+        <button class="wishlist-btn ${isWished ? 'active' : ''}" onclick="event.stopPropagation();toggleWishlistItem(${p.id})" id="wbtn-${p.id}">
+          <i class="fa${isWished ? 's' : 'r'} fa-heart" id="wicon-${p.id}"></i>
+        </button>
+        <img src="${p.img}" alt="${p.name}" onerror="this.style.padding='40px';this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22150%22><rect width=%22200%22 height=%22150%22 fill=%22%23161616%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23333%22 text-anchor=%22middle%22 dy=%22.3em%22 font-family=%22sans-serif%22 font-size=%2214%22>${p.brand}</text></svg>'">
+        <div class="color-swatches">${swatches}</div>
+      </div>
+      <div class="card-body-custom">
+        <div class="card-brand">${p.brand}</div>
+        <div class="card-name">${p.name}</div>
+        <div class="card-rating">
+          <span class="rating-star">★</span>
+          <span class="rating-val">${p.rating}</span>
+          <span class="rating-count">(${p.ratingCount.toLocaleString()})</span>
+        </div>
+        <div class="card-footer-custom">
+          <div>
+            ${p.oldPrice ? `<span class="card-price-old">₹${p.oldPrice.toLocaleString()}</span>` : ''}
+            <span class="card-price">₹${p.price.toLocaleString()}</span>
+            ${discount > 0 ? `<span style="font-size:10px;color:var(--accent2);font-family:'Space Mono',monospace;margin-left:4px;">-${discount}%</span>` : ''}
+          </div>
+          <button class="add-cart-btn" onclick="event.stopPropagation();addToCart(${p.id})">+ Cart</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderGrids() {
+  const featured = products.filter(p => p.tags.includes('hot') || p.tags.includes('new')).slice(0, 8);
+  document.getElementById('featuredGrid').innerHTML = featured.map(renderCard).join('');
+  renderWearables();
+}
+
+function renderWearables() {
+  let filtered = [...products];
+  if(currentCategory !== 'all') filtered = filtered.filter(p => p.category === currentCategory);
+  
+  const brand = document.getElementById('brandFilter')?.value;
+  const gender = document.getElementById('genderFilter')?.value;
+  const price = document.getElementById('priceFilter')?.value;
+  const sort = document.getElementById('sortFilter')?.value;
+  
+  if(brand) filtered = filtered.filter(p => p.brand === brand);
+  if(gender) filtered = filtered.filter(p => p.gender === gender);
+  if(price) {
+    const [min, max] = price.split('-').map(Number);
+    filtered = filtered.filter(p => p.price >= min && p.price <= max);
+  }
+  if(sort === 'price-asc') filtered.sort((a,b) => a.price - b.price);
+  if(sort === 'price-desc') filtered.sort((a,b) => b.price - a.price);
+  if(sort === 'rating') filtered.sort((a,b) => b.rating - a.rating);
+  if(sort === 'name') filtered.sort((a,b) => a.name.localeCompare(b.name));
+  
+  const count = document.getElementById('totalCount');
+  if(count) count.textContent = `${filtered.length} SHOES`;
+  
+  document.getElementById('wearablesGrid').innerHTML = filtered.length 
+    ? filtered.map(renderCard).join('')
+    : '<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:#555;"><i class="fas fa-search" style="font-size:36px;margin-bottom:16px;display:block;"></i>No shoes found. Try different filters.</div>';
+}
+
+// ===== PAGE NAVIGATION =====
+function showPage(page) {
+  document.getElementById('home-page').style.display = page === 'home' ? 'block' : 'none';
+  document.getElementById('wearables-page').style.display = page === 'wearables' ? 'block' : 'none';
+  document.getElementById('contact-page').style.display = page === 'contact' ? 'block' : 'none';
+  document.getElementById('about-page').style.display = page === 'about' ? 'block' : 'none';
+  activePage = page;
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  // update active nav
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+}
+
+function filterByBrand(brand) {
+  showPage('wearables');
+  document.getElementById('brandFilter').value = brand;
+  renderWearables();
+}
+
+function setCat(cat, btn) {
+  currentCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderWearables();
+}
+
+function setCatAndShow(cat) {
+  showPage('wearables');
+  currentCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase().startsWith(cat.slice(0,5)));
+  });
+  renderWearables();
+}
+
+function applyFilters() { renderWearables(); }
+
+function resetFilters() {
+  document.getElementById('brandFilter').value = '';
+  document.getElementById('genderFilter').value = '';
+  document.getElementById('priceFilter').value = '';
+  document.getElementById('sortFilter').value = '';
+  currentCategory = 'all';
+  document.querySelectorAll('.cat-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+  renderWearables();
+}
+
+// ===== MODAL =====
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  if(!p) return;
+  const isWished = wishlist.find(w => w.id === p.id);
+  const inCart = cart.find(c => c.id === p.id);
+  
+  document.getElementById('modalContent').innerHTML = `
+    <div class="col-md-5">
+      <div style="position:relative;">
+        ${p.tags.map(t => {
+          if(t==='new') return '<span class="card-tag tag-new" style="position:absolute;top:10px;left:10px;">NEW ARRIVAL</span>';
+          if(t==='sale') return '<span class="card-tag tag-sale" style="position:absolute;top:10px;left:10px;">SALE</span>';
+          if(t==='hot') return '<span class="card-tag tag-hot" style="position:absolute;top:10px;left:10px;">HOT</span>';
+          return '';
+        }).join('')}
+        <img src="${p.img}" class="modal-shoe-img" alt="${p.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22280%22><rect width=%22300%22 height=%22280%22 fill=%22%230d0d0d%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23333%22 text-anchor=%22middle%22 dy=%22.3em%22 font-family=%22sans-serif%22 font-size=%2220%22>${p.name}</text></svg>'">
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;">
+        ${p.colors.map(c => `<div class="swatch" style="background:${c};width:24px;height:24px;border-color:#333;cursor:pointer;" title="Color option"></div>`).join('')}
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="modal-brand-tag">${p.brand}</div>
+      <div class="modal-title-shoe">${p.name}</div>
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <span style="font-size:14px;color:var(--accent2);">★ ${p.rating}</span>
+        <span style="font-size:12px;color:#555;">(${p.ratingCount.toLocaleString()} reviews)</span>
+      </div>
+      <div class="modal-price">
+        ₹${p.price.toLocaleString()}
+        ${p.oldPrice ? `<span style="font-size:14px;color:#555;text-decoration:line-through;margin-left:8px;">₹${p.oldPrice.toLocaleString()}</span>` : ''}
+        ${p.oldPrice ? `<span style="font-size:12px;color:var(--accent2);margin-left:8px;">${Math.round((1-p.price/p.oldPrice)*100)}% OFF</span>` : ''}
+      </div>
+      
+      <div style="margin-bottom:16px;">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:#888;margin-bottom:8px;">SELECT UK SIZE</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;" id="sizeGroup">
+          ${p.sizes.map(s => `<button class="size-btn" onclick="selectSize(this,'${s}')">${s}</button>`).join('')}
+        </div>
+      </div>
+      
+      <div style="margin-bottom:20px;">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:#888;margin-bottom:8px;">QUANTITY</div>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <span class="qty-val" id="qtyVal">1</span>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+      
+      <div style="display:flex;gap:10px;margin-bottom:20px;">
+        <button class="btn-primary-custom flex-grow-1" onclick="addToCartModal(${p.id})">Add to Cart</button>
+        <button class="nav-icon-btn" onclick="toggleWishlistItem(${p.id})" id="modal-wbtn-${p.id}" style="width:48px;height:48px;">
+          <i class="${isWished ? 'fas' : 'far'} fa-heart" id="modal-wicon-${p.id}" style="${isWished ? 'color:#ff4d6d' : ''}"></i>
+        </button>
+      </div>
+      
+      <!-- Price Comparison Table -->
+      <div style="margin-bottom:16px;">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:8px;">PRICE COMPARISON</div>
+        <table class="compare-table">
+          <thead><tr><th>Platform</th><th>Price</th><th>Delivery</th></tr></thead>
+          <tbody>
+            <tr><td>SoleVault</td><td class="price-best">₹${p.price.toLocaleString()}</td><td style="color:var(--accent2);font-size:11px;">FREE</td></tr>
+            <tr><td>Amazon</td><td class="price-normal">₹${p.amazonPrice.toLocaleString()}</td><td style="color:#555;font-size:11px;">₹40</td></tr>
+            <tr><td>Flipkart</td><td class="price-normal">₹${p.flipkartPrice.toLocaleString()}</td><td style="color:#555;font-size:11px;">₹50</td></tr>
+            <tr><td>Myntra</td><td class="price-normal">₹${p.myntraPrice.toLocaleString()}</td><td style="color:#555;font-size:11px;">FREE</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:11px;color:var(--accent);margin-top:6px;">You save ₹${(Math.min(p.amazonPrice,p.flipkartPrice,p.myntraPrice)-p.price).toLocaleString()} by shopping here!</div>
+      </div>
+      
+      <!-- Product details -->
+      <details style="margin-bottom:8px;">
+        <summary style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:#888;cursor:pointer;padding:10px;background:#1a1a1a;border-radius:6px;">PRODUCT DETAILS</summary>
+        <div style="padding:12px;background:#161616;border-radius:0 0 6px 6px;font-size:13px;color:#888;line-height:1.6;">${p.desc}</div>
+      </details>
+      
+      <div class="d-flex gap-2">
+        <div class="policy-badge flex-grow-1"><i class="fas fa-undo"></i> 30-Day Returns</div>
+        <div class="policy-badge flex-grow-1"><i class="fas fa-shield-alt"></i> Authentic</div>
+      </div>
+    </div>
+  `;
+  
+  new bootstrap.Modal(document.getElementById('productModal')).show();
+}
+
+let currentQty = 1;
+let selectedSize = '';
+let modalProductId = null;
+
+function selectSize(btn, size) {
+  document.querySelectorAll('#sizeGroup .size-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedSize = size;
+}
+function changeQty(d) {
+  currentQty = Math.max(1, Math.min(10, currentQty + d));
+  document.getElementById('qtyVal').textContent = currentQty;
+}
+function addToCartModal(id) {
+  addToCart(id, currentQty, selectedSize);
+  bootstrap.Modal.getInstance(document.getElementById('productModal'))?.hide();
+}
+
+// ===== CART =====
+function addToCart(id, qty=1, size='') {
+  const p = products.find(x => x.id === id);
+  if(!p) return;
+  const existing = cart.find(c => c.id === id);
+  if(existing) {
+    existing.qty = Math.min(10, existing.qty + qty);
+  } else {
+    cart.push({...p, qty, size});
+  }
+  updateCartBadge();
+  showToast(`${p.name} added to cart 🛒`);
+}
+function openCart() {
+  renderCart();
+  new bootstrap.Offcanvas(document.getElementById('cartOffcanvas')).show();
+}
+function renderCart() {
+  const el = document.getElementById('cartItems');
+  const empty = document.getElementById('cartEmpty');
+  const totSec = document.getElementById('cartTotalSection');
+  if(cart.length === 0) {
+    el.innerHTML = '';
+    empty.style.display = 'block';
+    totSec.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  totSec.style.display = 'block';
+  el.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <img src="${item.img}" class="cart-item-img" alt="${item.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%231a1a1a%22/></svg>'">
+      <div style="flex:1;">
+        <div class="cart-item-brand">${item.brand}</div>
+        <div class="cart-item-name">${item.name}</div>
+        ${item.size ? `<div style="font-size:11px;color:#555;">${item.size}</div>` : ''}
+        <div class="cart-item-price">₹${(item.price * item.qty).toLocaleString()}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="display:flex;align-items:center;gap:6px;border:1px solid #2a2a2a;border-radius:6px;padding:2px 6px;">
+          <button class="qty-btn" style="width:24px;height:24px;font-size:12px;" onclick="changeCartQty(${item.id},-1)">−</button>
+          <span style="font-size:12px;min-width:16px;text-align:center;">${item.qty}</span>
+          <button class="qty-btn" style="width:24px;height:24px;font-size:12px;" onclick="changeCartQty(${item.id},1)">+</button>
+        </div>
+        <button class="remove-btn" onclick="removeFromCart(${item.id})"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>
+  `).join('');
+  
+  const total = cart.reduce((sum, c) => sum + c.price * c.qty, 0);
+  document.getElementById('cartTotal').textContent = '₹' + total.toLocaleString();
+  document.getElementById('cartSVPrice').textContent = '₹' + total.toLocaleString();
+  document.getElementById('cartAmazonPrice').textContent = '₹' + Math.round(total * 1.12).toLocaleString();
+  document.getElementById('cartFlipkartPrice').textContent = '₹' + Math.round(total * 1.09).toLocaleString();
+  document.getElementById('cartSavings').textContent = `You saved ₹${Math.round(total * 0.09).toLocaleString()} by using SoleVault!`;
+}
+function changeCartQty(id, d) {
+  const item = cart.find(c => c.id === id);
+  if(!item) return;
+  item.qty = Math.max(1, Math.min(10, item.qty + d));
+  updateCartBadge();
+  renderCart();
+}
+function removeFromCart(id) {
+  cart = cart.filter(c => c.id !== id);
+  updateCartBadge();
+  renderCart();
+}
+function updateCartBadge() {
+  document.getElementById('cart-count').textContent = cart.reduce((s,c) => s + c.qty, 0);
+}
+
+// ===== WISHLIST =====
+function toggleWishlist() {
+  renderWishlist();
+  new bootstrap.Offcanvas(document.getElementById('wishlistOffcanvas')).show();
+}
+function toggleWishlistItem(id) {
+  const p = products.find(x => x.id === id);
+  if(!p) return;
+  const idx = wishlist.findIndex(w => w.id === id);
+  if(idx >= 0) {
+    wishlist.splice(idx, 1);
+    showToast(`Removed from wishlist`);
+  } else {
+    wishlist.push(p);
+    showToast(`${p.name} added to wishlist ❤️`);
+  }
+  document.getElementById('wishlist-count').textContent = wishlist.length;
+  // update all wishlist buttons
+  ['wbtn','modal-wbtn'].forEach(prefix => {
+    const btn = document.getElementById(`${prefix}-${id}`);
+    const ico = document.getElementById(`${prefix === 'wbtn' ? 'wicon' : 'modal-wicon'}-${id}`);
+    if(btn) btn.classList.toggle('active', wishlist.find(w => w.id === id));
+    if(ico) {
+      ico.className = wishlist.find(w => w.id === id) ? 'fas fa-heart' : 'far fa-heart';
+      ico.style.color = wishlist.find(w => w.id === id) ? '#ff4d6d' : '';
+    }
+  });
+  // re-render grids to reflect wishlist state
+  renderGrids();
+}
+function renderWishlist() {
+  const el = document.getElementById('wishlistItems');
+  const empty = document.getElementById('wishlistEmpty');
+  if(wishlist.length === 0) {
+    el.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  el.innerHTML = wishlist.map(item => `
+    <div class="cart-item">
+      <img src="${item.img}" class="wishlist-item-img" alt="${item.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect width=%2260%22 height=%2260%22 fill=%22%231a1a1a%22/></svg>'">
+      <div style="flex:1;">
+        <div class="cart-item-brand">${item.brand}</div>
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">₹${item.price.toLocaleString()}</div>
+        <div style="margin-top:6px;">
+          <table style="font-size:10px;width:100%;">
+            <tr><td style="color:#555;">Amazon</td><td style="font-family:'Space Mono',monospace;color:#888;">₹${item.amazonPrice.toLocaleString()}</td></tr>
+            <tr><td style="color:#555;">Flipkart</td><td style="font-family:'Space Mono',monospace;color:#888;">₹${item.flipkartPrice.toLocaleString()}</td></tr>
+          </table>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <button class="add-cart-btn" style="font-size:10px;" onclick="addToCart(${item.id})">+ Cart</button>
+        <button class="remove-btn" onclick="removeWishlist(${item.id})"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+  `).join('');
+}
+function removeWishlist(id) {
+  wishlist = wishlist.filter(w => w.id !== id);
+  document.getElementById('wishlist-count').textContent = wishlist.length;
+  renderWishlist();
+  renderGrids();
+}
+
+// ===== PROFILE MENU =====
+function toggleProfileMenu() {
+  document.getElementById('profileMenu').classList.toggle('show');
+}
+document.addEventListener('click', e => {
+  if(!e.target.closest('.profile-dropdown')) {
+    document.getElementById('profileMenu').classList.remove('show');
+  }
+});
+
+// ===== SEARCH =====
+function filterProducts() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  if(!q) return;
+  const filtered = products.filter(p => 
+    p.name.toLowerCase().includes(q) || 
+    p.brand.toLowerCase().includes(q) || 
+    p.category.toLowerCase().includes(q)
+  );
+  showPage('wearables');
+  document.getElementById('wearablesGrid').innerHTML = filtered.length 
+    ? filtered.map(renderCard).join('')
+    : '<div style="grid-column:1/-1;text-align:center;padding:60px 0;color:#555;">No results found for "' + q + '"</div>';
+  if(document.getElementById('totalCount')) document.getElementById('totalCount').textContent = `${filtered.length} RESULTS`;
+}
+function handleSearch(e) {
+  if(e.key === 'Enter') filterProducts();
+}
+
+// ===== HERO PARALLAX =====
+document.addEventListener('mousemove', e => {
+  const bg = document.getElementById('heroBgText');
+  if(!bg) return;
+  const x = (e.clientX / window.innerWidth - 0.5) * 20;
+  const y = (e.clientY / window.innerHeight - 0.5) * 10;
+  bg.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+});
+
+// ===== SCROLL REVEAL =====
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = 'toast-msg';
+  el.textContent = msg;
+  t.appendChild(el);
+  setTimeout(() => el.remove(), 3100);
+}
+
+// ===== FAQ TOGGLE =====
+function toggleFaq(btn) {
+  const content = btn.nextElementSibling;
+  const isOpen = content.style.display === 'block';
+  content.style.display = isOpen ? 'none' : 'block';
+  btn.querySelector('i').style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+// ===== CONTACT FORM =====
+function submitForm() {
+  showToast('Message sent! We\'ll get back to you soon ✅');
+}
+
+// ===== INIT =====
+renderGrids();
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}, 100);
+</script>
+</body>
+</html>

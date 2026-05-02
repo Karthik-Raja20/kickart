@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoleHub - Premium Footwear Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --dark: #1e293b;
+            --light: #f1f5f9;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            color: var(--dark);
+        }
+
+        .page-section {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: white !important;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 600;
+            margin: 0 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        .cart-badge {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--warning);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            top: -300px;
+            right: -300px;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            bottom: -250px;
+            left: -250px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-hero {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            background: white;
+            color: var(--primary);
+            border: none;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .category-card {
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .category-sneakers {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .category-formal {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+        }
+
+        .category-casual {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .brand-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .product-body {
+            padding: 20px;
+        }
+
+        .product-brand {
+            font-size: 0.85rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 5px 0 10px;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .filter-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .filter-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .auth-box {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .auth-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .cart-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cart-item-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .qty-btn:hover {
+            background: var(--light);
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 80px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-icons i {
+            font-size: 1.5rem;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-icons i:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .single-product-image {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 8rem;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .color-option:hover, .color-option.active {
+            border-color: var(--dark);
+        }
+
+        .size-option {
+            padding: 10px 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .size-option:hover, .size-option.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showPage('home')">SoleHub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('home')">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('products')">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('about')">About</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('contact')">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('login')">Login</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-badge" onclick="showPage('cart')">
+                            <i class="bi bi-cart3"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="home" class="page-section active">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Step Into Style</h1>
+                <p class="hero-subtitle">Discover Premium Footwear for Every Occasion</p>
+                <button class="btn-hero" onclick="showPage('products')">Shop Now</button>
+            </div>
+        </div>
+
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title">Shop By Category</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="category-card category-sneakers" onclick="filterProducts('category', 'sneakers')">
+                            <div>
+                                <i class="bi bi-lightning-fill"></i>
+                                <div>SNEAKERS</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card category-formal" onclick="filterProducts('category', 'formal')">
+                            <div>
+                                <i class="bi bi-briefcase-fill"></i>
+                                <div>FORMAL</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="category-card category-casual" onclick="filterProducts('category', 'casual')">
+                            <div>
+                                <i class="bi bi-sun-fill"></i>
+                                <div>CASUAL</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title">Featured Brands</h2>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="brand-card" onclick="filterProducts('brand', 'Nike')">
+                            <div class="brand-logo">N</div>
+                            <h5>Nike</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="brand-card" onclick="filterProducts('brand', 'Adidas')">
+                            <div class="brand-logo">A</div>
+                            <h5>Adidas</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="brand-card" onclick="filterProducts('brand', 'Puma')">
+                            <div class="brand-logo">P</div>
+                            <h5>Puma</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="brand-card" onclick="filterProducts('brand', 'Reebok')">
+                            <div class="brand-logo">R</div>
+                            <h5>Reebok</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="brand-card" onclick="filterProducts('brand', 'New Balance')">
+                            <div class="brand-logo">NB</div>
+                            <h5>New Balance</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="brand-card" onclick="filterProducts('brand', 'Vans')">
+                            <div class="brand-logo">V</div>
+                            <h5>Vans</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="brand-card" onclick="filterProducts('brand', 'Converse')">
+                            <div class="brand-logo">C</div>
+                            <h5>Converse</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="brand-card" onclick="filterProducts('brand', 'Fila')">
+                            <div class="brand-logo">F</div>
+                            <h5>Fila</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <h2 class="section-title">Featured Products</h2>
+                <div class="row" id="featuredProducts"></div>
+            </div>
+        </section>
+    </div>
+
+    <div id="products" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">All Products</h2>
+            
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="filter-section">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="filter-title">Brand</div>
+                                <select class="form-select" id="brandFilter" onchange="applyFilters()">
+                                    <option value="">All Brands</option>
+                                    <option value="Nike">Nike</option>
+                                    <option value="Adidas">Adidas</option>
+                                    <option value="Puma">Puma</option>
+                                    <option value="Reebok">Reebok</option>
+                                    <option value="New Balance">New Balance</option>
+                                    <option value="Vans">Vans</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="filter-title">Category</div>
+                                <select class="form-select" id="categoryFilter" onchange="applyFilters()">
+                                    <option value="">All Categories</option>
+                                    <option value="sneakers">Sneakers</option>
+                                    <option value="formal">Formal</option>
+                                    <option value="casual">Casual</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="filter-title">Price Range</div>
+                                <select class="form-select" id="priceFilter" onchange="applyFilters()">
+                                    <option value="">All Prices</option>
+                                    <option value="0-50">Under $50</option>
+                                    <option value="50-100">$50 - $100</option>
+                                    <option value="100-150">$100 - $150</option>
+                                    <option value="150-999">Above $150</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="filter-title">Sort By</div>
+                                <select class="form-select" id="sortFilter" onchange="applyFilters()">
+                                    <option value="">Default</option>
+                                    <option value="price-asc">Price: Low to High</option>
+                                    <option value="price-desc">Price: High to Low</option>
+                                    <option value="name">Name: A to Z</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="productsContainer"></div>
+        </div>
+    </div>
+
+    <div id="productDetail" class="page-section">
+        <div class="container py-5">
+            <button class="btn btn-outline-secondary mb-4" onclick="showPage('products')">
+                <i class="bi bi-arrow-left"></i> Back to Products
+            </button>
+            <div class="row" id="productDetailContent"></div>
+        </div>
+    </div>
+
+    <div id="login" class="page-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2 class="auth-title">Login</h2>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">Login</button>
+                    <div class="text-center">
+                        Don't have an account? <a href="#" onclick="showPage('signup')" class="text-primary">Sign Up</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="signup" class="page-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2 class="auth-title">Sign Up</h2>
+                <form id="signupForm" onsubmit="handleSignup(event)">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="signupName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="signupEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="signupPassword" required minlength="6">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="signupConfirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary-custom w-100 mb-3">Sign Up</button>
+                    <div class="text-center">
+                        Already have an account? <a href="#" onclick="showPage('login')" class="text-primary">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">About SoleHub</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="bg-white p-5 rounded shadow">
+                        <h3 class="mb-4">Our Story</h3>
+                        <p class="mb-4">SoleHub was founded with a simple mission: to provide premium footwear that combines style, comfort, and quality. We believe that the right pair of shoes can transform not just your outfit, but your entire day.</p>
+                        
+                        <h3 class="mb-4">Our Mission</h3>
+                        <p class="mb-4">We strive to offer a curated selection of footwear from the world's leading brands, ensuring that every customer finds their perfect fit. Our commitment to excellence extends beyond our products to include exceptional customer service and a seamless shopping experience.</p>
+                        
+                        <h3 class="mb-4">Our Vision</h3>
+                        <p class="mb-4">To become the most trusted online destination for footwear enthusiasts worldwide, offering an unparalleled selection of styles for every occasion and every personality.</p>
+                        
+                        <h3 class="mb-4">Why Choose Us?</h3>
+                        <ul>
+                            <li class="mb-2">Authentic products from top brands</li>
+                            <li class="mb-2">Competitive prices and regular discounts</li>
+                            <li class="mb-2">Fast and reliable shipping</li>
+                            <li class="mb-2">Easy returns and exchanges</li>
+                            <li class="mb-2">Dedicated customer support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="bg-white p-5 rounded shadow">
+                        <form id="contactForm" onsubmit="handleContact(event)">
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">Send Message</button>
+                        </form>
+                        <div id="contactSuccess" class="alert alert-success mt-3" style="display: none;">
+                            Thank you! Your message has been sent successfully.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">Shopping Cart</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="cartItemsContainer"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h4 class="mb-4">Order Summary</h4>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Subtotal:</span>
+                            <span id="cartSubtotal">$0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Shipping:</span>
+                            <span>$10.00</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <strong>Total:</strong>
+                            <strong id="cartTotal">$10.00</strong>
+                        </div>
+                        <button class="btn btn-primary-custom w-100" onclick="showPage('checkout')">
+                            Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkout" class="page-section">
+        <div class="container py-5">
+            <h2 class="section-title">Checkout</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h4 class="mb-4">Shipping Information</h4>
+                        <form id="checkoutForm" onsubmit="handleCheckout(event)">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Payment Method</label>
+                                <select class="form-select" required>
+                                    <option value="">Select Payment Method</option>
+                                    <option value="credit">Credit Card</option>
+                                    <option value="debit">Debit Card</option>
+                                    <option value="paypal">PayPal</option>
+                                    <option value="cod">Cash on Delivery</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100">Place Order</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h4 class="mb-4">Order Summary</h4>
+                        <div id="checkoutSummary"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start mb-3">
+                    <h4>SoleHub</h4>
+                    <p>Your destination for premium footwear</p>
+                </div>
+                <div class="col-md-4 text-center mb-3">
+                    <div class="social-icons">
+                        <i class="bi bi-facebook"></i>
+                        <i class="bi bi-instagram"></i>
+                        <i class="bi bi-twitter"></i>
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center text-md-end mb-3">
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p>&copy; 2024 SoleHub. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const products = [
+            { id: 1, name: 'Air Max Pro', brand: 'Nike', category: 'sneakers', price: 129.99, desc: 'Premium running shoes with air cushioning', colors: ['black', 'white', 'blue'], sizes: [7, 8, 9, 10, 11], icon: '👟' },
+            { id: 2, name: 'Ultra Boost', brand: 'Adidas', category: 'sneakers', price: 149.99, desc: 'Energy-returning running shoes', colors: ['black', 'white', 'red'], sizes: [7, 8, 9, 10, 11], icon: '👟' },
+            { id: 3, name: 'Classic Oxford', brand: 'Clarks', category: 'formal', price: 89.99, desc: 'Timeless leather dress shoes', colors: ['black', 'brown'], sizes: [7, 8, 9, 10, 11], icon: '👞' },
+            { id: 4, name: 'Derby Elite', brand: 'Cole Haan', category: 'formal', price: 119.99, desc: 'Modern formal shoes with comfort technology', colors: ['black', 'brown'], sizes: [7, 8, 9, 10, 11], icon: '👞' },
+            { id: 5, name: 'Comfort Slip-On', brand: 'Skechers', category: 'casual', price: 59.99, desc: 'Memory foam casual shoes', colors: ['gray', 'blue', 'black'], sizes: [7, 8, 9, 10, 11], icon: '👟' },
+            { id: 6, name: 'Canvas Classic', brand: 'Vans', category: 'casual', price: 49.99, desc: 'Iconic skateboarding shoes', colors: ['black', 'white', 'red'], sizes: [7, 8, 9, 10, 11], icon: '👟' },
+            { id: 7, name: 'Street Runner', brand: 'Puma', category: 'sneakers', price: 99.99, desc: 'Lightweight training shoes', colors: ['white', 'black', 'blue'], sizes: [7, 8, 9, 10, 11], icon: '👟' },
+            { id: 8, name: 'Loafer Premium', brand: 'Gucci', category: 'formal', price: 199.99, desc: 'Luxury leather loafers', colors: ['black', 'brown'], sizes: [7, 8, 9, 10, 11], icon: '👞' },
+            { id: 9, name: 'Beach Walker', brand: 'Crocs', category: 'casual', price: 39.99, desc: 'Comfortable foam clogs', colors: ['blue', 'red', 'green'], sizes: [7, 8, 9, 10, 11], icon: '👡' },
+            { id: 10, name: 'Sport Elite', brand: 'Reebok', category: 'sneakers', price: 109.99, desc: 'Cross-training performance shoes', colors: ['white', 'black', 'red'], sizes: [7, 8, 9, 10, 11], icon: '👟' },
+            { id: 11, name: 'Fresh Foam', brand: 'New Balance', category: 'sneakers', price: 119.99, desc: 'Cushioned running shoes', colors: ['gray', 'navy', 'white'], sizes: [7, 8, 9, 10, 11], icon: '👟' },
+            { id: 12, name: 'Monk Strap', brand: 'Allen Edmonds', category: 'formal', price: 179.99, desc: 'Handcrafted leather dress shoes', colors: ['black', 'brown'], sizes: [7, 8, 9, 10, 11], icon: '👞' }
+        ];
+
+        let cart = [];
+        let filteredProducts = [...products];
+        let currentProduct = null;
+
+        function showPage(pageName) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(pageName).classList.add('active');
+            window.scrollTo(0, 0);
+
+            if (pageName === 'products') {
+                renderProducts();
+            } else if (pageName === 'home') {
+                renderFeaturedProducts();
+            } else if (pageName === 'cart') {
+                renderCart();
+            } else if (pageName === 'checkout') {
+                renderCheckoutSummary();
+            }
+        }
+
+        function renderFeaturedProducts() {
+            const container = document.getElementById('featuredProducts');
+            const featured = products.slice(0, 4);
+            container.innerHTML = featured.map(product => `
+                <div class="col-md-6 col-lg-3">
+                    <div class="product-card">
+                        <div class="product-image">${product.icon}</div>
+                        <div class="product-body">
+                            <div class="product-brand">${product.brand}</div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">$${product.price}</div>
+                            <button class="btn btn-primary-custom w-100" onclick="viewProduct(${product.id})">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="col-md-6 col-lg-4">
+                    <div class="product-card">
+                        <div class="product-image">${product.icon}</div>
+                        <div class="product-body">
+                            <div class="product-brand">${product.brand}</div>
+                            <div class="product-name">${product.name}</div>
+                            <p class="text-muted small">${product.desc}</p>
+                            <div class="product-price">$${product.price}</div>
+                            <button class="btn btn-primary-custom w-100" onclick="viewProduct(${product.id})">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function applyFilters() {
+            const brand = document.getElementById('brandFilter').value;
+            const category = document.getElementById('categoryFilter').value;
+            const priceRange = document.getElementById('priceFilter').value;
+            const sort = document.getElementById('sortFilter').value;
+
+            filteredProducts = products.filter(product => {
+                let match = true;
+                if (brand && product.brand !== brand) match = false;
+                if (category && product.category !== category) match = false;
+                if (priceRange) {
+                    const [min, max] = priceRange.split('-').map(Number);
+                    if (product.price < min || product.price > max) match = false;
+                }
+                return match;
+            });
+
+            if (sort === 'price-asc') {
+                filteredProducts.sort((a, b) => a.price - b.price);
+            } else if (sort === 'price-desc') {
+                filteredProducts.sort((a, b) => b.price - a.price);
+            } else if (sort === 'name') {
+                filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+            }
+
+            renderProducts();
+        }
+
+        function filterProducts(type, value) {
+            if (type === 'category') {
+                document.getElementById('categoryFilter').value = value;
+            } else if (type === 'brand') {
+                document.getElementById('brandFilter').value = value;
+            }
+            showPage('products');
+            applyFilters();
+        }
+
+        function viewProduct(id) {
+            currentProduct = products.find(p => p.id === id);
+            const container = document.getElementById('productDetailContent');
+            
+            container.innerHTML = `
+                <div class="col-md-6">
+                    <div class="single-product-image">${currentProduct.icon}</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="product-brand mb-2">${currentProduct.brand}</div>
+                    <h2 class="mb-3">${currentProduct.name}</h2>
+                    <div class="product-price mb-4">$${currentProduct.price}</div>
+                    <p class="mb-4">${currentProduct.desc}</p>
+                    
+                    <div class="mb-4">
+                        <h5 class="mb-3">Select Color</h5>
+                        <div class="d-flex gap-2">
+                            ${currentProduct.colors.map(color => `
+                                <div class="color-option" style="background-color: ${color}" onclick="selectColor(this)"></div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5 class="mb-3">Select Size</h5>
+                        <div class="d-flex gap-2 flex-wrap">
+                            ${currentProduct.sizes.map(size => `
+                                <div class="size-option" onclick="selectSize(this)">${size}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5 class="mb-3">Quantity</h5>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                            <span id="productQty">1</span>
+                            <button class="qty-btn" onclick="changeQty(1)">+</button>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary-custom btn-lg w-100" onclick="addToCartFromDetail()">
+                        Add to Cart
+                    </button>
+                </div>
+            `;
+            
+            showPage('productDetail');
+        }
+
+        let selectedColor = null;
+        let selectedSize = null;
+        let productQty = 1;
+
+        function selectColor(element) {
+            document.querySelectorAll('.color-option').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            selectedColor = element.style.backgroundColor;
+        }
+
+        function selectSize(element) {
+            document.querySelectorAll('.size-option').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            selectedSize = element.textContent;
+        }
+
+        function changeQty(delta) {
+            productQty = Math.max(1, productQty + delta);
+            document.getElementById('productQty').textContent = productQty;
+        }
+
+        function addToCartFromDetail() {
+            if (!selectedSize) {
+                alert('Please select a size');
+                return;
+            }
+            
+            const existingItem = cart.find(item => item.id === currentProduct.id && item.size === selectedSize);
+            
+            if (existingItem) {
+                existingItem.quantity += productQty;
+            } else {
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    brand: currentProduct.brand,
+                    price: currentProduct.price,
+                    size: selectedSize,
+                    color: selectedColor || currentProduct.colors[0],
+                    quantity: productQty
+                });
+            }
+            
+            updateCartCount();
+            alert('Product added to cart!');
+            productQty = 1;
+            selectedSize = null;
+            selectedColor = null;
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItemsContainer');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-center py-5"><h4>Your cart is empty</h4></div>';
+                document.getElementById('cartSubtotal').textContent = '$0.00';
+                document.getElementById('cartTotal').textContent = '$10.00';
+                return;
+            }
+            
+            container.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="text-muted">${item.brand} | Size: ${item.size}</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="fw-bold">$${item.price}</div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="qty-controls">
+                                <button class="qty-btn" onclick="updateCartQty(${index}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateCartQty(${index}, 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-sm btn-danger" onclick="removeFromCart(${index})">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateCartTotals();
+        }
+
+        function updateCartQty(index, delta) {
+            cart[index].quantity = Math.max(1, cart[index].quantity + delta);
+            renderCart();
+            updateCartCount();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+            updateCartCount();
+        }
+
+        function updateCartTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = subtotal + 10;
+            document.getElementById('cartSubtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('cartTotal').textContent = '$' + total.toFixed(2);
+        }
+
+        function renderCheckoutSummary() {
+            const container = document.getElementById('checkoutSummary');
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const total = subtotal + 10;
+            
+            container.innerHTML = `
+                ${cart.map(item => `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>${item.name} (${item.quantity}x)</span>
+                        <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `).join('')}
+                <hr>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span>$${subtotal.toFixed(2)}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Shipping:</span>
+                    <span>$10.00</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total:</strong>
+                    <strong>$${total.toFixed(2)}</strong>
+                </div>
+            `;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            alert('Login successful!');
+            showPage('home');
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            alert('Account created successfully!');
+            showPage('login');
+        }
+
+        function handleContact(e) {
+            e.preventDefault();
+            document.getElementById('contactSuccess').style.display = 'block';
+            e.target.reset();
+            setTimeout(() => {
+                document.getElementById('contactSuccess').style.display = 'none';
+            }, 3000);
+        }
+
+        function handleCheckout(e) {
+            e.preventDefault();
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            alert('Order placed successfully! Thank you for shopping with SoleHub.');
+            cart = [];
+            updateCartCount();
+            showPage('home');
+        }
+
+        renderFeaturedProducts();
+        renderProducts();
+    </script>
+</body>
+</html>
