@@ -1,2 +1,2 @@
 # kickart
-froent-end desig for a ecom shoes website 
+frontend designs for ecom shoes websits 
